@@ -1,30 +1,10 @@
-# 该config文件为该项目的pre-commit的配置文件，用于指定该项目可以执行的git hooks
-
-# 这是pre-commit的全局配置之一，fail_fast：遇到错误不会向下执行直接退出
-fail_fast: false
-
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
 repos:
-  # hook所在的仓库
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    # 仓库的版本，可以直接用tag或者分支，但分支是容易发生变化的
-    # 如果使用分支，则会在第一次安装之后不自动更新
-    # 通过 `pre-commit autoupdate`指令可以将tag更新到默认分支的最新tag
-    rev: v4.0.1
-    # 仓库中的hook id
+    rev: v4.4.0
     hooks:
-      # 定义的hook脚本，在repo的.pre-commit-hooks.yaml中定义
+      # -   id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
       - id: check-added-large-files
-      # 移除尾部空格符
-      - id: trailing-whitespace
-        # 传入参数，不处理makedown
-        args: [--markdown-linebreak-ext=md]
-      # 检查是否含有合并冲突符号
-      - id: check-merge-conflict
-
-  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-    rev: v2.0.0
-    hooks:
-      - id: pretty-format-yaml
-        # https://github.com/macisamuele/language-formatters-pre-commit-hooks/blob/v2.0.0/language_formatters_pre_commit_hooks/pretty_format_yaml.py
-        # hook脚本需要的参数，可以在该hook脚本文件中看到
-        args: [--autofix, --indent, '2']
