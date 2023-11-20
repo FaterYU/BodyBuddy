@@ -3,7 +3,7 @@ name: Main CI
 on: [push, pull_request]
 
 jobs:
-  main:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
