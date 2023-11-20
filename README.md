@@ -1,5 +1,12 @@
 # BodyBuddy
 
+## 项目进度
+
+- [x] 项目初始化
+- [x] Github Actions 配置
+- [ ] 开发：导航栏
+- [ ] 开发：页面
+
 ## 规范
 
 ### 代码规范
@@ -16,3 +23,41 @@
 ## 依赖环境
 
 - Node.js
+- yarn
+- Android Studio
+
+## 快速启动
+
+### 安装依赖
+
+```bash
+yarn
+```
+
+### 启动开发环境
+
+```bash
+yarn start
+```
+
+## 项目结构
+
+> 没提到的文件/文件夹不用管
+
+```bash
+├── android # Android 项目（不用管）
+├── ios # iOS 项目（不用管）
+├── src # 源代码
+│   └── screens # 页面
+├── App.js # 入口文件
+├── index.js # 入口文件
+├── package.json # 依赖配置（不用管）
+├── README.md # 项目说明
+└── yarn.lock # 依赖版本锁定（不用管）
+```
+
+
+## 官方文档
+
+- [React Native](https://reactnative.cn/docs/getting-started/)
+- [React Navigation](https://reactnavigation.org/docs/getting-started/)
