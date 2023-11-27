@@ -58,7 +58,6 @@ yarn start
 └── yarn.lock # 依赖版本锁定（不用管）
 ```
 
-
 ## 官方文档
 
 - [React Native](https://reactnative.cn/docs/getting-started/)
