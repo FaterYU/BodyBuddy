@@ -1,62 +1,141 @@
-import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { Agenda } from 'react-native-calendars';
-const App = () => {
-  return (
+import React, {Component} from 'react';
+import {Alert, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Agenda, DateData, AgendaEntry, AgendaSchedule} from 'react-native-calendars';
+
+interface State {
+  items?: AgendaSchedule;
+}
+
+export default class AgendaScreen extends Component<State> {
+  state: State = {
+    items: undefined
+  };
+
+  // reservationsKeyExtractor = (item, index) => {
+  //   return `${item?.reservation?.day}${index}`;
+  // };
+
+  render() {
+    return (
       <Agenda
-        // 列表中要显示的项目。如果要将项目呈现为空日期，日期键的值必须是一个空数组 []。如果日期键没有值，则认为该日期尚未加载。
-        items={{
-          '2012-05-22': [{ text: 'item 1 - any js object' }],
-          '2012-05-23': [{ text: 'item 2 - any js object' }],
-          '2012-05-24': [],
-          '2012-05-25': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
-        }}
-        // 当加载某个月的项目时触发的回调（月份变得可见）
-        loadItemsForMonth={(month) => { console.log('trigger items loading'); }}
-        // 在按下日期时触发的回调
-        onDayPress={(day) => { console.log('day pressed'); }}
-        // 在滚动日程列表时日期更改时触发的回调
-        onDayChange={(day) => { console.log('day changed'); }}
-        // 初始选择的日期
-        selected={'2012-05-16'}
-        // 可选择的最小日期，minDate之前的日期将变灰。默认 = undefined
-        minDate={'2012-05-10'}
-        // 可选择的最大日期，maxDate之后的日期将变灰。默认 = undefined
-        maxDate={'2012-05-30'}
-        // 允许向过去滚动的最大月份数。默认 = 50
-        pastScrollRange={50}
-        // 允许向未来滚动的最大月份数。默认 = 50
-        futureScrollRange={50}
-        // 指定如何呈现日程中的每个项目
-        renderItem={(item, firstItemInDay) => { return (<View />); }}
-        // 指定如何呈现每个日期。如果该项不是当天的第一项，则日期可能为 undefined。
-        renderDay={(day, item) => { return (<View />); }}
-        // 指定如何呈现没有项目的空日期内容
-        renderEmptyDate={() => { return (<View />); }}
-        // 指定日程旋钮的外观
-        renderKnob={() => { return (<View />); }}
-        // 指定用于增强性能的项目比较函数
-        rowHasChanged={(r1, r2) => { return r1.text !== r2.text; }}
-        // 隐藏旋钮按钮。默认 = false
-        hideKnob={true}
-        // 默认情况下，如果日期至少有一个项目，日程日期将被标记，但如果需要，可以覆盖此项
-        markedDates={{
-          '2012-05-16': { selected: true, marked: true },
-          '2012-05-17': { marked: true },
-          '2012-05-18': { disabled: true },
-        }}
-        // 日程主题
-        theme={{
-          agendaDayTextColor: 'yellow',
-          agendaDayNumColor: 'green',
-          agendaTodayColor: 'red',
-          agendaKnobColor: 'blue',
-        }}
-        // 日程容器样式
-        style={{}}
+        items={this.state.items}
+        loadItemsForMonth={this.loadItems}
+        selected={'2017-05-16'}
+        renderItem={this.renderItem}
+        renderEmptyDate={this.renderEmptyDate}
+        rowHasChanged={this.rowHasChanged}
+        showClosingKnob={true}
+        // markingType={'period'}
+        // markedDates={{
+        //    '2017-05-08': {textColor: '#43515c'},
+        //    '2017-05-09': {textColor: '#43515c'},
+        //    '2017-05-14': {startingDay: true, endingDay: true, color: 'blue'},
+        //    '2017-05-21': {startingDay: true, color: 'blue'},
+        //    '2017-05-22': {endingDay: true, color: 'gray'},
+        //    '2017-05-24': {startingDay: true, color: 'gray'},
+        //    '2017-05-25': {color: 'gray'},
+        //    '2017-05-26': {endingDay: true, color: 'gray'}}}
+        // monthFormat={'yyyy'}
+        // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
+        // renderDay={this.renderDay}
+        // hideExtraDays={false}
+        // showOnlySelectedDayItems
+        // reservationsKeyExtractor={this.reservationsKeyExtractor}
       />
+    );
+  }
 
-  );
-};
+  loadItems = (day: DateData) => {
+    const items = this.state.items || {};
 
-export default App;
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+
+        if (!items[strTime]) {
+          items[strTime] = [];
+          
+          const numItems = Math.floor(Math.random() * 3 + 1);
+          for (let j = 0; j < numItems; j++) {
+            items[strTime].push({
+              name: 'Item for ' + strTime + ' #' + j,
+              height: Math.max(50, Math.floor(Math.random() * 150)),
+              day: strTime
+            });
+          }
+        }
+      }
+      
+      const newItems: AgendaSchedule = {};
+      Object.keys(items).forEach(key => {
+        newItems[key] = items[key];
+      });
+      this.setState({
+        items: newItems
+      });
+    }, 1000);
+  };
+
+  renderDay = (day) => {
+    if (day) {
+      return <Text style={styles.customDay}>{day.getDay()}</Text>;
+    }
+    return <View style={styles.dayItem}/>;
+  };
+
+  renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
+    const fontSize = isFirst ? 16 : 14;
+    const color = isFirst ? 'black' : '#43515c';
+
+    return (
+      <TouchableOpacity
+        style={[styles.item, {height: reservation.height}]}
+        onPress={() => Alert.alert(reservation.name)}
+      >
+        <Text style={{fontSize, color}}>{reservation.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  renderEmptyDate = () => {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>This is empty date!</Text>
+      </View>
+    );
+  };
+
+  rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
+    return r1.name !== r2.name;
+  };
+
+  timeToString(time: number) {
+    const date = new Date(time);
+    return date.toISOString().split('T')[0];
+  }
+}
+
+const styles = StyleSheet.create({
+  item: {
+    backgroundColor: 'white',
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17
+  },
+  emptyDate: {
+    height: 15,
+    flex: 1,
+    paddingTop: 30
+  },
+  customDay: {
+    margin: 10,
+    fontSize: 24,
+    color: 'green'
+  },
+  dayItem: {
+    marginLeft: 34
+  }
+});
