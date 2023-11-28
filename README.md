@@ -2,6 +2,8 @@
 
 ![example workflow](https://github.com/FaterYU/BodyBuddy/actions/workflows/main_ci.yml/badge.svg)
 
+项目对应后端项目：[BodyBuddy_BackEnd](https://github.com/FaterYU/BodyBuddy_BackEnd)
+
 ## 项目进度
 
 - [x] 项目初始化
