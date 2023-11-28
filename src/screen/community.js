@@ -20,7 +20,7 @@ const data = [
 ];
 
 
-const WaterfallList = () => {
+export const WaterfallList = () => {
   const HeaderComponent = () => (
     <View style={styles.headerComp}>
     </View>
