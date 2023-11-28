@@ -1,202 +1,62 @@
-import { useState, useEffect, useRef  } from 'react'
-import {Text, View, StyleSheet, ScrollView, FlatList, ActivityIndicator, Dimensions} from 'react-native';
-import { Input, Box, AspectRatio, Image, Center, Stack, Heading, HStack, Toast} from "native-base";
-
-import RNFS from 'react-native-fs';
-const numColumns = 2;
-const SCREENHEIGHT = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
-
-
-const CommunityScreen = () => {
-  /*
-  const [fileList, setFileList] = useState([]);
-  useEffect(() => {
-    RNFS.readDirAssets('courses').then((result) => {
-      console.log('GOT RESULT', result);
-      const files = result.map(file => file.name);
-      setFileList(files);
-    }).catch((err) => {
-      console.log(err.message, err.code);
-    });
-      
-    // const readFiles = async () => {
-    //   try {
-    //     const path = 'D:/developProject/BodyBuddy/src/assets/courses';
-    //     console.log('path',path)
-    //     const result = await RNFS.readDir(path);
-    //     console.log('GOT RESULT', result);
-    //     const files = result.map(file => file.name);
-    //     setFileList(files);
-    //   } catch (error) {
-    //     console.error('Error reading files:', error);
-    //   }
-    // };
-    // readFiles();
-  }, []);
-  */
-
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { Agenda } from 'react-native-calendars';
+const App = () => {
   return (
-      <View style={styles.container}>
-        <Input style={styles.topInput} variant="rounded" placeholder="Search Here" />
-        <WaterfallList />
-      </View>
+      <Agenda
+        // 列表中要显示的项目。如果要将项目呈现为空日期，日期键的值必须是一个空数组 []。如果日期键没有值，则认为该日期尚未加载。
+        items={{
+          '2012-05-22': [{ text: 'item 1 - any js object' }],
+          '2012-05-23': [{ text: 'item 2 - any js object' }],
+          '2012-05-24': [],
+          '2012-05-25': [{ text: 'item 3 - any js object' }, { text: 'any js object' }],
+        }}
+        // 当加载某个月的项目时触发的回调（月份变得可见）
+        loadItemsForMonth={(month) => { console.log('trigger items loading'); }}
+        // 在按下日期时触发的回调
+        onDayPress={(day) => { console.log('day pressed'); }}
+        // 在滚动日程列表时日期更改时触发的回调
+        onDayChange={(day) => { console.log('day changed'); }}
+        // 初始选择的日期
+        selected={'2012-05-16'}
+        // 可选择的最小日期，minDate之前的日期将变灰。默认 = undefined
+        minDate={'2012-05-10'}
+        // 可选择的最大日期，maxDate之后的日期将变灰。默认 = undefined
+        maxDate={'2012-05-30'}
+        // 允许向过去滚动的最大月份数。默认 = 50
+        pastScrollRange={50}
+        // 允许向未来滚动的最大月份数。默认 = 50
+        futureScrollRange={50}
+        // 指定如何呈现日程中的每个项目
+        renderItem={(item, firstItemInDay) => { return (<View />); }}
+        // 指定如何呈现每个日期。如果该项不是当天的第一项，则日期可能为 undefined。
+        renderDay={(day, item) => { return (<View />); }}
+        // 指定如何呈现没有项目的空日期内容
+        renderEmptyDate={() => { return (<View />); }}
+        // 指定日程旋钮的外观
+        renderKnob={() => { return (<View />); }}
+        // 指定用于增强性能的项目比较函数
+        rowHasChanged={(r1, r2) => { return r1.text !== r2.text; }}
+        // 隐藏旋钮按钮。默认 = false
+        hideKnob={true}
+        // 默认情况下，如果日期至少有一个项目，日程日期将被标记，但如果需要，可以覆盖此项
+        markedDates={{
+          '2012-05-16': { selected: true, marked: true },
+          '2012-05-17': { marked: true },
+          '2012-05-18': { disabled: true },
+        }}
+        // 日程主题
+        theme={{
+          agendaDayTextColor: 'yellow',
+          agendaDayNumColor: 'green',
+          agendaTodayColor: 'red',
+          agendaKnobColor: 'blue',
+        }}
+        // 日程容器样式
+        style={{}}
+      />
+
   );
 };
 
-const ScrollBase = ({ dataArray }) => {
-  return (
-    <ScrollView
-      horizontal showsHorizontalScrollIndicator={false} style={styles.courseList} nestedScrollEnabled={true}
-      >
-        {dataArray.map((item) => (
-          <View style={styles.courseItem}>
-              <Text>{item.title}</Text>
-          </View>
-        ))}
-    </ScrollView>
-  );
-};
-
-const generateData = () => {
-  const data = [];
-  for (let i = 1; i <= 20; i++) {
-    const item = {
-      id: i,
-      title: `Item ${i}`,
-      height: Math.floor(Math.random() * 200) + 100, // 随机生成高度
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-const data = generateData();
-
-const WaterfallList = () => {
-  const dataArray = [
-    { title: '跑步' },
-    { title: '行走' },
-    { title: '全身燃脂' },
-    { title: '马拉松' },
-    { title: '腰腹训练' },
-  ];
-  const HeaderComponent = () => (
-    <ScrollBase dataArray={dataArray} />
-  );
-  const CardList = ({item}) => {
-    const marginTop = item.id % numColumns === 1 ? -30 : 8;
-    const height = 260
-    // const height = item.height
-
-    return(
-    <Box alignItems="center" style={[styles.cardList, {height, marginTop }]}>
-        <Box style={styles.cardItem } maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-          borderColor: "coolGray.600",
-          backgroundColor: "gray.700"
-        }} _web={{
-          shadow: 2,
-          borderWidth: 0
-        }} _light={{
-          backgroundColor: "gray.50"
-        }}>
-          <Box>
-            <AspectRatio w="100%" ratio={16 / 9}>
-              {/* <Image source={{
-              uri: ""
-            }} alt="image" /> */}
-            </AspectRatio>
-  
-            <Center bg="violet.500" _dark={{
-            bg: "violet.400"
-          }} _text={{
-            color: "warmGray.50",
-            fontWeight: "700",
-            fontSize: "xs"
-          }} position="absolute" bottom="0" px="3" py="1.5">
-              {item.title}
-            </Center>
-          </Box>
-          <Stack p="4" space={3}>
-            <Stack space={2}>
-              <Heading size="md" ml="-1">
-                The Garden City
-              </Heading>
-            </Stack>
-            <Text fontWeight="400">
-              Bengaluru (also called Bangalore) is the center of India's high-tech
-              industry.
-            </Text>
-            <HStack alignItems="center" space={4} justifyContent="space-between">
-              <HStack alignItems="center">
-                <Text color="coolGray.600" _dark={{
-                color: "warmGray.200"
-              }} fontWeight="400">
-                  6 mins ago
-                </Text>
-              </HStack>
-            </HStack>
-          </Stack>
-        </Box>
-      </Box>
-    )
-  };
-
-  return (
-    <FlatList
-      data={data}
-      renderItem={CardList}
-      keyExtractor={(item) => item.id.toString()}
-      numColumns={numColumns}
-      ListHeaderComponent={HeaderComponent}
-      contentContainerStyle={styles.flatListContent}
-      onStartShouldSetResponderCapture={() => {
-        handleStop(false)
-    }}
-    />
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: 8,
-    border: 1,
-    borderColor: 'red',
-    
-  },
-  topInput: {
-    width: '100%',
-  },
-  courseList: {
-    width: '100%',
-    height: 80,
-    marginTop: 10,
-    marginBottom: 40,
-},
-  courseItem: {
-    width: 100,
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 18,
-    marginRight: 6,
-    backgroundColor: '#6ee7b7',
-    color: '#059669',
-  },
-
-  cardItem: {
-    flex: 1,
-    marginLeft: 4,
-    marginRight: 4,
-    borderRadius: 10,
-    backgroundColor: 'lightblue',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: screenWidth / numColumns - 20,
-  },
-
-});
-
-export default CommunityScreen;
+export default App;
