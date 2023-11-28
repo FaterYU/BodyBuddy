@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NativeBaseProvider, Text, Box } from "native-base";
+import 'react-native-gesture-handler';
+
 // import {MaterialCommunityIcons} from '@expo/vector-icons';
 import CommunityScreen from './src/screen/community';
 import FitScreen from './src/screen/fit';
