@@ -1,11 +1,13 @@
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import { Avatar } from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { WaterfallList } from './community';
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 function PersonScreen() {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'flex-start'}}>
       <View style={styles.userBackground}>
         <View style={styles.userInfo}>
           <Avatar
@@ -41,6 +43,7 @@ function PersonScreen() {
           <Text>动态</Text>
         </View>
       </View>
+
       <View style={styles.cardList}>
         <View style={styles.dataCard}>
           <View style={{flexDirection:'row', alignContent:'space-around',justifyContent:'space-between',marginTop:10}}>
@@ -70,7 +73,7 @@ function PersonScreen() {
         <View style={styles.waterfall}>
           <WaterfallList />
         </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent:'flex-start',
+    // justifyContent:'flex-start',
     backgroundColor: 'rgba(248,248,248,1)',
   },
   userBackground: {
@@ -86,7 +89,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(200,200,200,0.8)',
-    height: '26%',
+    height: screenHeight*0.26,
     width: '100%',
   },
   userInfo:{
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
   },
   cardList:{
     width:'100%',
-    height:'28%',
+    height:screenHeight*0.28,
     justifyContent:'space-around',
     alignItems:'center',
     flexDirection:'row',
