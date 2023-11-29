@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Dimensions, FlatList, ReactFragment} from 'react-native';
 import { Avatar } from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { WaterfallList } from './community';
@@ -7,73 +7,81 @@ const screenHeight = Dimensions.get('window').height;
 
 function PersonScreen() {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{justifyContent:'flex-start'}}>
-      <View style={styles.userBackground}>
-        <View style={styles.userInfo}>
-          <Avatar
-            source={{uri:'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg'}}
-            size={76}
-            containerStyle={styles.avatar}
-            rounded
-            />
-          <View style={{flexDirection:'column'}}>
-              <Text style={{color:'white', fontSize:22, fontWeight:'bold',marginTop:6,marginLeft:8}}>UserName</Text>
-              <View style={{flexDirection:'row',flexWrap:'nowrap',flex:1,width:"100%"}}>
-                <View style={styles.fab}>
-                  <Text style={styles.fabText}>社区达人</Text>
-                </View>
-                <View style={styles.fab}>
-                  <Text style={styles.fabText}>勋章1</Text>
+    <FlatList
+    style={styles.container}
+
+    ListHeaderComponent={() => (
+      <View>
+        <View style={styles.userBackground}>
+          <View style={styles.userInfo}>
+            <Avatar
+              source={{uri:'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg'}}
+              size={76}
+              containerStyle={styles.avatar}
+              rounded
+              />
+            <View style={{flexDirection:'column'}}>
+                <Text style={{color:'white', fontSize:22, fontWeight:'bold',marginTop:6,marginLeft:8}}>UserName</Text>
+                <View style={{flexDirection:'row',flexWrap:'nowrap',flex:1,width:"100%"}}>
+                  <View style={styles.fab}>
+                    <Text style={styles.fabText}>社区达人</Text>
+                  </View>
+                  <View style={styles.fab}>
+                    <Text style={styles.fabText}>勋章1</Text>
+                  </View>
                 </View>
               </View>
-            </View>
+          </View>
         </View>
-      </View>
-      <View style={styles.fansList}>
-        <View style={styles.fansButton}>
-          <Text>4</Text>
-          <Text>关注</Text>
+        <View style={styles.fansList}>
+          <View style={styles.fansButton}>
+            <Text>4</Text>
+            <Text>关注</Text>
+          </View>
+          <View style={styles.fansButton}>
+            <Text>2</Text>
+            <Text>粉丝</Text>
+          </View>
+          <View style={styles.fansButton}>
+            <Text>6</Text>
+            <Text>动态</Text>
+          </View>
         </View>
-        <View style={styles.fansButton}>
-          <Text>2</Text>
-          <Text>粉丝</Text>
-        </View>
-        <View style={styles.fansButton}>
-          <Text>6</Text>
-          <Text>动态</Text>
-        </View>
-      </View>
 
-      <View style={styles.cardList}>
-        <View style={styles.dataCard}>
-          <View style={{flexDirection:'row', alignContent:'space-around',justifyContent:'space-between',marginTop:10}}>
-            <Text style={{fontWeight:'bold',color:'blue',fontSize:24,lineHeight:30,marginLeft:10}}>运动数据</Text>
-            <MaterialCommunityIcons name='chevron-right' size={26} color='blue'/>
+        <View style={styles.cardList}>
+          <View style={styles.dataCard}>
+            <View style={{flexDirection:'row', alignContent:'space-around',justifyContent:'space-between',marginTop:10}}>
+              <Text style={{fontWeight:'bold',color:'blue',fontSize:24,lineHeight:30,marginLeft:10}}>运动数据</Text>
+              <MaterialCommunityIcons name='chevron-right' size={26} color='blue'/>
+            </View>
+              <Text style={{marginTop:10,marginLeft:10}}>总运动</Text>
+            <View style={{flexDirection:'row',marginLeft:10}}>
+              <Text style={{marginTop:14,fontSize:36,color:'black'}}>336</Text>
+              <Text style={{marginTop:22,color:'black',marginLeft:6}}>分钟</Text>
+            </View>
+            <Text style={{marginLeft:10}}>本周消耗164千卡</Text>
           </View>
-            <Text style={{marginTop:10,marginLeft:10}}>总运动</Text>
-          <View style={{flexDirection:'row',marginLeft:10}}>
-            <Text style={{marginTop:14,fontSize:36,color:'black'}}>336</Text>
-            <Text style={{marginTop:22,color:'black',marginLeft:6}}>分钟</Text>
+          <View style={styles.dataCard}>
+            <View style={{flexDirection:'row', alignContent:'space-around',justifyContent:'space-between',marginTop:10}}>
+              <Text style={{fontWeight:'bold',color:'blue',fontSize:24,lineHeight:30,marginLeft:10}}>健康数据</Text>
+              <MaterialCommunityIcons name='chevron-right' size={26} color='blue'/>
+            </View>
+              <Text style={{marginTop:10,marginLeft:10}}>体重</Text>
+            <View style={{flexDirection:'row',marginLeft:10}}>
+              <Text style={{marginTop:14,fontSize:36,color:'black'}}>52.3</Text>
+              <Text style={{marginTop:22,color:'black',marginLeft:6}}>kg</Text>
+            </View>
+            <Text style={{marginLeft:10}}>上次记录10天前</Text>
+            </View>
           </View>
-          <Text style={{marginLeft:10}}>本周消耗164千卡</Text>
         </View>
-        <View style={styles.dataCard}>
-          <View style={{flexDirection:'row', alignContent:'space-around',justifyContent:'space-between',marginTop:10}}>
-            <Text style={{fontWeight:'bold',color:'blue',fontSize:24,lineHeight:30,marginLeft:10}}>健康数据</Text>
-            <MaterialCommunityIcons name='chevron-right' size={26} color='blue'/>
-          </View>
-            <Text style={{marginTop:10,marginLeft:10}}>体重</Text>
-          <View style={{flexDirection:'row',marginLeft:10}}>
-            <Text style={{marginTop:14,fontSize:36,color:'black'}}>52.3</Text>
-            <Text style={{marginTop:22,color:'black',marginLeft:6}}>kg</Text>
-          </View>
-          <Text style={{marginLeft:10}}>上次记录10天前</Text>
-          </View>
-        </View>
+    )}
+    ListFooterComponent={()=>(
         <View style={styles.waterfall}>
           <WaterfallList />
         </View>
-    </ScrollView>
+    )}
+    />
   );
 }
 
@@ -143,6 +151,7 @@ const styles = StyleSheet.create({
   },
   waterfall:{
     alignItems:'center',
+    marginTop:16,
   }
 });
 
