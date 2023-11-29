@@ -9,7 +9,6 @@ function PersonScreen() {
   return (
     <FlatList
     style={styles.container}
-
     ListHeaderComponent={() => (
       <View>
         <View style={styles.userBackground}>
