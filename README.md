@@ -1,5 +1,9 @@
 # BodyBuddy
 
+![example workflow](https://github.com/FaterYU/BodyBuddy/actions/workflows/main_ci.yml/badge.svg)
+
+项目对应后端项目：[BodyBuddy_BackEnd](https://github.com/FaterYU/BodyBuddy_BackEnd)
+
 ## 项目进度
 
 - [x] 项目初始化
@@ -55,7 +59,6 @@ yarn start
 ├── README.md # 项目说明
 └── yarn.lock # 依赖版本锁定（不用管）
 ```
-
 
 ## 官方文档
 
