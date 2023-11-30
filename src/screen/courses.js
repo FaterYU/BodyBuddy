@@ -1,15 +1,19 @@
-import {Text, View, Dimensions, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, Dimensions, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback} from 'react-native';
 import { SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
 const screenWidth = Dimensions.get('window').width;
 
-function CoursesScreen() {
+function CoursesScreen({navigation}) {
   var currentDate = new Date();
   // 获取今日星期
   const todayWeek = currentDate.getDay();
   const weekName = ['日', '一', '二', '三', '四', '五', '六'];
   currentDate = currentDate.toLocaleDateString().slice(0,-5);
+  const goToCalendar = () => {
+    navigation.navigate('Calendar');
+  }
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{flexDirection:'row',alignItems:"flex-end"}}>
@@ -55,9 +59,9 @@ function CoursesScreen() {
           </View>
         </View>
         <SevenDaysCalendar />
-        <View style={styles.planButton}>
+        <TouchableOpacity activeOpacity={0.4} style={styles.planButton} onPressOut={goToCalendar}>
           <Text style={{color:'white'}}>查看今日训练计划</Text>
-        </View>
+        </TouchableOpacity >
       </View>
       <View style={{width:'100%'}}>
         <Text style={{color:'black', fontSize:16, fontWeight:'bold',marginLeft:16, marginBottom:4, marginTop:8}}>最近课程</Text>
@@ -90,6 +94,7 @@ const RecommendCourse = () => {
     </View>
   )
 }
+
 
 export default CoursesScreen;
 
