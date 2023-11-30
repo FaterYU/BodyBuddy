@@ -114,11 +114,11 @@ const CommunityScreen = () => {
             platform='android'
             containerStyle={{
               backgroundColor: 'rgba(1,1,1,0)',
-              width: screenWidth-18,
+              width: screenWidth-20,
             }}
             inputContainerStyle={{
               backgroundColor: 'rgba(220,220,220,0.4)',
-              borderRadius:12,
+              borderRadius:20,
               height:40,
             }}
             // onChangeText={updateSearch}

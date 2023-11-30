@@ -3,6 +3,7 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { NativeBaseProvider, Text, Box } from "native-base";
 import 'react-native-gesture-handler';
 
