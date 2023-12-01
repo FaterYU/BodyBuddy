@@ -13,6 +13,7 @@ import PersonScreen from './src/screen/person';
 import CalendarScreen from './src/screen/calendar';
 import VideoScreen from './src/screen/video';
 import DetailsScreen from './src/screen/course_details';
+import CommunityDetailScreen from './src/screen/CommunityDetail'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,6 +84,7 @@ export default function MyTabs() {
           <Stack.Screen name="MainTabs" component={MainTabs} />
           <Stack.Screen name="VideoScreen" component={VideoScreen} />
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+          <Stack.Screen name="CommunityDetailScreen" component={CommunityDetailScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

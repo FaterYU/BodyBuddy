@@ -11,7 +11,7 @@ function CoursesScreen({navigation}) {
   const weekName = ['日', '一', '二', '三', '四', '五', '六'];
   currentDate = currentDate.toLocaleDateString().slice(0,-5);
   const goToCalendar = () => {
-    navigation.navigate('DetailsScreen');
+    navigation.navigate('Calendar');
   }
   
   return (
@@ -59,7 +59,7 @@ function CoursesScreen({navigation}) {
           </View>
         </View>
         <SevenDaysCalendar />
-        <TouchableOpacity activeOpacity={0.4} style={styles.planButton} onPressOut={goToCalendar}>
+        <TouchableOpacity activeOpacity={0.4} style={styles.planButton} onPress={goToCalendar}>
           <Text style={{color:'white'}}>查看今日训练计划</Text>
         </TouchableOpacity >
       </View>

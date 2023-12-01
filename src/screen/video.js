@@ -19,7 +19,7 @@ const VideoScreen = ({navigation}) => {
     return (
         <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'row' }}>
             <View style={styles.video}>
-                <TouchableOpacity onPressOut={goBack}>
+                <TouchableOpacity onPress={goBack}>
                     <MaterialCommunityIcons name="chevron-left-circle" size={26} color="rgba(200,200,200,0.8)" style={{alignSelf:'flex-start',marginTop:14,marginLeft:14}} />
                 </TouchableOpacity>
             </View>

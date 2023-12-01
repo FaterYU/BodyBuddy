@@ -1,11 +1,16 @@
-import {Text, View, Dimensions, StyleSheet} from 'react-native';
+import {Text, View, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 
-function CourseCard (){
+function CourseCard() {
+    const navigation = useNavigation();
+    const goToCourse = () => {
+        navigation.navigate('DetailsScreen');
+      }
     return(
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={goToCourse}>
             <View style={styles.img}></View>
             <View style={{flexDirection:'column',justifyContent:'space-around',height:90}}>
                 <Text style={{fontSize:16,fontWeight:'500',color:'black'}}>HIIT燃脂-臀腿初级</Text>
@@ -20,7 +25,7 @@ function CourseCard (){
                 </View>
             </View>
             <MaterialCommunityIcons name="chevron-right-circle" size={20} color="rgba(200,200,200,0.8)" style={{alignSelf:'flex-start',marginTop:10,marginLeft:screenWidth-294}} />
-        </View>
+        </TouchableOpacity>
     )
 }
 

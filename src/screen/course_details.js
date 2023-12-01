@@ -17,9 +17,7 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 function DetailsScreen({ navigation }) {
-    const goBack = () => {
-        navigation.navigate('Courses');
-    }
+
     const goToVideo = () => {
         navigation.navigate('VideoScreen');
     }
@@ -27,7 +25,7 @@ function DetailsScreen({ navigation }) {
         <ScrollView>
             <View style={styles.top}>
                 <View style={{ width: "95%", flexDirection: "row", justifyContent: "space-between" }}>
-                    <TouchableOpacity onPress={goBack}>
+                    <TouchableOpacity onPress={()=>navigation.goBack()}>
                         <MaterialCommunityIcons
                             name="chevron-left"
                             size={40}
@@ -133,7 +131,7 @@ function DetailsScreen({ navigation }) {
                 </View>
             </VStack>
             <View style={{justifyContent:'center',alignItems:'center',width:'100%',marginVertical:10}}>
-                <TouchableOpacity style={styles.button} onPressOut={goToVideo}>
+                <TouchableOpacity style={styles.button} onPress={goToVideo}>
                     <Text style={{color:'white',fontSize:18}}>开始第3次训练</Text>
                 </TouchableOpacity>
             </View>
