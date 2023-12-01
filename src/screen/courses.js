@@ -11,7 +11,7 @@ function CoursesScreen({navigation}) {
   const weekName = ['日', '一', '二', '三', '四', '五', '六'];
   currentDate = currentDate.toLocaleDateString().slice(0,-5);
   const goToCalendar = () => {
-    navigation.navigate('VideoScreen');
+    navigation.navigate('DetailsScreen');
   }
   
   return (

@@ -13,7 +13,7 @@ const VideoScreen = ({navigation}) => {
           Orientation.lockToPortrait();
         };
       }, []); // 确保这个 effect 只在组件挂载和卸载时执行
-      const goBack = () => {
+    const goBack = () => {
         navigation.navigate('Courses');
     }
     return (
