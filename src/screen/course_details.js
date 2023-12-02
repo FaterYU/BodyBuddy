@@ -60,8 +60,8 @@ function DetailsScreen({ navigation }) {
                 <Text
                     style={{
                         color: "#333333",
-                        fontSize: 22,
-                        fontWeight: "900",
+                        fontSize: 20,
+                        fontWeight: "700",
                         margin: 10,
                         marginTop: 20
                     }}>
@@ -72,7 +72,8 @@ function DetailsScreen({ navigation }) {
                         color: "#6E6E6E",
                         fontSize: 16,
                         margin: 10,
-                        marginTop: 10
+                        marginTop: 10,
+                        paddingHorizontal: 12,
                     }}>
                     HIIT通过短暂高强度的运动和休息的交替重复进行，
                     能在单位时间内就达到非常高的能量消耗效果，
@@ -98,7 +99,7 @@ function DetailsScreen({ navigation }) {
                     <Text
                         style={{
                             color: "#333333",
-                            fontSize: 22,
+                            fontSize: 20,
                             fontWeight: "900",
                             marginTop: 20,
                             margin: 10,
@@ -171,14 +172,14 @@ const styles = StyleSheet.create({
     },
     tl_divider: {
         color: "#E4E4E4",
-        marginVertical: 40,
+        marginVertical: 30,
     },
     tldetails: {
         flexDirection: "row",
         alignSelf: "center",
-        marginTop: 10,
+        marginTop: 8,
         color: "white",
-        fontSize: 25,
+        fontSize: 24,
         flexGrow: 3,
     },
     card: {
@@ -207,9 +208,10 @@ const styles = StyleSheet.create({
         marginVertical: 25,
     },
     carddetails: {
-        marginTop: 10,
+        marginTop: 6,
+        marginBottom: 8,
         color: "black",
-        fontSize: 25,
+        fontSize: 24,
         fontWeight: "900",
     },
     list: {

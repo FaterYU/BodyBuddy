@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import {Text, View, Dimensions, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {Text, View, Dimensions, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, Alert} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -13,41 +13,58 @@ const VideoScreen = ({navigation}) => {
           Orientation.lockToPortrait();
         };
       }, []); // 确保这个 effect 只在组件挂载和卸载时执行
-    const goBack = () => {
-        navigation.navigate('Courses');
-    }
+    const [isVisible, setIsVisible] = useState(false);
+    const showGoBackButton = () => {
+        setIsVisible(true);
+        setTimeout(() => {
+            setIsVisible(false);
+        }, 3000);
+    };
+    const finishCourse = () => {
+        Orientation.lockToPortrait();
+
+        navigation.navigate("CourseFinish");
+    };
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'row' }}>
-            <View style={styles.video}>
-                <TouchableOpacity onPress={goBack}>
-                    <MaterialCommunityIcons name="chevron-left-circle" size={26} color="rgba(200,200,200,0.8)" style={{alignSelf:'flex-start',marginTop:14,marginLeft:14}} />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.sideCard}>
-                <View style={styles.camera}>
-                    <Text style={{color:'black'}}>用户摄像头界面</Text>
+        <TouchableWithoutFeedback onPress={showGoBackButton}>
+            <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'row' }}>
+                <View style={styles.video}>
+                    <TouchableOpacity  onPress={()=>navigation.goBack()}>
+                        <MaterialCommunityIcons name="chevron-left-circle" size={26} color="rgba(200,200,200,0.8)" style={{alignSelf:'flex-start',marginTop:14,marginLeft:14}} />
+                    </TouchableOpacity >
                 </View>
-                <View style={styles.score}>
-                    <Text style={{color:'white',marginTop:30}}>当前评分</Text>
-                    <Text style={{color:'white',fontSize:44,fontWeight:700}}>93</Text>
-                    <Text style={{color:'white',marginBottom:30}}>继续保持</Text>
+                
+                <View style={styles.sideCard}>
+                    <TouchableOpacity style={{position:'absolute',top:10,right:10,zIndex:1000, opacity:isVisible ? 1:0 }} onPress={finishCourse}>
+                        <MaterialCommunityIcons name="location-exit" size={28} color="rgba(200,0,0,1)" style={{}} />
+                    </TouchableOpacity>    
+                        
+                    <View style={styles.camera}>
+                        <Text style={{color:'black'}}>用户摄像头界面</Text>
+                    </View>
+                    <View style={styles.score}>
+                        <Text style={{color:'white',marginTop:30}}>当前评分</Text>
+                        <Text style={{color:'white',fontSize:44,fontWeight:700}}>93</Text>
+                        <Text style={{color:'white',marginBottom:30}}>继续保持</Text>
+                    </View>
                 </View>
-            </View>
 
 
-            {/* <Video 
-                ref={ref = this.Video = ref}
-                source={{uri: "url"}}  
-                poster={"url"}
-                paused={paused}
-                onProgress={({currentTime}) => {}}
-                onLoad={({duration}) => {}}
-                onEnd={() => {}}
-                resizeMode="cover"
-                posterResizeMode="cover"
-                style={style}
-            /> */}
-        </View>
+                {/* <Video 
+                    ref={ref = this.Video = ref}
+                    source={{uri: "url"}}  
+                    poster={"url"}
+                    paused={paused}
+                    onProgress={({currentTime}) => {}}
+                    onLoad={({duration}) => {}}
+                    onEnd={() => {}}
+                    resizeMode="cover"
+                    posterResizeMode="cover"
+                    style={style}
+                /> */}
+            </View>
+        </TouchableWithoutFeedback>
+
     );
     }
 

@@ -7,22 +7,7 @@ import CourseCard from './courseCard';
 const screenWidth = Dimensions.get('window').width;
 
 function CommunityDetail({navigation}) {
-    const panResponder = useRef(
-        PanResponder.create({
-          onStartShouldSetPanResponder: (evt, gestureState) => {
-            // 判断手势是否是点击而不是滑动
-            return Math.abs(gestureState.dx) < 5 && Math.abs(gestureState.dy) < 5;
-          },
-          onPanResponderRelease: (evt, gestureState) => {
-            // 手指点击时触发的回调
-            handlePress();
-          },
-        })
-      ).current;
-      const handlePress = () => {
-        console.log('Button Pressed!');
-        // 在这里执行你的点击回调
-      };
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={{backgroundColor:'gray',height:300,width:"100%"}}>
@@ -40,7 +25,7 @@ function CommunityDetail({navigation}) {
                     2.营养摄入:运动后的30分钟内，适当摄入营养是为肌肉恢复和修复提供能量和营养物质的关键时期。优先选择含有高质量蛋白质和碳水化合物的食物，如瘦肉、鸡蛋、全麦面包或水果等，以促进肌肉的修复和能量的恢复。{"\n"}
                     3.轻度拉伸和放松:进行适度的拉伸和放松活动可以帮助减少肌肉酸痛和僵硬感。重点关注运动所涉及的肌肉群，并进行缓慢而温和的拉伸动作，有助于恢复肌肉的弹性和灵活性。{"\n"}
             </Text>
-            <CourseCard {...panResponder.panHandlers}/>
+            <CourseCard />
             <Text style={{alignSelf:'flex-start', fontSize:12,marginLeft:12,marginTop:-4,}}>发布于11月29日 22:00</Text>
             <View style={{height:1,width:"90%",backgroundColor:'rgba(220,220,220,0.8)',marginTop:10}}></View>
             <CommentCard />
