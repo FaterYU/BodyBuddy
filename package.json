@@ -15,6 +15,7 @@
     "@react-navigation/native": "^6.1.9",
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
+    "axios": "^1.6.2",
     "expo": "*",
     "expo-constants": "^14.4.2",
     "expo-font": "^11.6.0",
