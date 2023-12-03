@@ -18,18 +18,18 @@ const CourseFinish = ({navigation}) => {
                     <Text style={{fontSize:40,color:'black',fontWeight:'bold'}}>训练完成</Text>
                     <View style={styles.trainData}>
                         <View style={{flexDirection:'column',alignItems:'center'}}>
-                            <Text style={{color:'blue',fontWeight:'700',fontSize:18}}>平均得分</Text>
-                            <Text style={{color:'black',fontSize:26,fontWeight:'bold'}}>95</Text>
+                            <Text style={{color:"#4969FF",fontWeight:'700',fontSize:20}}>平均得分</Text>
+                            <Text style={{color:'black',fontSize:24,fontWeight:'bold'}}>95</Text>
                         </View>
-                        <View style={{height:60,width:2,backgroundColor:'rgba(200,200,200,0.9)'}}></View>
+                        <View style={{height:50,width:2,backgroundColor:"#E4E4E4"}}></View>
                         <View style={{flexDirection:'column',alignItems:'center'}}>
-                            <Text style={{color:'blue',fontWeight:'700',fontSize:18}}>训练时长</Text>
-                            <Text style={{color:'black',fontSize:26,fontWeight:'bold'}}>23:59</Text>
+                            <Text style={{color:"#4969FF",fontWeight:'700',fontSize:20}}>训练时长</Text>
+                            <Text style={{color:'black',fontSize:24,fontWeight:'bold'}}>23:59</Text>
                         </View>
-                        <View style={{height:60,width:2,backgroundColor:'rgba(200,200,200,0.9)'}}></View>
+                        <View style={{height:50,width:2,backgroundColor:"#E4E4E4"}}></View>
                         <View style={{flexDirection:'column',alignItems:'center'}}>
-                            <Text style={{color:'blue',fontWeight:'700',fontSize:18}}>连续天数</Text>
-                            <Text style={{color:'black',fontSize:26,fontWeight:'bold'}}>95</Text>
+                            <Text style={{color:"#4969FF",fontWeight:'700',fontSize:20}}>连续天数</Text>
+                            <Text style={{color:'black',fontSize:24,fontWeight:'bold'}}>2天</Text>
                         </View>
                     </View>
                 </View>
@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(236,236,236,1)',
         marginVertical:12,
         width:screenWidth-40,
-        height:80,
-        borderRadius:10,
+        height:90,
+        borderRadius:20,
         flexDirection:'row',
         justifyContent:'space-around',
         alignItems:'center',

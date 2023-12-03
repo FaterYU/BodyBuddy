@@ -85,7 +85,7 @@ function PersonScreen() {
                   style={{
                     fontWeight: 'bold',
                     color: '#4969ff',
-                    fontSize: 22,
+                    fontSize: 20,
                     lineHeight: 30,
                     marginLeft: 10,
                     marginTop: -5,
@@ -121,7 +121,7 @@ function PersonScreen() {
                   style={{
                     fontWeight: 'bold',
                     color: '#4969ff',
-                    fontSize: 22,
+                    fontSize: 20,
                     lineHeight: 30,
                     marginLeft: 10,
                     marginTop: -5

@@ -39,7 +39,7 @@ const SevenDaysCalendar = () => {
         data={currentWeek}
         horizontal
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item) => item.toISOString()} // 用 ISO 格式的字符串作为唯一 key
+        keyExtractor={(item) => item.toISOString()}
         renderItem={renderItem}
         contentContainerStyle={styles.container}
       />
@@ -48,7 +48,8 @@ const SevenDaysCalendar = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
-    justifyContent: 'center',
+    paddingHorizontal: 10,
+    justifyContent: 'space-around',
     alignItems: 'center',
     flex:1,
   },

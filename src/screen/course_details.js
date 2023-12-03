@@ -56,7 +56,7 @@ function DetailsScreen({ navigation }) {
                     </View>
                 </View>
             </View>
-            <View>
+            <View style={{flexDirection:'column',width:'100%'}}>
                 <Text
                     style={{
                         color: "#333333",
@@ -79,20 +79,20 @@ function DetailsScreen({ navigation }) {
                     能在单位时间内就达到非常高的能量消耗效果，
                     对于快节奏生活的都市人群来说这是一种非常不错的训练方式。
                 </Text>
-                <View style={styles.card}>
-                    <View style={{flexDirection:'colum',justifyContent:'center',alignItems:'center',backgroundColor:'rgba(1,1,1,0)'}}>
-                        <Text style={styles.cardhead}>训练次数</Text>
-                        <Text style={styles.carddetails}>2次</Text>
+                <View style={styles.trainData}>
+                    <View style={{flexDirection:'column',alignItems:'center'}}>
+                        <Text style={{color:"#4969FF",fontWeight:'700',fontSize:20}}>训练次数</Text>
+                        <Text style={{color:'black',fontSize:24,fontWeight:'bold'}}>2次</Text>
                     </View>
-                    <Divider style={styles.card_divider} orientation='vertical' width={2} />
-                    <View style={{flexDirection:'colum',justifyContent:'center',alignItems:'center',backgroundColor:'rgba(1,1,1,0)'}}>
-                        <Text style={styles.cardhead}>最高评分</Text>
-                        <Text style={styles.carddetails}>95分</Text>
+                    <View style={{height:50,width:2,backgroundColor:"#E4E4E4"}}></View>
+                    <View style={{flexDirection:'column',alignItems:'center'}}>
+                        <Text style={{color:"#4969FF",fontWeight:'700',fontSize:20}}>最高评分</Text>
+                        <Text style={{color:'black',fontSize:24,fontWeight:'bold'}}>95分</Text>
                     </View>
-                    <Divider style={styles.card_divider} orientation='vertical' width={2} />
-                    <View style={{flexDirection:'colum',justifyContent:'center',alignItems:'center',backgroundColor:'rgba(1,1,1,0)'}}>
-                        <Text style={styles.cardhead}>连续天数</Text>
-                        <Text style={styles.carddetails}>2天</Text>
+                    <View style={{height:50,width:2,backgroundColor:"#E4E4E4"}}></View>
+                    <View style={{flexDirection:'column',alignItems:'center'}}>
+                        <Text style={{color:"#4969FF",fontWeight:'700',fontSize:20}}>连续天数</Text>
+                        <Text style={{color:'black',fontSize:24,fontWeight:'bold'}}>2天</Text>
                     </View>
                 </View>
                 <View>
@@ -141,6 +141,7 @@ function DetailsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+
     top: {
         height: screenHeight * 0.33,
         width: "100%",
@@ -182,37 +183,17 @@ const styles = StyleSheet.create({
         fontSize: 24,
         flexGrow: 3,
     },
-    card: {
-        marginTop: 20,
-        paddingHorizontal: 20,
-        backgroundColor: "#FAFAFA",
-        height: 100,
-        borderRadius: 20,
-        flexDirection: "row",
-        alignSelf: "center",
-        width: "90%",
-        justifyContent: 'space-around',
-        alignItems: 'center'
-    },
-    cardhead: {
-        marginTop: 5,
-        width: "110%",
-        color: "#4969FF",
-        fontSize: 20,
-        fontWeight: "900",
-        justifyContent: "space-around",
-        alignItems: 'center'
-    },
-    card_divider: {
-        color: "#E4E4E4",
-        marginVertical: 25,
-    },
-    carddetails: {
-        marginTop: 6,
-        marginBottom: 8,
-        color: "black",
-        fontSize: 24,
-        fontWeight: "900",
+    trainData:{
+        backgroundColor:"#FAFAFA",
+        marginVertical:12,
+        width:screenWidth-40,
+        height:100,
+        borderRadius:20,
+        flexDirection:'row',
+        justifyContent:'space-around',
+        alignItems:'center',
+        paddingHorizontal:20,
+        alignSelf:'center',
     },
     list: {
         width: "90%",
