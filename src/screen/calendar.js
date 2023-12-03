@@ -12,11 +12,13 @@ class AgendaScreen extends Component {
   }
 
   render() {
+    const todayDate = new Date();
+    const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
     return (
       <Agenda
         items={this.state.items}
         loadItemsForMonth={this.loadItems}
-        selected={'2017-05-16'}
+        selected={todayString}
         renderItem={this.renderItem}
         renderEmptyDate={this.renderEmptyDate}
         rowHasChanged={this.rowHasChanged}

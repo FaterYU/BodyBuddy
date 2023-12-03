@@ -2743,7 +2743,7 @@
 
 "@react-navigation/native@^6.1.9":
   version "6.1.9"
-  resolved "https://registry.npmmirror.com/@react-navigation/native/-/native-6.1.9.tgz"
+  resolved "https://registry.npmmirror.com/@react-navigation/native/-/native-6.1.9.tgz#8ef87095cd9c2ed094308c726157c7f6fc28796e"
   integrity sha512-AMuJDpwXE7UlfyhIXaUCCynXmv69Kb8NzKgKJO7v0k0L+u6xUTbt6xvshmJ79vsvaFyaEH9Jg5FMzek5/S5qNw==
   dependencies:
     "@react-navigation/core" "^6.4.10"
@@ -2758,6 +2758,23 @@
   dependencies:
     nanoid "^3.1.23"
 
+"@react-stately/checkbox@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.npmmirror.com/@react-stately/checkbox/-/checkbox-3.6.0.tgz"
+  integrity sha512-e1ChMwGovcOEDcdizqXDT6eDZixIMiPQOzNV5wPQ91SlGaIry9b0lQnK18tHg3yv2iiS6Ipj96cGBUKLJqQ+cQ==
+"@react-navigation/stack@^6.3.20":
+  version "6.3.20"
+  resolved "https://registry.npmmirror.com/@react-navigation/stack/-/stack-6.3.20.tgz#8eec944888f317bb1ba1ff30e7f513806bea16c2"
+  integrity sha512-vE6mgZzOgoa5Uy7ayT97Cj+ZIK7DK+JBYVuKUViILlWZy6IWK7HFDuqoChSbZ1ajTIfAxj/acVGg1jkbAKsToA==
+  dependencies:
+    "@react-navigation/elements" "^1.3.21"
+    color "^4.2.3"
+    warn-once "^0.1.0"
+
+"@react-stately/collections@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.3.0.tgz"
+  integrity sha512-Y8Pfugw/tYbcR9F6GTiTkd9O4FiXErxi5aDLSZ/knS6v0pvr3EHsC3T7jLW+48dSNrwl+HkMe5ECMhWSUA1jRQ==
 "@react-stately/checkbox@3.0.3":
   version "3.0.3"
   resolved "https://registry.npmmirror.com/@react-stately/checkbox/-/checkbox-3.0.3.tgz"
@@ -2768,6 +2785,10 @@
     "@react-stately/utils" "^3.2.2"
     "@react-types/checkbox" "^3.2.3"
 
+"@react-stately/collections@^3.10.3":
+  version "3.10.3"
+  resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.10.3.tgz"
+  integrity sha512-fA28HIApAIz9sNGeOVXZJPgV5Kig6M72KI1t9sUbnRUr9Xq9OMJTR6ElDMXNe0iTeZffRFDOPYyqnX9zkxof6Q==
 "@react-stately/checkbox@^3.6.0":
   version "3.6.0"
   resolved "https://registry.npmmirror.com/@react-stately/checkbox/-/checkbox-3.6.0.tgz"
@@ -2779,14 +2800,27 @@
     "@react-types/shared" "^3.22.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-stately/combobox@3.0.0-alpha.1":
+  version "3.0.0-alpha.1"
+  resolved "https://registry.npmmirror.com/@react-stately/combobox/-/combobox-3.0.0-alpha.1.tgz"
+  integrity sha512-v0DNGLx0KGvNgBbXoSKzfHGcy65eP0Wx4uY3dqj+u9k3ru2BEvIqB8fo6CWhQqu8VHBX4AlhoxcyrloIKvjD/g==
 "@react-stately/collections@3.3.0":
   version "3.3.0"
   resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.3.0.tgz"
   integrity sha512-Y8Pfugw/tYbcR9F6GTiTkd9O4FiXErxi5aDLSZ/knS6v0pvr3EHsC3T7jLW+48dSNrwl+HkMe5ECMhWSUA1jRQ==
   dependencies:
     "@babel/runtime" "^7.6.2"
-    "@react-types/shared" "^3.2.1"
+    "@react-stately/list" "^3.2.2"
+    "@react-stately/menu" "^3.1.0"
+    "@react-stately/select" "^3.1.0"
+    "@react-stately/utils" "^3.2.0"
+    "@react-types/combobox" "3.0.0-alpha.1"
+    "@react-types/shared" "^3.4.0"
 
+"@react-stately/combobox@^3.8.0":
+  version "3.8.0"
+  resolved "https://registry.npmmirror.com/@react-stately/combobox/-/combobox-3.8.0.tgz"
+  integrity sha512-F74Avf7+8ruRqEB+3Lh6/C5jXc3ESJbRf9ovUxhmNAzBGeFKesPn5HpEpo87C+3OukGb+/Buvi3Rhib9+HVBKA==
 "@react-stately/collections@^3.10.3":
   version "3.10.3"
   resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.10.3.tgz"
@@ -3676,15 +3710,6 @@ available-typed-arrays@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmmirror.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
-
-axios@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.npmmirror.com/axios/-/axios-1.6.2.tgz#de67d42c755b571d3e698df1b6504cde9b0ee9f2"
-  integrity sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==
-  dependencies:
-    follow-redirects "^1.15.0"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
 
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
@@ -5441,11 +5466,6 @@ flow-parser@^0.206.0:
   resolved "https://registry.npmmirror.com/flow-parser/-/flow-parser-0.206.0.tgz"
   integrity sha512-HVzoK3r6Vsg+lKvlIZzaWNBVai+FXTX1wdYhz/wVlH13tb/gOdLXmlTqy6odmTBhT5UoWUbq0k8263Qhr9d88w==
 
-follow-redirects@^1.15.0:
-  version "1.15.3"
-  resolved "https://registry.npmmirror.com/follow-redirects/-/follow-redirects-1.15.3.tgz#fe2f3ef2690afce7e82ed0b44db08165b207123a"
-  integrity sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==
-
 fontfaceobserver@^2.1.0:
   version "2.3.0"
   resolved "https://registry.npmmirror.com/fontfaceobserver/-/fontfaceobserver-2.3.0.tgz"
@@ -5462,15 +5482,6 @@ form-data@^3.0.1:
   version "3.0.1"
   resolved "https://registry.npmmirror.com/form-data/-/form-data-3.0.1.tgz"
   integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
-  dependencies:
-    asynckit "^0.4.0"
-    combined-stream "^1.0.8"
-    mime-types "^2.1.12"
-
-form-data@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmmirror.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
-  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -8246,11 +8257,6 @@ prop-types@15.8.1, prop-types@^15.5.10, prop-types@^15.7.2, prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-proxy-from-env@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmmirror.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
-  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
-
 pump@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmmirror.com/pump/-/pump-3.0.0.tgz"
@@ -8395,6 +8401,11 @@ react-native-gesture-handler@^2.14.0:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-orientation-locker@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmmirror.com/react-native-orientation-locker/-/react-native-orientation-locker-1.6.0.tgz#4ea60e7cb5f2864d595a85f3b9af634c8f7c5121"
+  integrity sha512-D3IOtAcaAi6S2w0Y1EUnr16I47isosQbE7F67fAu9A+gE67NkyKaJ9HL5EsZ+Uc7+7m+NsuBjx3dxuANNy8rVA==
+
 react-native-ratings@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmmirror.com/react-native-ratings/-/react-native-ratings-8.1.0.tgz"
@@ -8432,6 +8443,13 @@ react-native-swipe-gestures@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmmirror.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz"
   integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
+
+react-native-swiper@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npmmirror.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
+  integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-vector-icons@^10.0.2:
   version "10.0.2"

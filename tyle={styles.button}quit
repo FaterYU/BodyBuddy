@@ -1,0 +1,264 @@
+[33mcommit f935d6919e97e08adbed57823d9ec8099b5f2c00[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Sat Dec 2 00:18:06 2023 +0800
+
+    feat: 完成详情页视频页逻辑连接
+
+[33mcommit 3a895b05b5a5af4ed6942f1d2e695295de4b3a22[m
+Author: sumikko <2792661138@qq.com>
+Date:   Fri Dec 1 22:43:50 2023 +0800
+
+    feat: 新增课程详情页
+
+[33mcommit 88bed735506db0ee01c83a8bd240f4732b217bfa[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Fri Dec 1 16:58:07 2023 +0800
+
+    feat: 添加视频播放页
+
+[33mcommit c78b06a7b4575af5bc84ca37d70e86516bf22a37[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Thu Nov 30 22:30:13 2023 +0800
+
+    feat: 首页日历跳转功能
+
+[33mcommit 49eead73802fe5255d7bbeb14ed0da0f8ca15c8f[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Thu Nov 30 22:27:15 2023 +0800
+
+    feat: 首页日历跳转功能
+
+[33mcommit 7d3916d8a42ef6a318595fd56a94878e321a2baf[m
+Merge: aeae757 8f59246
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Thu Nov 30 17:28:27 2023 +0800
+
+    Merge branch 'develop' of https://github.com/FaterYU/BodyBuddy into develop
+
+[33mcommit aeae757f24e79484ddc3b34d2e8247ccb51f8cc3[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Thu Nov 30 17:26:49 2023 +0800
+
+    feat: 完成课程首页
+
+[33mcommit 8f59246c10cc18708c0399759e5552e74bd06234[m
+Author: Evan <3100591749@qq.com>
+Date:   Thu Nov 30 00:55:13 2023 +0800
+
+    style: profile的翻译，修改一点颜色、大小
+
+[33mcommit 72924adac61f9cc59acec8309c3865b35924684b[m
+Author: Evan <3100591749@qq.com>
+Date:   Thu Nov 30 00:42:50 2023 +0800
+
+    style: profile的翻译，修改一点颜色、大小细节
+
+[33mcommit b71378895020a2d4812a1dc7dbb9967f8697651b[m
+Author: Evan <3100591749@qq.com>
+Date:   Thu Nov 30 00:40:06 2023 +0800
+
+    Revert "profile的翻译，一点大小、颜色细节"
+    
+    This reverts commit 4b9e24119e11ddf530bff4390288b77f648f9380.
+
+[33mcommit 4b9e24119e11ddf530bff4390288b77f648f9380[m
+Author: Evan <3100591749@qq.com>
+Date:   Thu Nov 30 00:31:59 2023 +0800
+
+    profile的翻译，一点大小、颜色细节
+
+[33mcommit c128c5ba753d978c76e33f9d555466d0e3a82cd8[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 23:36:08 2023 +0800
+
+    fix: 恢复分支
+
+[33mcommit 50420f530e5720d1b54159b9c57f26ac6411438d[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 17:00:10 2023 +0800
+
+    style: 加了一个空行
+
+[33mcommit 240e5fae0480737a3658ac86ebcfa591467f663b[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 16:58:11 2023 +0800
+
+    fix: 修复scrollview嵌套问题
+
+[33mcommit a0ff2a9f17e1711f6a2f764a80fa0390c069c96d[m
+Merge: 3885edc 0b4529b
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 16:55:50 2023 +0800
+
+    Merge branch 'develop' of https://github.com/FaterYU/BodyBuddy into develop
+
+[33mcommit 0b4529bf368a4cc17d094931dfc41d95cab8b0e7[m
+Merge: 50e1049 46cfec2
+Author: FaterYU <74441262+FaterYU@users.noreply.github.com>
+Date:   Wed Nov 29 16:45:15 2023 +0800
+
+    Merge branch 'main' into develop
+
+[33mcommit 3885edce9aa2fdc27e2d7c5001b62e0bf2ef39ab[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 14:41:22 2023 +0800
+
+    feat：将ScrollView改为FlatList结构，提升渲染性能
+
+[33mcommit 50e10492fdbb6088c3d2cd6067f266686ff9c692[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 14:21:44 2023 +0800
+
+    feat：修改了个人页滑动逻辑，将仅滚动瀑布流改为整页滚动
+
+[33mcommit c886b982fb95fa15db51580e8457e6026ba68ba3[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 03:32:37 2023 +0800
+
+    feat: 完成个人页，scroll逻辑待优化
+
+[33mcommit b3474a6b43bfa129f22f1683eb7e1fdfacfa8527[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 03:25:55 2023 +0800
+
+    'feat:完成个人页，scroll逻辑待优化'
+
+[33mcommit 336fb5d1b5a441f786a52fc7120ccc6a598ea8e6[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 01:06:26 2023 +0800
+
+    'feat:重构路径，导航栏新增日历页'
+
+[33mcommit d2f5be068a83ab6d6f2358ba200ccae04b7d9b9e[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Wed Nov 29 00:25:25 2023 +0800
+
+    'feat:添加日历功能'
+
+[33mcommit e2ca3c1de0f1c6d9ec9ab492bdba2fdcbcbc7028[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Tue Nov 28 22:22:57 2023 +0800
+
+    feat: 完成社区页面,日历问题待解决
+
+[33mcommit c7e3a3e82d113cca8a9e0d795154afba10a74cff[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Tue Nov 28 22:21:29 2023 +0800
+
+    feat: 完成社区页面,日历问题待解决
+
+[33mcommit 46cfec28e3f5967083eb01552ade9d9d26bbb0a0[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Tue Nov 28 15:59:20 2023 +0800
+
+    docs: backend repo location
+
+[33mcommit 5e620819410db971841bfb22b4ea2a2dfe10566c[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Tue Nov 28 14:21:42 2023 +0800
+
+    feat: add flatlist in home page
+
+[33mcommit 12d93b65f4a004a2cc692228563684d6172e9db6[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Tue Nov 28 14:18:37 2023 +0800
+
+    feat: add flatlist in home page
+
+[33mcommit 686a27e980675a944132bba6f2a444ae12a6e978[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Tue Nov 28 14:16:11 2023 +0800
+
+    feat: add flatlist in home page
+
+[33mcommit 9ba80a10af994121b5968293b66f290db0111a36[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Tue Nov 28 14:05:18 2023 +0800
+
+    feat: add flatlist in home page
+
+[33mcommit 77a5841d5d5d8be03667bce3a3001a005e0ae98f[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 27 19:32:58 2023 +0800
+
+    docs: remove empty line
+
+[33mcommit 40fe90b35fc8b68787d07f52e1e73bd119eab24a[m
+Author: LLLLLrf <1626226046@qq.com>
+Date:   Mon Nov 27 18:51:33 2023 +0800
+
+    create new branch
+
+[33mcommit a3cbb5ec740cae343b4ed9795844806da2c724da[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Tue Nov 21 00:07:48 2023 +0800
+
+    feat: add workflow icon in README
+
+[33mcommit 791b81c4bab0d1fe059cce094c1ec09de1707d61[m[33m ([m[1;32mmain[m[33m)[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 20 23:16:03 2023 +0800
+
+    feat: update README
+
+[33mcommit a6c6e11b710c3bac7bb8c864b4b297d928fed617[m
+Author: FaterYU <74441262+FaterYU@users.noreply.github.com>
+Date:   Mon Nov 20 23:05:30 2023 +0800
+
+    test: test valid commit message (#1)
+    
+    * test unvalid commit message
+    
+    * test valid commit message
+    
+    * feat: test valid commit message
+    
+    * ci: remove pr ci
+
+[33mcommit 17a2aefeebcd075a5f6b31113f47cead510c6f76[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 20 22:37:09 2023 +0800
+
+    test unvalid commit message
+
+[33mcommit 5913f6b230d564f8fedb45db01379b4096d500c3[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 20 22:11:25 2023 +0800
+
+    update ci change
+
+[33mcommit d937bdddd45eb7b114ad72f6392f571a5aff3371[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 20 22:09:15 2023 +0800
+
+    ci: update change
+
+[33mcommit 06885f1de55e245db76f75cc92b2ea26a41651d6[m
+Author: FaterYU <74441262+FaterYU@users.noreply.github.com>
+Date:   Mon Nov 20 21:42:25 2023 +0800
+
+    Update pre_commit.yml
+
+[33mcommit d4270c05dc27b1d23f7fa64acc24368ffe9e1920[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 20 21:39:37 2023 +0800
+
+    Feat: add .pre-commit-config.yaml
+
+[33mcommit 74ef5e9c1ba70b94c876d925f16b2ae604f59483[m
+Author: FaterYU <74441262+FaterYU@users.noreply.github.com>
+Date:   Mon Nov 20 21:13:51 2023 +0800
+
+    Create pre_commit.yml
+
+[33mcommit 05fb9525dc5e3a553c5a70fde677d3ceedeab4a7[m
+Author: FaterYU <1042277145@qq.com>
+Date:   Mon Nov 20 20:02:26 2023 +0800
+
+    Feat: init app navigator
+
+[33mcommit 04ecacb112b1ddc4c6442ae347a03fa60c51ba6a[m
+Author: FaterYU <74441262+FaterYU@users.noreply.github.com>
+Date:   Tue Oct 10 11:37:37 2023 +0800
+
+    Initial commit

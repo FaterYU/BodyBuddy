@@ -48,10 +48,10 @@ function PersonScreen() {
                     width: '100%',
                   }}>
                   <View style={styles.fab}>
-                    <Text style={styles.fabText}>社区达人</Text>
+                    <Text style={styles.fabText}>Community Master</Text>
                   </View>
                   <View style={styles.fab}>
-                    <Text style={styles.fabText}>勋章1</Text>
+                    <Text style={styles.fabText}>Medal 1</Text>
                   </View>
                 </View>
               </View>
@@ -59,16 +59,16 @@ function PersonScreen() {
           </View>
           <View style={styles.fansList}>
             <View style={styles.fansButton}>
-              <Text>4</Text>
-              <Text>关注</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>4</Text>
+              <Text style={{fontSize: 15}}>Following</Text>
             </View>
             <View style={styles.fansButton}>
-              <Text>2</Text>
-              <Text>粉丝</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>2</Text>
+              <Text style={{fontSize: 15}}>Followers</Text>
             </View>
             <View style={styles.fansButton}>
-              <Text>6</Text>
-              <Text>动态</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>6</Text>
+              <Text style={{fontSize: 15}}>Moments</Text>
             </View>
           </View>
 
@@ -84,29 +84,32 @@ function PersonScreen() {
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    color: 'blue',
-                    fontSize: 24,
+                    color: '#4969ff',
+                    fontSize: 22,
                     lineHeight: 30,
                     marginLeft: 10,
+                    marginTop: -5,
                   }}>
-                  运动数据
+                  Moments Data
                 </Text>
                 <MaterialCommunityIcons
                   name="chevron-right"
                   size={26}
-                  color="blue"
+                  color="#4969ff"
                 />
               </View>
-              <Text style={{marginTop: 10, marginLeft: 10}}>总运动</Text>
+              <Text style={{marginTop: 10, marginLeft: 10}}>Total</Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 14, fontSize: 36, color: 'black'}}>
                   336
                 </Text>
                 <Text style={{marginTop: 22, color: 'black', marginLeft: 6}}>
-                  分钟
+                  minutes
                 </Text>
               </View>
-              <Text style={{marginLeft: 10}}>本周消耗164千卡</Text>
+              <Text style={{marginLeft: 10}}>
+                164 thousand calories consumed this week
+              </Text>
             </View>
             <View style={styles.dataCard}>
               <View
@@ -119,20 +122,21 @@ function PersonScreen() {
                 <Text
                   style={{
                     fontWeight: 'bold',
-                    color: 'blue',
-                    fontSize: 24,
+                    color: '#4969ff',
+                    fontSize: 22,
                     lineHeight: 30,
                     marginLeft: 10,
+                    marginTop: -5,
                   }}>
-                  健康数据
+                  Health Data
                 </Text>
                 <MaterialCommunityIcons
                   name="chevron-right"
                   size={26}
-                  color="blue"
+                  color="#4969ff"
                 />
               </View>
-              <Text style={{marginTop: 10, marginLeft: 10}}>体重</Text>
+              <Text style={{marginTop: 10, marginLeft: 10}}>Weight</Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 14, fontSize: 36, color: 'black'}}>
                   52.3
@@ -141,7 +145,7 @@ function PersonScreen() {
                   kg
                 </Text>
               </View>
-              <Text style={{marginLeft: 10}}>上次记录10天前</Text>
+              <Text style={{marginLeft: 10}}>Last recorded 10 days ago</Text>
             </View>
           </View>
         </View>
@@ -192,8 +196,8 @@ const styles = StyleSheet.create({
   },
   fansList: {
     backgroundColor: 'white',
-    marginTop: -44,
-    height: 88,
+    marginTop: -40,
+    height: 80,
     width: '90%',
     alignSelf: 'center',
     borderRadius: 6,
