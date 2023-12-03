@@ -24,6 +24,7 @@
     "react": "18.2.0",
     "react-native": "^0.72.7",
     "react-native-calendars": "^1.1302.0",
+    "react-native-camera": "git+https://git@github.com/react-native-community/react-native-camera.git",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.14.0",
     "react-native-orientation-locker": "^1.6.0",

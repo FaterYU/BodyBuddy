@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Text, View, Dimensions, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, Alert} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { RNCamera } from 'react-native-camera';
 
 const VideoScreen = ({navigation}) => {
     useEffect(() => {
@@ -22,7 +23,6 @@ const VideoScreen = ({navigation}) => {
     };
     const finishCourse = () => {
         Orientation.lockToPortrait();
-
         navigation.navigate("CourseFinish");
     };
     return (
@@ -38,8 +38,15 @@ const VideoScreen = ({navigation}) => {
                     <TouchableOpacity style={{position:'absolute',top:10,right:10,zIndex:1000, opacity:isVisible ? 1:0 }} onPress={finishCourse}>
                         <MaterialCommunityIcons name="location-exit" size={28} color="rgba(200,0,0,1)" style={{}} />
                     </TouchableOpacity>    
-                        
+
                     <View style={styles.camera}>
+                        {/* <RNCamera
+                            style={styles.camera}
+                            type={RNCamera.Constants.Type.back}
+                            onCameraReady={() => console.log('Camera is ready')}
+                            onMountError={(error) => console.log('Camera mount error:', error)}
+                            onCameraViewChanged={(camera) => handleCameraStream(camera)}
+                        /> */}
                         <Text style={{color:'black'}}>用户摄像头界面</Text>
                     </View>
                     <View style={styles.score}>
