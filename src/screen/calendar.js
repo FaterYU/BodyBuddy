@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Agenda } from 'react-native-calendars';
+import React, {Component} from 'react';
+import {Alert, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Agenda} from 'react-native-calendars';
 
 class AgendaScreen extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class AgendaScreen extends Component {
     );
   }
 
-  loadItems = (day) => {
+  loadItems = day => {
     const items = this.state.items || {};
 
     setTimeout(() => {
@@ -49,7 +49,7 @@ class AgendaScreen extends Component {
         }
       }
 
-      const newItems = { ...items };
+      const newItems = {...items};
       this.setState({
         items: newItems,
       });
@@ -62,10 +62,9 @@ class AgendaScreen extends Component {
 
     return (
       <TouchableOpacity
-        style={[styles.item, { height: reservation.height }]}
-        onPress={() => Alert.alert(reservation.name)}
-      >
-        <Text style={{ fontSize, color }}>{reservation.name}</Text>
+        style={[styles.item, {height: reservation.height}]}
+        onPress={() => Alert.alert(reservation.name)}>
+        <Text style={{fontSize, color}}>{reservation.name}</Text>
       </TouchableOpacity>
     );
   };

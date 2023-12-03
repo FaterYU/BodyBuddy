@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Text, View, TouchableWithoutFeedback } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Text, View, TouchableWithoutFeedback} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { NativeBaseProvider } from "native-base";
+import {NativeBaseProvider} from 'native-base';
 import 'react-native-gesture-handler';
 import CommunityScreen from './src/screen/community';
 import CoursesScreen from './src/screen/courses';
@@ -13,7 +13,7 @@ import PersonScreen from './src/screen/person';
 import CalendarScreen from './src/screen/calendar';
 import VideoScreen from './src/screen/video';
 import DetailsScreen from './src/screen/course_details';
-import CommunityDetailScreen from './src/screen/CommunityDetail'
+import CommunityDetailScreen from './src/screen/CommunityDetail';
 import CourseFinish from './src/screen/courseFinish';
 
 const Tab = createBottomTabNavigator();
@@ -28,14 +28,13 @@ const MainTabs = () => {
         tabBarActiveTintColor: '#e91e63',
         scrollEnabled: true,
         animationEnabled: true,
-      }}
-    >
+      }}>
       <Tab.Screen
         name="Courses"
         component={CoursesScreen}
-        options={({ route }) => ({
+        options={({route}) => ({
           tabBarLabel: 'Courses',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="human" color={color} size={size} />
           ),
         })}
@@ -45,8 +44,12 @@ const MainTabs = () => {
         component={CalendarScreen}
         options={{
           tabBarLabel: 'Calendar',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="calendar-month" color={color} size={size} />
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="calendar-month"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -55,8 +58,12 @@ const MainTabs = () => {
         component={CommunityScreen}
         options={{
           tabBarLabel: 'Community',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home-city" color={color} size={size} />
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="home-city"
+              color={color}
+              size={size}
+            />
           ),
         }}
       />
@@ -65,14 +72,14 @@ const MainTabs = () => {
         component={PersonScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
         }}
       />
     </Tab.Navigator>
   );
-}
+};
 
 export default function MyTabs() {
   return (
@@ -80,12 +87,14 @@ export default function MyTabs() {
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="MainTabs"
-          screenOptions={{ headerShown: false }}
-        >
+          screenOptions={{headerShown: false}}>
           <Stack.Screen name="MainTabs" component={MainTabs} />
           <Stack.Screen name="VideoScreen" component={VideoScreen} />
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
-          <Stack.Screen name="CommunityDetailScreen" component={CommunityDetailScreen} />
+          <Stack.Screen
+            name="CommunityDetailScreen"
+            component={CommunityDetailScreen}
+          />
           <Stack.Screen name="CourseFinish" component={CourseFinish} />
         </Stack.Navigator>
       </NavigationContainer>

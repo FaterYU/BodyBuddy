@@ -7,9 +7,9 @@ import {
   FlatList,
   ReactFragment,
 } from 'react-native';
-import { Avatar } from '@rneui/themed';
+import {Avatar} from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { WaterfallList } from './community';
+import {WaterfallList} from './community';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -29,7 +29,7 @@ function PersonScreen() {
                 containerStyle={styles.avatar}
                 rounded
               />
-              <View style={{ flexDirection: 'column' }}>
+              <View style={{flexDirection: 'column'}}>
                 <Text
                   style={{
                     color: 'white',
@@ -59,16 +59,16 @@ function PersonScreen() {
           </View>
           <View style={styles.fansList}>
             <View style={styles.fansButton}>
-              <Text style={{ color: '#333333', fontSize: 20 }}>4</Text>
-              <Text style={{ fontSize: 15 }}>Following</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>4</Text>
+              <Text style={{fontSize: 15}}>Following</Text>
             </View>
             <View style={styles.fansButton}>
-              <Text style={{ color: '#333333', fontSize: 20 }}>2</Text>
-              <Text style={{ fontSize: 15 }}>Followers</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>2</Text>
+              <Text style={{fontSize: 15}}>Followers</Text>
             </View>
             <View style={styles.fansButton}>
-              <Text style={{ color: '#333333', fontSize: 20 }}>6</Text>
-              <Text style={{ fontSize: 15 }}>Moments</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>6</Text>
+              <Text style={{fontSize: 15}}>Moments</Text>
             </View>
           </View>
 
@@ -98,16 +98,18 @@ function PersonScreen() {
                   color="#4969ff"
                 />
               </View>
-              <Text style={{ marginTop: 10, marginLeft: 10 }}>Total</Text>
-              <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                <Text style={{ marginTop: 14, fontSize: 36, color: 'black' }}>
+              <Text style={{marginTop: 10, marginLeft: 10}}>Total</Text>
+              <View style={{flexDirection: 'row', marginLeft: 10}}>
+                <Text style={{marginTop: 14, fontSize: 36, color: 'black'}}>
                   336
                 </Text>
-                <Text style={{ marginTop: 22, color: 'black', marginLeft: 6 }}>
+                <Text style={{marginTop: 22, color: 'black', marginLeft: 6}}>
                   minutes
                 </Text>
               </View>
-              <Text style={{ marginLeft: 10 }}>164 thousand calories consumed this week</Text>
+              <Text style={{marginLeft: 10}}>
+                164 thousand calories consumed this week
+              </Text>
             </View>
             <View style={styles.dataCard}>
               <View
@@ -115,7 +117,7 @@ function PersonScreen() {
                   flexDirection: 'row',
                   alignContent: 'space-around',
                   justifyContent: 'space-between',
-                  marginTop: 10
+                  marginTop: 10,
                 }}>
                 <Text
                   style={{
@@ -124,7 +126,7 @@ function PersonScreen() {
                     fontSize: 20,
                     lineHeight: 30,
                     marginLeft: 10,
-                    marginTop: -5
+                    marginTop: -5,
                   }}>
                   Health Data
                 </Text>
@@ -134,16 +136,16 @@ function PersonScreen() {
                   color="#4969ff"
                 />
               </View>
-              <Text style={{ marginTop: 10, marginLeft: 10 }}>Weight</Text>
-              <View style={{ flexDirection: 'row', marginLeft: 10 }}>
-                <Text style={{ marginTop: 14, fontSize: 36, color: 'black' }}>
+              <Text style={{marginTop: 10, marginLeft: 10}}>Weight</Text>
+              <View style={{flexDirection: 'row', marginLeft: 10}}>
+                <Text style={{marginTop: 14, fontSize: 36, color: 'black'}}>
                   52.3
                 </Text>
-                <Text style={{ marginTop: 22, color: 'black', marginLeft: 6 }}>
+                <Text style={{marginTop: 22, color: 'black', marginLeft: 6}}>
                   kg
                 </Text>
               </View>
-              <Text style={{ marginLeft: 10 }}>Last recorded 10 days ago</Text>
+              <Text style={{marginLeft: 10}}>Last recorded 10 days ago</Text>
             </View>
           </View>
         </View>

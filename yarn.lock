@@ -2758,6 +2758,10 @@
   dependencies:
     nanoid "^3.1.23"
 
+"@react-stately/checkbox@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.npmmirror.com/@react-stately/checkbox/-/checkbox-3.6.0.tgz"
+  integrity sha512-e1ChMwGovcOEDcdizqXDT6eDZixIMiPQOzNV5wPQ91SlGaIry9b0lQnK18tHg3yv2iiS6Ipj96cGBUKLJqQ+cQ==
 "@react-navigation/stack@^6.3.20":
   version "6.3.20"
   resolved "https://registry.npmmirror.com/@react-navigation/stack/-/stack-6.3.20.tgz#8eec944888f317bb1ba1ff30e7f513806bea16c2"
@@ -2767,6 +2771,10 @@
     color "^4.2.3"
     warn-once "^0.1.0"
 
+"@react-stately/collections@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.3.0.tgz"
+  integrity sha512-Y8Pfugw/tYbcR9F6GTiTkd9O4FiXErxi5aDLSZ/knS6v0pvr3EHsC3T7jLW+48dSNrwl+HkMe5ECMhWSUA1jRQ==
 "@react-stately/checkbox@3.0.3":
   version "3.0.3"
   resolved "https://registry.npmmirror.com/@react-stately/checkbox/-/checkbox-3.0.3.tgz"
@@ -2777,6 +2785,10 @@
     "@react-stately/utils" "^3.2.2"
     "@react-types/checkbox" "^3.2.3"
 
+"@react-stately/collections@^3.10.3":
+  version "3.10.3"
+  resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.10.3.tgz"
+  integrity sha512-fA28HIApAIz9sNGeOVXZJPgV5Kig6M72KI1t9sUbnRUr9Xq9OMJTR6ElDMXNe0iTeZffRFDOPYyqnX9zkxof6Q==
 "@react-stately/checkbox@^3.6.0":
   version "3.6.0"
   resolved "https://registry.npmmirror.com/@react-stately/checkbox/-/checkbox-3.6.0.tgz"
@@ -2788,14 +2800,27 @@
     "@react-types/shared" "^3.22.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-stately/combobox@3.0.0-alpha.1":
+  version "3.0.0-alpha.1"
+  resolved "https://registry.npmmirror.com/@react-stately/combobox/-/combobox-3.0.0-alpha.1.tgz"
+  integrity sha512-v0DNGLx0KGvNgBbXoSKzfHGcy65eP0Wx4uY3dqj+u9k3ru2BEvIqB8fo6CWhQqu8VHBX4AlhoxcyrloIKvjD/g==
 "@react-stately/collections@3.3.0":
   version "3.3.0"
   resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.3.0.tgz"
   integrity sha512-Y8Pfugw/tYbcR9F6GTiTkd9O4FiXErxi5aDLSZ/knS6v0pvr3EHsC3T7jLW+48dSNrwl+HkMe5ECMhWSUA1jRQ==
   dependencies:
     "@babel/runtime" "^7.6.2"
-    "@react-types/shared" "^3.2.1"
+    "@react-stately/list" "^3.2.2"
+    "@react-stately/menu" "^3.1.0"
+    "@react-stately/select" "^3.1.0"
+    "@react-stately/utils" "^3.2.0"
+    "@react-types/combobox" "3.0.0-alpha.1"
+    "@react-types/shared" "^3.4.0"
 
+"@react-stately/combobox@^3.8.0":
+  version "3.8.0"
+  resolved "https://registry.npmmirror.com/@react-stately/combobox/-/combobox-3.8.0.tgz"
+  integrity sha512-F74Avf7+8ruRqEB+3Lh6/C5jXc3ESJbRf9ovUxhmNAzBGeFKesPn5HpEpo87C+3OukGb+/Buvi3Rhib9+HVBKA==
 "@react-stately/collections@^3.10.3":
   version "3.10.3"
   resolved "https://registry.npmmirror.com/@react-stately/collections/-/collections-3.10.3.tgz"
