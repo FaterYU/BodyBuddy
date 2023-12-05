@@ -1,13 +1,31 @@
 import React, { useEffect, useState } from 'react';
 // import { Tab, Text, TabView } from '@rneui/themed';
 // import { FlatList, View } from 'react-native';
-import { Text, View, StyleSheet, ScrollView, FlatList, ActivityIndicator, Dimensions, TouchableOpacity } from 'react-native';
-import { Input, Box, AspectRatio, Image, Center, Stack, Heading, HStack, Toast } from "native-base";
-import { Tab, TabView, SearchBar } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  ActivityIndicator,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {
+  Input,
+  Box,
+  AspectRatio,
+  Image,
+  Center,
+  Stack,
+  Heading,
+  HStack,
+  Toast,
+} from 'native-base';
+import {Tab, TabView, SearchBar} from '@rneui/themed';
+import {useNavigation} from '@react-navigation/native';
 
-const numColumns = 2
+const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
 
 export const WaterfallList = ({ tabIndex }) => {
@@ -75,14 +93,14 @@ export const WaterfallList = ({ tabIndex }) => {
           </Box>
         </TouchableOpacity>
       </Box>
-    )
+    );
   };
 
   return (
     <FlatList
       data={data}
       renderItem={CardList}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={item => item.id.toString()}
       numColumns={numColumns}
       ListHeaderComponent={HeaderComponent}
       contentContainerStyle={styles.flatListContent}
@@ -125,7 +143,7 @@ const CommunityScreen = ({ navigation }) => {
         <View style={styles.nav}>
           <Tab
             value={index}
-            onChange={(e) => setIndex(e)}
+            onChange={e => setIndex(e)}
             indicatorStyle={{
               backgroundColor: 'blue',
               borderRadius: 1,
@@ -133,8 +151,7 @@ const CommunityScreen = ({ navigation }) => {
               width: '50%',
             }}
             variant="default"
-            style={styles.tabContent}
-          >
+            style={styles.tabContent}>
             <Tab.Item
               title="广场"
               titleStyle={{ fontSize: 16, fontWeight: 'bold', color: 'black' }}
@@ -142,7 +159,7 @@ const CommunityScreen = ({ navigation }) => {
             />
             <Tab.Item
               title="关注"
-              titleStyle={{ fontSize: 16, fontWeight: 'bold', color: 'black' }}
+              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
           </Tab>
@@ -195,7 +212,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: screenWidth / numColumns - 16,
   },
-
 });
 
 export default CommunityScreen;
