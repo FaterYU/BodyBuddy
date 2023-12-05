@@ -150,7 +150,7 @@ function PersonScreen() {
       )}
       ListFooterComponent={() => (
         <View style={styles.waterfall}>
-          <WaterfallList />
+          <WaterfallList tabIndex={0} />
         </View>
       )}
     />

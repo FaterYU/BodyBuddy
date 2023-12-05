@@ -15,6 +15,7 @@ import VideoScreen from './src/screen/video';
 import DetailsScreen from './src/screen/course_details';
 import CommunityDetailScreen from './src/screen/CommunityDetail'
 import CourseFinish from './src/screen/courseFinish';
+import PublishScreen from './src/screen/publish';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -87,6 +88,7 @@ export default function MyTabs() {
           <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
           <Stack.Screen name="CommunityDetailScreen" component={CommunityDetailScreen} />
           <Stack.Screen name="CourseFinish" component={CourseFinish} />
+          <Stack.Screen name="PublishScreen" component={PublishScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

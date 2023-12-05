@@ -43,8 +43,9 @@ const SevenDaysCalendar = () => {
         renderItem={renderItem}
         contentContainerStyle={styles.container}
       />
-    );
+    ); 
   };
+
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,

@@ -37,7 +37,7 @@ const CourseFinish = ({navigation}) => {
             ListFooterComponent={() => (
                 <View style={styles.waterfall}>
                     <Text style={{marginTop:-20,marginBottom:36,marginLeft:10,color:'black',fontWeight:'900',fontSize:16}}>社区精彩内容</Text>
-                    <WaterfallList />
+                    <WaterfallList tabIndex={0} />
                 </View>
             )}
             />
