@@ -78,7 +78,7 @@ android {
     namespace "com.bodybuddy"
     defaultConfig {
         applicationId "com.bodybuddy"
-        missingDimensionStrategy 'react-native-camera', 'general' 
+        // missingDimensionStrategy 'react-native-camera', 'general' 
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
