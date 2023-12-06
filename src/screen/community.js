@@ -22,6 +22,7 @@ import {
   HStack,
   Toast,
 } from 'native-base';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Tab, TabView, SearchBar} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 
@@ -33,20 +34,27 @@ export const WaterfallList = ({ tabIndex }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // 根据标签索引选择不同的请求方法
     const fetchData = async () => {
       const url = tabIndex === 0
         ? 'http://bodybuddy.fater.top/api/moments/findAll'
         : 'http://bodybuddy.fater.top/api/moments/getFollowMoment';
-
-      const requestOptions = {
-        method: tabIndex === 0 ? 'GET' : 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        // body: JSON.stringify({ "uid": 'value' }),
-      };
-
+      var requestOptions;
+      if (tabIndex === 1){
+        requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "uid": 1 }),
+        };
+      }else if (tabIndex === 0){
+        requestOptions = {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+      }
       try {
         const response = await fetch(url, requestOptions);
         const allData = await response.json();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Alert,
   StyleSheet,
@@ -25,7 +25,72 @@ import {
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
+  const [eventTime, setEventTime] = useState('');
+  const [eventContent, setEventContent] = useState('');
 
+  const createNewAct = ({startTime, endTime, content, course}) => {
+      const url = 'http://bodybuddy.fater.top/api/users/addCalendarActivity'
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "uid": 1,
+          "activityDate": {
+            "year": 2023,
+            "month": 12,
+            "day": 6
+          },
+          "activityStartTime": {
+            "hour": 12,
+            "minute": 12
+          },
+          "activityEndTime": {
+            "hour": 22,
+            "minute": 12
+          },
+          "activityContent": "I am activity",
+          "activityCourseId": 1
+        }),
+      };
+      fetch(url, requestOptions)
+        .then(response => response.json())
+        .catch(error => console.log('error', error));
+  };
+  // const loadItems = (day) => {
+  //   const currentItems = items || {};
+
+  //   const url = 'http://bodybuddy.fater.top/api/users/getCalendarActivity'
+  //   const requestOptions = {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ "uid": 1 }),
+  //   };
+  //   fetch(url, requestOptions)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       for (let i = 0; i < data.length; i++) {
+  //         const time = new Date(data[i].activityDate.year, data[i].activityDate.month - 1, data[i].activityDate.day).getTime();
+  //         const strTime = timeToString(time);
+  //         if (!currentItems[strTime]) {
+  //           currentItems[strTime] = [];
+  //         }
+  //         currentItems[strTime].push({
+  //           name: data[i].activityContent,
+  //           day: strTime,
+  //           startTime: data[i].activityStartTime,
+  //           endTime: data[i].activityEndTime,
+  //           content: data[i].activityContent,
+  //           course: data[i].activityCourseId,
+  //         });
+  //       }
+  //       setItems({ ...currentItems });
+  //     })
+  //     .catch(error => console.log('error', error));
+  // };
   const todayDate = new Date();
   const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
 
@@ -42,11 +107,8 @@ const AgendaScreen = () => {
 
           const numItems = Math.floor(Math.random() * 3);
           for (let j = 0; j < numItems; j++) {
-            console.log(strTime)
             currentItems[strTime].push({
               name: 'Item for ' + strTime + ' #' + j,
-              // height: Math.max(50, Math.floor(Math.random() * 150)),
-              height: "auto",
               day: strTime,
             });
           }
@@ -63,8 +125,9 @@ const AgendaScreen = () => {
 
     return (
       <TouchableOpacity
-        style={[styles.item, { height: reservation.height }]}
+        style={[styles.item]}
         onPress={() => setShowModal(true)}
+        onLongPress={() => console.log('You pressed long!')}
       >
         <Text style={{ fontSize, color }}>{reservation.name}</Text>
       </TouchableOpacity>
@@ -74,11 +137,11 @@ const AgendaScreen = () => {
   const renderEmptyDate = () => {
     return (
       <TouchableOpacity
-      style={[styles.emptyDate]}
-      onPress={() => setShowModal(true)}
-    >
-        <Text>This is an empty date!</Text>
-    </TouchableOpacity>
+        style={[styles.emptyDate]}
+        onPress={() => setShowModal(true)}
+      >
+        <Text>暂未添加日程</Text>
+      </TouchableOpacity>
     );
   };
 
@@ -111,11 +174,11 @@ const AgendaScreen = () => {
               <Modal.Body>
                 <FormControl>
                   <FormControl.Label>时间</FormControl.Label>
-                  <Input />
+                  <Input value={eventTime} onChangeText={setEventTime} />
                 </FormControl>
                 <FormControl mt="3">
                   <FormControl.Label>内容</FormControl.Label>
-                  <Input />
+                  <Input value={eventContent} onChangeText={setEventContent} />
                 </FormControl>
               </Modal.Body>
               <Modal.Footer>
@@ -150,17 +213,20 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: 'white',
     flex: 1,
-    borderRadius: 5,
+    borderRadius: 6,
     padding: 10,
     marginRight: 10,
     marginTop: 17,
   },
   emptyDate: {
-    height: 15,
     flex: 1,
-    paddingTop: 30,
-    justifyContent:'flex-start',
-    alignItems:'center',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    backgroundColor: 'rgba(240,240,240,1)',
+    borderRadius: 6,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17,
   },
 });
 
