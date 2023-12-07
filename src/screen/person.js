@@ -6,14 +6,19 @@ import {
   Dimensions,
   FlatList,
   ReactFragment,
+  TouchableOpacity,
 } from 'react-native';
 import {Avatar} from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WaterfallList} from './community';
+import {useNavigation} from '@react-navigation/native';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 function PersonScreen() {
+  const navigation = useNavigation();
+
   return (
     <FlatList
       style={styles.container}
@@ -21,14 +26,16 @@ function PersonScreen() {
         <View>
           <View style={styles.userBackground}>
             <View style={styles.userInfo}>
-              <Avatar
-                source={{
-                  uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
-                }}
-                size={76}
-                containerStyle={styles.avatar}
-                rounded
-              />
+              <TouchableOpacity onPress={()=>{navigation.navigate("LoginScreen")}}>
+                <Avatar
+                  source={{
+                    uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
+                  }}
+                  size={76}
+                  containerStyle={styles.avatar}
+                  rounded
+                />
+              </TouchableOpacity>
               <View style={{flexDirection: 'column'}}>
                 <Text
                   style={{
