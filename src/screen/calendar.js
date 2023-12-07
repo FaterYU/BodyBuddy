@@ -11,7 +11,6 @@ import {
   Input,
   TextArea,
   Box,
-  Stagger,
   useDisclose,
   Button,
   Center,
@@ -20,11 +19,13 @@ import {
   HStack,
   Modal,
   FormControl,
+  Popover 
 } from 'native-base';
 
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventTime, setEventTime] = useState('');
   const [eventContent, setEventContent] = useState('');
 
@@ -42,7 +43,7 @@ const AgendaScreen = () => {
             "month": 12,
             "day": 6
           },
-          "activityStartTime": {
+          "startTime": {
             "hour": 12,
             "minute": 12
           },
@@ -58,63 +59,132 @@ const AgendaScreen = () => {
         .then(response => response.json())
         .catch(error => console.log('error', error));
   };
-  // const loadItems = (day) => {
-  //   const currentItems = items || {};
 
-  //   const url = 'http://bodybuddy.fater.top/api/users/getCalendarActivity'
-  //   const requestOptions = {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ "uid": 1 }),
-  //   };
-  //   fetch(url, requestOptions)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       for (let i = 0; i < data.length; i++) {
-  //         const time = new Date(data[i].activityDate.year, data[i].activityDate.month - 1, data[i].activityDate.day).getTime();
-  //         const strTime = timeToString(time);
-  //         if (!currentItems[strTime]) {
-  //           currentItems[strTime] = [];
-  //         }
-  //         currentItems[strTime].push({
-  //           name: data[i].activityContent,
-  //           day: strTime,
-  //           startTime: data[i].activityStartTime,
-  //           endTime: data[i].activityEndTime,
-  //           content: data[i].activityContent,
-  //           course: data[i].activityCourseId,
-  //         });
-  //       }
-  //       setItems({ ...currentItems });
-  //     })
-  //     .catch(error => console.log('error', error));
-  // };
   const todayDate = new Date();
   const todayString = `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
 
   const loadItems = (day) => {
     const currentItems = items || {};
-
+    const postData =[
+      {
+          "activityDate": {
+              "year": 2023,
+              "month": 12,
+              "day": 6
+          },
+          "activityList": [
+              {
+                  "activityId": 2,
+                  "activityDate": {
+                      "year": 2023,
+                      "month": 12,
+                      "day": 6
+                  },
+                  "startTime": {
+                      "hour": 12,
+                      "minute": 12
+                  },
+                  "activityEndTime": {
+                      "hour": 22,
+                      "minute": 12
+                  },
+                  "activityContent": "I am activity",
+                  "activityCourse": null
+              },
+              {
+                  "activityId": 3,
+                  "activityDate": {
+                      "year": 2023,
+                      "month": 12,
+                      "day": 6
+                  },
+                  "startTime": {
+                      "hour": 12,
+                      "minute": 12
+                  },
+                  "activityEndTime": {
+                      "hour": 22,
+                      "minute": 12
+                  },
+                  "activityContent": "I am activity",
+                  "activityCourse": null
+              },
+              {
+                  "activityId": 1,
+                  "activityDate": {
+                      "year": 2023,
+                      "month": 12,
+                      "day": 6
+                  },
+                  "startTime": {
+                      "hour": 12,
+                      "minute": 12
+                  },
+                  "activityEndTime": {
+                      "hour": 22,
+                      "minute": 12
+                  },
+                  "activityContent": "I am activity",
+                  "activityCourse": {
+                      "id": 1,
+                      "name": "Push-up training • Upper body strength burst more easily!",
+                      "photo": "push_up_training.jpg"
+                  }
+              }
+          ]
+        },
+        {
+          "activityDate": {
+              "year": 2023,
+              "month": 12,
+              "day": 7
+          },
+          "activityList": [
+              {
+                  "activityId": 2,
+                  "activityDate": {
+                      "year": 2023,
+                      "month": 12,
+                      "day": 7
+                  },
+                  "startTime": {
+                      "hour": 12,
+                      "minute": 12
+                  },
+                  "activityEndTime": {
+                      "hour": 22,
+                      "minute": 12
+                  },
+                  "activityContent": "I am activity",
+                  "activityCourse": null
+              },
+            ]
+        }
+      ]
     setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
+      for (let i = -10; i < 15; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
         const strTime = timeToString(time);
-
         if (!currentItems[strTime]) {
           currentItems[strTime] = [];
-
-          const numItems = Math.floor(Math.random() * 3);
-          for (let j = 0; j < numItems; j++) {
-            currentItems[strTime].push({
-              name: 'Item for ' + strTime + ' #' + j,
-              day: strTime,
-            });
-          }
         }
       }
-
+      const dataLength = Object.keys(postData).length;
+      const Data = postData;
+      for (let i = 0; i < dataLength; i++) {
+        const month = Data[i].activityDate.month < 10 ? '0' + Data[i].activityDate.month : Data[i].activityDate.month;
+        const day = Data[i].activityDate.day < 10 ? '0' + Data[i].activityDate.day : Data[i].activityDate.day;
+        const date = Data[i].activityDate.year + '-' + month + '-' + day;
+        for (let j = 0; j < Data[i].activityList.length; j++) {
+          currentItems[date].push({
+            startTime: Data[i].activityList[j].startTime.hour + ':' + Data[i].activityList[j].startTime.minute,
+            endTime: Data[i].activityList[j].activityEndTime.hour + ':' + Data[i].activityList[j].activityEndTime.minute,
+            content: Data[i].activityList[j].activityContent,
+            course: Data[i].activityList[j].activityCourse,
+            day: date,
+          });
+        }
+      }
       setItems({ ...currentItems });
     }, 1000);
   };
@@ -122,17 +192,30 @@ const AgendaScreen = () => {
   const renderItem = (reservation, isFirst) => {
     const fontSize = isFirst ? 16 : 14;
     const color = isFirst ? 'black' : '#43515c';
-
+  
     return (
       <TouchableOpacity
         style={[styles.item]}
-        onPress={() => setShowModal(true)}
-        onLongPress={() => console.log('You pressed long!')}
-      >
-        <Text style={{ fontSize, color }}>{reservation.name}</Text>
+        onPress={() => {
+          setEventTime(reservation.startTime); // 设置日程的开始时间
+          setEventContent(reservation.content); // 设置日程的内容
+          setShowModal(true);
+          console.log('press');
+          return true;
+        }}
+        onLongPress={() => {
+          setShowDeleteModal(true);
+          console.log('long press');
+          return true;
+        }}
+        >
+        <Text style={{ fontSize, color }}>{reservation.startTime}</Text>
+        <Text style={{fontSize, color}}>{reservation.endTime}</Text>
+        <Text style={{fontSize, color}}>{reservation.content}</Text>
       </TouchableOpacity>
     );
   };
+  
 
   const renderEmptyDate = () => {
     return (
@@ -146,14 +229,14 @@ const AgendaScreen = () => {
   };
 
   const rowHasChanged = (r1, r2) => {
-    return r1.name !== r2.name;
+    return r1.content !== r2.content || r1.startTime !== r2.startTime || r1.endTime !== r2.endTime || r1.course !== r2.course || r1.day !== r2.day;
   };
 
   const timeToString = (time) => {
     const date = new Date(time);
     return date.toISOString().split('T')[0];
   };
-
+  
   return (
     <>
       <Agenda
@@ -205,6 +288,40 @@ const AgendaScreen = () => {
           </Modal>
         </Center>
       )}
+      {showDeleteModal && (
+        <Center>
+        <Modal isOpen={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
+          <Modal.Content maxWidth="400px">
+            <Modal.CloseButton />
+            <Modal.Header>删除日程</Modal.Header>
+            <Modal.Body>
+              <Text>确定删除该日程吗？</Text>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button.Group space={2}>
+                <Button
+                  variant="ghost"
+                  colorScheme="blueGray"
+                  onPress={() => {
+                    setShowDeleteModal(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onPress={() => {
+                    setShowDeleteModal(false);
+                    colorScheme="red"
+                  }}
+                >
+                  Delete
+                </Button>
+              </Button.Group>
+            </Modal.Footer>
+          </Modal.Content>
+        </Modal>
+      </Center>
+        )}
     </>
   );
 };

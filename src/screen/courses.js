@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
 } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import {SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
