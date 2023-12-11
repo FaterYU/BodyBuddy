@@ -6,14 +6,19 @@ import {
   Dimensions,
   FlatList,
   ReactFragment,
+  TouchableOpacity,
 } from 'react-native';
 import {Avatar} from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WaterfallList} from './community';
+import {useNavigation} from '@react-navigation/native';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 function PersonScreen() {
+  const navigation = useNavigation();
+
   return (
     <FlatList
       style={styles.container}
@@ -21,14 +26,16 @@ function PersonScreen() {
         <View>
           <View style={styles.userBackground}>
             <View style={styles.userInfo}>
-              <Avatar
-                source={{
-                  uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
-                }}
-                size={76}
-                containerStyle={styles.avatar}
-                rounded
-              />
+              <TouchableOpacity onPress={()=>{navigation.navigate("LoginScreen")}}>
+                <Avatar
+                  source={{
+                    uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
+                  }}
+                  size={76}
+                  containerStyle={styles.avatar}
+                  rounded
+                />
+              </TouchableOpacity>
               <View style={{flexDirection: 'column'}}>
                 <Text
                   style={{
@@ -58,14 +65,18 @@ function PersonScreen() {
             </View>
           </View>
           <View style={styles.fansList}>
-            <View style={styles.fansButton}>
-              <Text style={{color: '#333333', fontSize: 20}}>4</Text>
-              <Text style={{fontSize: 15}}>Following</Text>
-            </View>
-            <View style={styles.fansButton}>
-              <Text style={{color: '#333333', fontSize: 20}}>2</Text>
-              <Text style={{fontSize: 15}}>Followers</Text>
-            </View>
+            <TouchableOpacity onPress={()=>{navigation.navigate("FollowingScreen")}}>
+              <View style={styles.fansButton}>
+                <Text style={{color: '#333333', fontSize: 20}}>4</Text>
+                <Text style={{fontSize: 15}}>Following</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate("FollowersScreen")}}>
+              <View style={styles.fansButton}>
+                <Text style={{color: '#333333', fontSize: 20}}>2</Text>
+                <Text style={{fontSize: 15}}>Followers</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.fansButton}>
               <Text style={{color: '#333333', fontSize: 20}}>6</Text>
               <Text style={{fontSize: 15}}>Moments</Text>
@@ -85,7 +96,7 @@ function PersonScreen() {
                   style={{
                     fontWeight: 'bold',
                     color: '#4969ff',
-                    fontSize: 22,
+                    fontSize: 20,
                     lineHeight: 30,
                     marginLeft: 10,
                     marginTop: -5,
@@ -123,7 +134,7 @@ function PersonScreen() {
                   style={{
                     fontWeight: 'bold',
                     color: '#4969ff',
-                    fontSize: 22,
+                    fontSize: 20,
                     lineHeight: 30,
                     marginLeft: 10,
                     marginTop: -5,
@@ -152,7 +163,7 @@ function PersonScreen() {
       )}
       ListFooterComponent={() => (
         <View style={styles.waterfall}>
-          <WaterfallList />
+          <WaterfallList tabIndex={0} />
         </View>
       )}
     />

@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -77,6 +78,7 @@ android {
     namespace "com.bodybuddy"
     defaultConfig {
         applicationId "com.bodybuddy"
+        // missingDimensionStrategy 'react-native-camera', 'general' 
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -107,6 +109,7 @@ android {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    // implementation project(':react-native-camera')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {

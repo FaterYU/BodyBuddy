@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useState, useEffect, useRef, useImperativeHandle } from "react";
 import {Text, View, Dimensions, StyleSheet, ScrollView, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback, Alert} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { RNCamera } from 'react-native-camera';
+// import { Camera, useCameraDevices } from "react-native-vision-camera";
 
 const VideoScreen = ({navigation}) => {
     useEffect(() => {
@@ -22,7 +24,6 @@ const VideoScreen = ({navigation}) => {
     };
     const finishCourse = () => {
         Orientation.lockToPortrait();
-
         navigation.navigate("CourseFinish");
     };
     return (
@@ -38,8 +39,9 @@ const VideoScreen = ({navigation}) => {
                     <TouchableOpacity style={{position:'absolute',top:10,right:10,zIndex:1000, opacity:isVisible ? 1:0 }} onPress={finishCourse}>
                         <MaterialCommunityIcons name="location-exit" size={28} color="rgba(200,0,0,1)" style={{}} />
                     </TouchableOpacity>    
-                        
+
                     <View style={styles.camera}>
+                        {/* <CameraScreen ref={ref => this.camera = ref} /> */}
                         <Text style={{color:'black'}}>用户摄像头界面</Text>
                     </View>
                     <View style={styles.score}>
@@ -67,6 +69,21 @@ const VideoScreen = ({navigation}) => {
 
     );
     }
+ 
+// const CameraScreen = forwardRef((props, ref) => {
+//     const { hasPermission, requestPermission } = useCameraPermission()
+
+//     const device = useCameraDevice('back')
+
+//     if (device == null) return <NoCameraDeviceError />
+//     return (
+//       <Camera
+//         style={StyleSheet.absoluteFill}
+//         device={device}
+//         isActive={true}
+//       />
+//     )
+//     });
 
 const styles = StyleSheet.create({
     video: {
