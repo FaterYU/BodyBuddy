@@ -17,6 +17,8 @@ import CommunityDetailScreen from './src/screen/CommunityDetail';
 import CourseFinish from './src/screen/courseFinish';
 import PublishScreen from './src/screen/publish';
 import LoginScreen from './src/screen/LoginScreen';
+import FollowingScreen from './src/screen/FollowingScreen';
+import FollowersScreen from './src/screen/FollowersScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -100,6 +102,8 @@ export default function MyTabs() {
           <Stack.Screen name="CourseFinish" component={CourseFinish} />
           <Stack.Screen name="PublishScreen" component={PublishScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="FollowingScreen" component={FollowingScreen} />
+          <Stack.Screen name="FollowersScreen" component={FollowersScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

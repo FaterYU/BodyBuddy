@@ -65,14 +65,18 @@ function PersonScreen() {
             </View>
           </View>
           <View style={styles.fansList}>
-            <View style={styles.fansButton}>
-              <Text style={{color: '#333333', fontSize: 20}}>4</Text>
-              <Text style={{fontSize: 15}}>Following</Text>
-            </View>
-            <View style={styles.fansButton}>
-              <Text style={{color: '#333333', fontSize: 20}}>2</Text>
-              <Text style={{fontSize: 15}}>Followers</Text>
-            </View>
+            <TouchableOpacity onPress={()=>{navigation.navigate("FollowingScreen")}}>
+              <View style={styles.fansButton}>
+                <Text style={{color: '#333333', fontSize: 20}}>4</Text>
+                <Text style={{fontSize: 15}}>Following</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>{navigation.navigate("FollowersScreen")}}>
+              <View style={styles.fansButton}>
+                <Text style={{color: '#333333', fontSize: 20}}>2</Text>
+                <Text style={{fontSize: 15}}>Followers</Text>
+              </View>
+            </TouchableOpacity>
             <View style={styles.fansButton}>
               <Text style={{color: '#333333', fontSize: 20}}>6</Text>
               <Text style={{fontSize: 15}}>Moments</Text>
