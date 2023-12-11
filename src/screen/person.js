@@ -26,7 +26,10 @@ function PersonScreen() {
         <View>
           <View style={styles.userBackground}>
             <View style={styles.userInfo}>
-              <TouchableOpacity onPress={()=>{navigation.navigate("LoginScreen")}}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('LoginScreen');
+                }}>
                 <Avatar
                   source={{
                     uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
@@ -65,13 +68,19 @@ function PersonScreen() {
             </View>
           </View>
           <View style={styles.fansList}>
-            <TouchableOpacity onPress={()=>{navigation.navigate("FollowingScreen")}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('FollowingScreen');
+              }}>
               <View style={styles.fansButton}>
                 <Text style={{color: '#333333', fontSize: 20}}>4</Text>
                 <Text style={{fontSize: 15}}>Following</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{navigation.navigate("FollowersScreen")}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('FollowersScreen');
+              }}>
               <View style={styles.fansButton}>
                 <Text style={{color: '#333333', fontSize: 20}}>2</Text>
                 <Text style={{fontSize: 15}}>Followers</Text>
