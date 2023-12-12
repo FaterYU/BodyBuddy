@@ -131,31 +131,16 @@ const CommunityScreen = ({navigation}) => {
   return (
     <>
       <View style={styles.container}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingHorizontal: 10,
-          }}>
+        <View style={styles.view}>
           <SearchBar
-            inputStyle={{
-              fontSize: 16,
-            }}
+            inputStyle={styles.input}
             placeholder="Search Here..."
             round={true}
             lightTheme
             showCancel
             platform="android"
-            containerStyle={{
-              backgroundColor: 'rgba(1,1,1,0)',
-              width: screenWidth - 60,
-            }}
-            inputContainerStyle={{
-              backgroundColor: 'rgba(220,220,220,0.4)',
-              borderRadius: 20,
-              height: 40,
-            }}
+            containerStyle={styles.containerStyle}
+            inputContainerStyle={styles.inputContainerStyle}
             // onChangeText={updateSearch}
             // value={search}
           />
@@ -250,6 +235,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: screenWidth / numColumns - 16,
+  },
+  view: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  input: {
+    fontSize: 16,
+  },
+  containerStyle: {
+    backgroundColor: 'rgba(1,1,1,0)',
+    width: screenWidth - 60,
+  },
+  inputContainerStyle: {
+    backgroundColor: 'rgba(220,220,220,0.4)',
+    borderRadius: 20,
+    height: 40,
   },
 });
 

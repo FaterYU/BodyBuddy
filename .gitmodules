@@ -1,0 +1,3 @@
+[submodule "BACKEND"]
+	path = BACKEND
+	url = git@github.com:FaterYU/BodyBuddy_BackEnd.git
