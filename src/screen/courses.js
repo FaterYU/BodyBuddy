@@ -8,12 +8,12 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
-import { createStackNavigator } from '@react-navigation/stack';
-import { useRoute } from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {useRoute} from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 const Stack = createStackNavigator();
@@ -29,12 +29,12 @@ function CoursesScreen({navigation}) {
   const goToCalendar = () => {
     navigation.navigate('Calendar');
   };
-  const updateSearch = (text) => {
+  const updateSearch = text => {
     setSearch(text);
   };
   const handleSearch = () => {
-    setSearch("")
-    navigation.navigate('SearchScreen', { searchContent: search });
+    setSearch('');
+    navigation.navigate('SearchScreen', {searchContent: search});
   };
 
   return (
