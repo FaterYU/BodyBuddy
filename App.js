@@ -19,6 +19,7 @@ import PublishScreen from './src/screen/publish';
 import LoginScreen from './src/screen/LoginScreen';
 import FollowingScreen from './src/screen/FollowingScreen';
 import FollowersScreen from './src/screen/FollowersScreen';
+import SearchScreen from './src/screen/search';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -104,6 +105,7 @@ export default function MyTabs() {
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen name="FollowingScreen" component={FollowingScreen} />
           <Stack.Screen name="FollowersScreen" component={FollowersScreen} />
+          <Stack.Screen name="SearchScreen" component={SearchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
