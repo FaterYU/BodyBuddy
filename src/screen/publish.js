@@ -28,9 +28,6 @@ import {launchImageLibrary} from 'react-native-image-picker';
 const PublishScreen = ({navigation}) => {
   const {isOpen, onToggle} = useDisclose();
   const [imageSourceList, setImageSourceList] = useState([]);
-  const pushImage = image => {
-    setImageSourceList([...imageSourceList, image]);
-  };
 
   return (
     <View>
@@ -81,44 +78,27 @@ const PublishScreen = ({navigation}) => {
         horizontal={true}
         style={{flexDirection: 'row', marginTop: 10, padding: 10}}
         contentContainerStyle={{alignItems: 'flex-start'}}>
-        {/* show all image from imageSourceList */}
-        {imageSourceList.map((item, index) => {
-          return (
-            <View
-              key={index}
-              style={{
-                backgroundColor: '#ccc',
-                height: 68,
-                width: 68,
-                borderRadius: 12,
-                marginLeft: 10,
-              }}>
-              {item && (
-                <Image
-                  source={item.uri}
-                  style={{height: 68, width: 68, borderRadius: 12}}
-                />
-              )}
-            </View>
-          );
-        })}
-
-        {/* <View
-          style={{
-            backgroundColor: '#ccc',
-            height: 68,
-            width: 68,
-            borderRadius: 12,
-            marginLeft: 10,
-          }}></View>
-        <View
-          style={{
-            backgroundColor: '#ccc',
-            height: 68,
-            width: 68,
-            borderRadius: 12,
-            marginLeft: 10,
-          }}></View> */}
+        {imageSourceList.length > 0 &&
+          imageSourceList.map((item, index) => {
+            return (
+              <View
+                key={index}
+                style={{
+                  backgroundColor: '#ccc',
+                  height: 68,
+                  width: 68,
+                  borderRadius: 12,
+                  marginLeft: 10,
+                }}>
+                {item && (
+                  <Image
+                    source={{uri: item}}
+                    style={{height: 68, width: 68, borderRadius: 12}}
+                  />
+                )}
+              </View>
+            );
+          })}
         <View
           style={{
             marginTop: 2,
@@ -221,49 +201,11 @@ const PublishScreen = ({navigation}) => {
                 bg="red.500"
                 colorScheme="red"
                 borderRadius="10"
-                onPress={() => {
-                  // var imageSrc = await selectImage();
-                  // console.log('imageSrc', imageSrc);
-                  // if (imageSrc) {
-                  //   pushImage(imageSrc);
-                  // } else {
-                  //   console.log('imageSrc is null');
-                  // }
-                  launchImageLibrary({
-                    mediaType: 'photo',
-                    maxWidth: 1000, // 设置选择照片的大小，设置小的话会相应的进行压缩
-                    maxHeight: 1000,
-                    quality: 0.8,
-                    // videoQuality: 'low',
-                    // includeBase64: true
-                  })
-                    .then(response => {
-                      if (response.didCancel) {
-                        console.log('User cancelled image picker');
-                        return null;
-                      } else if (response.errorCode === 'camera_unavailable') {
-                        console.log('Camera not available on device');
-                        return null;
-                      } else if (response.errorCode === 'permission') {
-                        console.log('Permission not satisfied');
-                        return null;
-                      } else if (response.errorCode === 'others') {
-                        console.log(response.errorMessage);
-                        return null;
-                      }
-                      return {
-                        uri: response.uri,
-                        type: response.type,
-                        name: response.fileName,
-                      };
-                    })
-                    .then(imageSrc => {
-                      if (imageSrc) {
-                        pushImage(imageSrc);
-                      } else {
-                        console.log('imageSrc is null');
-                      }
-                    });
+                onPress={async () => {
+                  var imageSrc = await selectImage();
+                  var uri = imageSrc[0].uri;
+                  setImageSourceList([...imageSourceList, uri]);
+                  onToggle();
                 }}
                 icon={
                   <Icon
