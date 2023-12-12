@@ -22,8 +22,7 @@ import {
   HStack,
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import selectImage from '../components/imagePicker';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {selectImage, takePhoto} from '../components/imagePicker';
 
 const PublishScreen = ({navigation}) => {
   const {isOpen, onToggle} = useDisclose();
@@ -165,6 +164,14 @@ const PublishScreen = ({navigation}) => {
                 bg="yellow.400"
                 colorScheme="yellow"
                 borderRadius="10"
+                onPress={async () => {
+                  var imageSrc = await selectImage();
+                  imageSrc.forEach(item => {
+                    var uri = item.uri;
+                    setImageSourceList([...imageSourceList, uri]);
+                  });
+                  onToggle();
+                }}
                 icon={
                   <Icon
                     as={MaterialCommunityIcons}
@@ -202,9 +209,11 @@ const PublishScreen = ({navigation}) => {
                 colorScheme="red"
                 borderRadius="10"
                 onPress={async () => {
-                  var imageSrc = await selectImage();
-                  var uri = imageSrc[0].uri;
-                  setImageSourceList([...imageSourceList, uri]);
+                  var imageSrc = await takePhoto();
+                  imageSrc.forEach(item => {
+                    var uri = item.uri;
+                    setImageSourceList([...imageSourceList, uri]);
+                  });
                   onToggle();
                 }}
                 icon={

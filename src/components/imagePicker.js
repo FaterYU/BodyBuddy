@@ -1,31 +1,16 @@
-import {launchImageLibrary} from 'react-native-image-picker';
-import {PermissionsAndroid} from 'react-native';
-
-async function requestGalleryPermission() {
-  try {
-    const permission = PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE;
-    const granted = await PermissionsAndroid.request(permission);
-
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log('Gallery permission is granted');
-    } else {
-      console.log('Gallery permission denied');
-    }
-  } catch (error) {
-    console.error('Error requesting gallery permission: ', error);
-  }
-}
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+// import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 /**
  *
- * @returns {JSON} Image source
+ * @returns {JSON} Image source List
  * @example
  * {async () => {
- * var imageSrc = await selectImage();
- * return imageSrc.uri;
+ * var imageSrcList = await selectImage();
+ * return imageSrcList;
  * }};
  */
-const selectImage = async () => {
+export const selectImage = async () => {
   return new Promise((resolve, reject) => {
     // await requestGalleryPermission();
     launchImageLibrary(
@@ -34,6 +19,7 @@ const selectImage = async () => {
         maxWidth: 1000,
         maxHeight: 1000,
         quality: 0.8,
+        selectionLimit: 10,
       },
       response => {
         resolve(response.assets);
@@ -41,4 +27,30 @@ const selectImage = async () => {
     );
   });
 };
-export default selectImage;
+
+/**
+ *
+ * @returns {JSON} Image source List
+ * @example
+ * {async () => {
+ * var imageSrcList = await takePhoto();
+ * return imageSrcList;
+ * }};
+ */
+export const takePhoto = async () => {
+  return new Promise((resolve, reject) => {
+    launchCamera(
+      {
+        mediaType: 'photo',
+        maxWidth: 1000,
+        maxHeight: 1000,
+        quality: 0.8,
+        cameraType: 'back',
+        saveToPhotos: true,
+      },
+      response => {
+        resolve(response.assets);
+      },
+    );
+  });
+};
