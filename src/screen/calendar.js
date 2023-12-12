@@ -16,12 +16,17 @@ import {
   Popover,
 } from 'native-base';
 
+import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventTime, setEventTime] = useState('');
   const [eventContent, setEventContent] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
 
   const createNewAct = ({startTime, endTime, content, course}) => {
     const url = 'http://bodybuddy.fater.top/api/users/addCalendarActivity';
@@ -244,8 +249,26 @@ const AgendaScreen = () => {
   };
 
   const timeToString = time => {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
+    var pdate = new Date(time);
+    return pdate.toISOString().split('T')[0];
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setDate(currentDate);
+  };
+
+  const showMode = currentMode => {
+    DateTimePickerAndroid.open({
+      value: date,
+      onChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
   };
 
   return (
@@ -268,7 +291,18 @@ const AgendaScreen = () => {
               <Modal.Body>
                 <FormControl>
                   <FormControl.Label>时间</FormControl.Label>
-                  <Input value={eventTime} onChangeText={setEventTime} />
+                  {/* <Input value={eventTime} onChangeText={setEventTime} /> */}
+
+                  {/* <View onPress={showTimepicker} title="Show time picker!" /> */}
+                  <TouchableOpacity onPress={showTimepicker}>
+                    <Text
+                      style={{
+                        fontSize: 22,
+                        backgroundColor: 'rgba(220,220,220,0.4)',
+                      }}>
+                      {date.toTimeString()}
+                    </Text>
+                  </TouchableOpacity>
                 </FormControl>
                 <FormControl mt="3">
                   <FormControl.Label>内容</FormControl.Label>
