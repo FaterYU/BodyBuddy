@@ -12,16 +12,29 @@ import React, { useState, useEffect } from 'react';
 import {SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
+import { createStackNavigator } from '@react-navigation/stack';
+import { useRoute } from '@react-navigation/native';
+
 const screenWidth = Dimensions.get('window').width;
+const Stack = createStackNavigator();
 
 function CoursesScreen({navigation}) {
+  const [search, setSearch] = useState('');
+
   var currentDate = new Date();
-  // 获取今日星期
   const todayWeek = currentDate.getDay();
   const weekName = ['日', '一', '二', '三', '四', '五', '六'];
   currentDate = currentDate.toLocaleDateString().slice(0, -5);
+
   const goToCalendar = () => {
     navigation.navigate('Calendar');
+  };
+  const updateSearch = (text) => {
+    setSearch(text);
+  };
+  const handleSearch = () => {
+    setSearch("")
+    navigation.navigate('SearchScreen', { searchContent: search });
   };
 
   return (
@@ -67,8 +80,9 @@ function CoursesScreen({navigation}) {
           borderRadius: 20,
           height: 40,
         }}
-        // onChangeText={updateSearch}
-        // value={search}
+        onSubmitEditing={handleSearch}
+        onChangeText={updateSearch}
+        value={search}
       />
       <View style={styles.calendarCard}>
         <View
