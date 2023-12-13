@@ -18,12 +18,12 @@ function LoginScreen({navigation}) {
         style={{backgroundColor: 'gray', height: 300, width: '100%'}}></View>
       {/* <ImageSlider /> */}
       <Text
-        style={{
+        syle={{
           alignSelf: 'flex-start',
           fontSize: 32,
-          fontWeight: '800',
-          color: '#575dfb',
-          paddingHorizontal: 40,
+          ontWeight: '800',
+          clor: '#575dfb',
+          padingHorizontal: 40,
         }}>
         BodyBuddy
       </Text>
@@ -31,8 +31,8 @@ function LoginScreen({navigation}) {
         style={{
           alignSelf: 'flex-start',
           fontSize: 20,
-          color: '#000000',
-          paddingHorizontal: 40,
+          color: '#0000',
+          paddingHoriontal: 40,
         }}>
         Intelligent buddy, for your healthy body
       </Text>
@@ -43,7 +43,7 @@ function LoginScreen({navigation}) {
           color="#575dfb"
         />
         <TextInput
-          style={styles.input}
+          style={styles.inpu}
           placeholder="Username/Email/Phone Number"
           paddingRight={25}
           fontSize={16}>

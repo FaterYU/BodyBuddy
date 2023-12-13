@@ -4,6 +4,7 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
@@ -17,7 +18,12 @@ function CourseCard() {
   };
   return (
     <TouchableOpacity style={styles.container} onPress={goToCourse}>
-      <View style={styles.img}></View>
+      <View style={styles.img}>
+        <Image
+          source={require('../assets/courses/pexels-pixabay-235922.jpg')}
+          style={styles.img}
+        />
+      </View>
       <View
         style={{
           flexDirection: 'column',
@@ -56,7 +62,7 @@ function CourseCard() {
   );
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
