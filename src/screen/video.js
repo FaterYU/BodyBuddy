@@ -19,7 +19,14 @@ import {
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { RNCamera } from 'react-native-camera';
-// import { Camera, useCameraDevices } from "react-native-vision-camera";
+import {
+  useFrameProcessor,
+  useCameraDevice,
+  NoCameraDeviceError,
+  Camera,
+  useCameraDevices,
+} from 'react-native-vision-camera';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 const VideoScreen = ({navigation}) => {
   useEffect(() => {
@@ -81,8 +88,7 @@ const VideoScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <View style={styles.camera}>
-            {/* <CameraScreen ref={ref => this.camera = ref} /> */}
-            <Text style={{color: 'black'}}>用户摄像头界面</Text>
+            <Frame />
           </View>
           <View style={styles.score}>
             <Text style={{color: 'white', marginTop: 30}}>当前评分</Text>
@@ -110,20 +116,22 @@ const VideoScreen = ({navigation}) => {
   );
 };
 
-// const CameraScreen = forwardRef((props, ref) => {
-//     const { hasPermission, requestPermission } = useCameraPermission()
-
-//     const device = useCameraDevice('back')
-
-//     if (device == null) return <NoCameraDeviceError />
-//     return (
-//       <Camera
-//         style={StyleSheet.absoluteFill}
-//         device={device}
-//         isActive={true}
-//       />
-//     )
-//     });
+const Frame = () => {
+  const device = useCameraDevice('front');
+  const FrameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
+  }, []);
+  if (device == null) return <NoCameraDeviceError />;
+  return (
+    <Camera
+      style={StyleSheet.absoluteFill}
+      device={device}
+      isActive={true}
+      frameProcessor={FrameProcessor}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   video: {
