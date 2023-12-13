@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  Image,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WaterfallList} from './community';
@@ -47,7 +48,17 @@ const CourseFinish = ({navigation}) => {
               color="rgba(190,190,190,0.8)"
               onPress={goToHome}
             />
-            <Text style={{fontSize: 40, color: 'black', fontWeight: 'bold'}}>
+            <Image
+              source={require('../assets/icons/大拇哥.png')}
+              style={{
+                width: 280,
+                height: 270,
+                marginTop:-80,
+                borderRadius: 40,
+                marginBottom: 16,
+              }}
+            />
+            <Text style={{fontSize: 40, color: 'black', fontWeight: 'bold', marginTop:-80}}>
               训练完成
             </Text>
             <View style={styles.trainData}>

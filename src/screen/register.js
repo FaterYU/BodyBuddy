@@ -8,15 +8,15 @@ import {
   Image,
   ScrollView,
   ToastAndroid,
+  Animated,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import React, {useRef, useState} from 'react';
 
 const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 
-function LoginScreen({navigation}) {
+function RegisterScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   function showToast(Text) {
@@ -51,21 +51,22 @@ function LoginScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection:'column'}}>
+      {/* <ImageSlider /> */}
       <TouchableOpacity style={{alignSelf:'flex-start',margin:10}} onPress={()=>navigation.goBack()}>
         <MaterialCommunityIcons name="chevron-left-circle" color="#575dfb" size={40} />
       </TouchableOpacity>
       <KeyboardAwareScrollView
-        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled={true}
+        style={{marginTop:-120}}
       >
       <Image
         source={require('../assets/icons/小跑哥.png')}
         style={{
           width: 360,
           height: 360,
-          marginTop: -40,
+          marginTop: -60,
         }}
       />
       <Text
@@ -116,14 +117,16 @@ function LoginScreen({navigation}) {
               >
             </TextInput>
           </View>
-      <TouchableOpacity style={styles.loginButton} onPress={Login}>
+      <TouchableOpacity style={styles.loginButton} onPress={Login()}>
         <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
           Login
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{alignSelf: 'flex-end', marginRight: 42, marginTop: 6, flexDirection:'row', justifyContent:'center', alignItems:'flex-end',alignItems:'center'}}
-        onPress={() => navigation.navigate('RegisterScreen')}>
+        onPress={() => handleScrollToTop()}
+        // onPress={() => navigation.navigate('RegisterScreen')}
+        >
         <Text style={{marginRight:6, fontSize:13}}>
           Don't have an account?
         </Text>
@@ -132,7 +135,6 @@ function LoginScreen({navigation}) {
         </Text>
       </TouchableOpacity>
       </KeyboardAwareScrollView>
-      </View>
 
     </View>
   );
@@ -152,9 +154,8 @@ const ImageSlider = ({images}) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    flexDirectionL: 'column',
   },
   login: {
     flexDirection: 'row',
@@ -182,4 +183,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;
