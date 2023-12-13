@@ -19,9 +19,9 @@ const screenHeight = Dimensions.get('window').height;
 function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  function showToast(Text) {
-    ToastAndroid.show(Text, ToastAndroid.SHORT);
-  }
+  const showToast = (text, type) => {
+    ToastAndroid.show(text, ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
+  };
   const Login = () => {
     const url = "http://bodybuddy.fater.top/api/users/login";
     const requestOptions = {
@@ -38,21 +38,21 @@ function LoginScreen({navigation}) {
         .then(data => {
           console.log(data);
           if (data.status == 200) {
-            console.log('Login success');
             showToast('Login Successfully!');
             navigation.navigate('HomeScreen');
           } else {
             showToast('Login failed!');
-            console.log('Login failed');
           }
         });
+    }else{
+      showToast('Please enter your email and password!');
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={{flexDirection:'column'}}>
-      <TouchableOpacity style={{alignSelf:'flex-start',margin:10}} onPress={()=>navigation.goBack()}>
+      <TouchableOpacity style={{position:'absolute',top:10, left:10, zIndex:1000}} onPress={()=>navigation.goBack()}>
         <MaterialCommunityIcons name="chevron-left-circle" color="#575dfb" size={40} />
       </TouchableOpacity>
       <KeyboardAwareScrollView
@@ -65,7 +65,6 @@ function LoginScreen({navigation}) {
         style={{
           width: 360,
           height: 360,
-          marginTop: -40,
         }}
       />
       <Text
@@ -95,7 +94,7 @@ function LoginScreen({navigation}) {
               color="#575dfb"
             />
             <TextInput
-              style={styles.inpu}
+              style={styles.input}
               placeholder="Username/Email/Phone Number"
               paddingRight={25}
               fontSize={16}
@@ -138,17 +137,6 @@ function LoginScreen({navigation}) {
   );
 }
 
-const ImageSlider = ({images}) => {
-  return (
-    <Swiper style={styles.wrapper} showsButtons={false} showsPagination={false}>
-      {images.map((image, index) => (
-        <View key={index} style={styles.slide}>
-          <Image source={{uri: image}} style={styles.image} />
-        </View>
-      ))}
-    </Swiper>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

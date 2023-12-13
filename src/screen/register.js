@@ -8,7 +8,6 @@ import {
   Image,
   ScrollView,
   ToastAndroid,
-  Animated,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -51,8 +50,7 @@ function RegisterScreen({navigation}) {
 
   return (
     <View style={styles.container}>
-      {/* <ImageSlider /> */}
-      <TouchableOpacity style={{alignSelf:'flex-start',margin:10}} onPress={()=>navigation.goBack()}>
+      <TouchableOpacity style={{position:'absolute',top:10, left:10, zIndex:1000}} onPress={()=>navigation.goBack()}>
         <MaterialCommunityIcons name="chevron-left-circle" color="#575dfb" size={40} />
       </TouchableOpacity>
       <KeyboardAwareScrollView
@@ -61,24 +59,30 @@ function RegisterScreen({navigation}) {
         scrollEnabled={true}
         style={{marginTop:-120}}
       >
-      <Image
-        source={require('../assets/icons/小跑哥.png')}
-        style={{
-          width: 360,
-          height: 360,
-          marginTop: -60,
-        }}
-      />
-      <Text
-        style={{
-          alignSelf: 'flex-start',
-          fontSize: 32,
-          fontWeight: '800',
-          color: '#575dfb',
-          paddingHorizontal: 40,
-        }}>
-        BodyBuddy
-      </Text>
+      <View style={{flexDirection:'row',alignItems:'flex-end',justifyContent:'flex-start',width:'100%',marginBottom:-6}}>
+        <View>
+          <Text style={{marginLeft:40,color:'#575dfb',fontSize:18,marginBottom:2}}>Sign Up For</Text>
+          <Text
+            style={{
+              alignSelf: 'flex-end',
+              fontSize: 32,
+              fontWeight: '800',
+              color: '#575dfb',
+              marginLeft:40,
+              marginBottom:10,
+            }}>
+            BodyBuddy
+          </Text>
+        </View>
+        <Image
+          source={require('../assets/icons/小跑哥.png')}
+          style={{
+            width: 100,
+            height: 100,
+            marginBottom:-2
+          }}
+        />
+      </View>
       <Text
         style={{
           alignSelf: 'flex-start',
@@ -97,7 +101,39 @@ function RegisterScreen({navigation}) {
             />
             <TextInput
               style={styles.inpu}
-              placeholder="Username/Email/Phone Number"
+              placeholder="Username"
+              paddingRight={25}
+              fontSize={16}
+              onChangeText={text => setEmail(text)}
+              value={email}
+              >
+            </TextInput>
+          </View>
+          <View style={styles.login}>
+            <MaterialCommunityIcons
+              name="email-outline"
+              size={30}
+              color="#575dfb"
+            />
+            <TextInput
+              style={styles.inpu}
+              placeholder="Email"
+              paddingRight={25}
+              fontSize={16}
+              onChangeText={text => setEmail(text)}
+              value={email}
+              >
+            </TextInput>
+          </View>
+          <View style={styles.login}>
+            <MaterialCommunityIcons
+              name="cellphone"
+              size={30}
+              color="#575dfb"
+            />
+            <TextInput
+              style={styles.inpu}
+              placeholder="Phone Number"
               paddingRight={25}
               fontSize={16}
               onChangeText={text => setEmail(text)}
@@ -119,38 +155,15 @@ function RegisterScreen({navigation}) {
           </View>
       <TouchableOpacity style={styles.loginButton} onPress={Login()}>
         <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
-          Login
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{alignSelf: 'flex-end', marginRight: 42, marginTop: 6, flexDirection:'row', justifyContent:'center', alignItems:'flex-end',alignItems:'center'}}
-        onPress={() => handleScrollToTop()}
-        // onPress={() => navigation.navigate('RegisterScreen')}
-        >
-        <Text style={{marginRight:6, fontSize:13}}>
-          Don't have an account?
-        </Text>
-        <Text style={{color: '#575dfb', fontSize: 16, fontWeight: '600', textDecorationLine:'underline' }}>
           Register
         </Text>
       </TouchableOpacity>
+
       </KeyboardAwareScrollView>
 
     </View>
   );
 }
-
-const ImageSlider = ({images}) => {
-  return (
-    <Swiper style={styles.wrapper} showsButtons={false} showsPagination={false}>
-      {images.map((image, index) => (
-        <View key={index} style={styles.slide}>
-          <Image source={{uri: image}} style={styles.image} />
-        </View>
-      ))}
-    </Swiper>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

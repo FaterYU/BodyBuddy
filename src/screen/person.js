@@ -6,6 +6,7 @@ import {
   Dimensions,
   FlatList,
   ReactFragment,
+  ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 import {Avatar} from '@rneui/themed';
@@ -24,7 +25,10 @@ function PersonScreen() {
       style={styles.container}
       ListHeaderComponent={() => (
         <View>
-          <View style={styles.userBackground}>
+            <TouchableOpacity style={{postion:'absolute', left:screenWidth-34, top:12, zIndex:1000}} onPress={()=>navigation.navigate("PersonDetails")}>
+              <MaterialCommunityIcons name="lead-pencil" size={26}  color={'#cccccc'}/>
+            </TouchableOpacity>
+          <ImageBackground style={styles.userBackground} source={require("../assets/backgrounds/rain_glass.jpg")}>
             <View style={styles.userInfo}>
               <TouchableOpacity
                 onPress={() => {
@@ -66,7 +70,7 @@ function PersonScreen() {
                 </View>
               </View>
             </View>
-          </View>
+          </ImageBackground>
           <View style={styles.fansList}>
             <TouchableOpacity
               onPress={() => {
@@ -190,7 +194,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(200,200,200,0.8)',
+    marginTop:-26,
     height: screenHeight * 0.26,
     width: '100%',
   },

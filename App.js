@@ -21,6 +21,7 @@ import FollowingScreen from './src/screen/FollowingScreen';
 import FollowersScreen from './src/screen/FollowersScreen';
 import SearchScreen from './src/screen/search';
 import RegisterScreen from './src/screen/register';
+import PersonDetails from './src/screen/person_details';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -108,6 +109,7 @@ export default function MyTabs() {
           <Stack.Screen name="FollowersScreen" component={FollowersScreen} />
           <Stack.Screen name="SearchScreen" component={SearchScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="PersonDetails" component={PersonDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

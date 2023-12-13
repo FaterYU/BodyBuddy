@@ -56,11 +56,18 @@ const CourseFinish = ({navigation}) => {
                 marginTop:-80,
                 borderRadius: 40,
                 marginBottom: 16,
+                marginLeft:8,
               }}
             />
-            <Text style={{fontSize: 40, color: 'black', fontWeight: 'bold', marginTop:-80}}>
-              训练完成
-            </Text>
+            <View style={{flexDirection:'row'}}>
+              <Text style={{fontSize: 40, color: 'black', fontWeight: 'bold', marginTop:-80}}>
+                训练完成
+              </Text>
+              <Image
+                source={require('../assets/icons/礼花哥.png')}
+                style={{width:36, height:36, marginTop:-68, marginLeft:10}}
+              />
+            </View>
             <View style={styles.trainData}>
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text

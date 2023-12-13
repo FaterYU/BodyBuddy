@@ -6,85 +6,101 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
+    ImageBackground,
 } from 'react-native';
 import { Avatar } from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {selectImage, takePhoto} from '../components/imagePicker';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 
-function PersonDetails() {
-    return (
-        <ScrollView>
-            <View style={{ backgroundColor: "#e9eaff" }}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <MaterialCommunityIcons name="chevron-left-circle" size={35} color="#b6b7cc" style={{ marginLeft: 14, marginTop: 14 }} />
+function PersonDetails({navigation}) {
+  const [avatar, setAvatar] = useState(null);
+  return (
+      <ScrollView>
+          <View style={{ backgroundColor: "#e9eaff" }}>
+              <ImageBackground source={require('../assets/backgrounds/rain_glass.jpg')} style={{height:screenHeight*0.35}}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 12, marginTop: 12, zIndex:1000}}>
+                    <MaterialCommunityIcons name="chevron-left" size={36} color="#b6b7cc" />
                 </TouchableOpacity>
-                <Text style={styles.head}>ME</Text>
-                <View style={styles.avatar}>
+                <Text style={styles.head}>Personal Profile</Text>
+                <TouchableOpacity
+                  style={styles.avatar}
+                  onPress={async () => {
+                    var imageSrc = await selectImage();
+                    setAvatar(imageSrc[0]);
+                  }}
+                >
                     <Avatar
                         source={{
-                            uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
+                          uri: avatar?avatar.uri:"https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg",
                         }}
                         size={150}
                         rounded
-                    />
-                </View>
-                <View style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40, height: screenHeight * 0.75, backgroundColor: "white" }}>
-                    <View>
-                        <Text style={{ fontSize: 18, fontWeight: "600", color: "#05011f", margin: 25 }}>Personal Information</Text>
-                        <View style={{ marginHorizontal: 25 }}>
-                            <View>
-                                <Text style={styles.info_head}>Name</Text>
-                                <Input size="lg" placeholder='Name' style={styles.input}></Input>
-                                <Text style={styles.info_head}>Telephone Number</Text>
-                                <Input size="lg" placeholder='Tel' style={styles.input}></Input>
-                            </View>
+                      />
+                </TouchableOpacity>
+              </ImageBackground>
+              <View style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40, height: screenHeight * 0.75, marginTop:-40, backgroundColor: "white", elevation:6 }}>
+                  <View>
+                      <Text style={{ fontSize: 18, fontWeight: "700", color: "#05011f", margin: 25, marginBottom:16 }}>Personal Information</Text>
+                      <View style={{ marginHorizontal: 25 }}>
+                          <View>
+                              <Text style={styles.info_head}>Name</Text>
+                              <Input size="lg" placeholder='Name' style={styles.input}></Input>
+                              <Text style={styles.info_head}>Telephone Number</Text>
+                              <Input size="lg" placeholder='Tel' style={styles.input} ></Input>
+                          </View>
 
-                            <View style={{ flexDirection: "column" }}>
-                                <Text style={styles.info_head}>Birthday</Text>
-                                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                    <BirthYearSelect />
-                                </View>
-                            </View>
+                          <View style={{ flexDirection: "column" }}>
+                              <Text style={styles.info_head}>Birthday</Text>
+                              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                  <BirthYearSelect />
+                              </View>
+                          </View>
 
-                            <View>
-                                <Text style={styles.info_head}>Gender</Text>
-                                <FormControl w="3/4" maxW="300" isRequired isInvalid></FormControl>
-                                <Select size="lg" accessibilityLabel="Gender" placeholder="Gender" _selectedItem={{ bg: "teal.600" }} mt="1">
-                                    <Select.Item label="Male" value="Male" />
-                                    <Select.Item label="Female" value="Female" />
-                                </Select>
-                            </View>
+                          <View>
+                              <Text style={styles.info_head}>Gender</Text>
+                              <FormControl w="3/4" maxW="300" isRequired isInvalid></FormControl>
+                              <Select size="lg" accessibilityLabel="Gender" placeholder="Gender" _selectedItem={{ bg: "teal.600" }} mt="1">
+                                  <Select.Item label="Male" value="Male" />
+                                  <Select.Item label="Female" value="Female" />
+                              </Select>
+                          </View>
 
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                <View style={{ flexDirection: "column" }}>
-                                    <Text style={styles.info_head}>Height</Text>
-                                    <InputGroup>
-                                        <Input size="lg" placeholder='Height' w={(screenWidth - 175) / 2}></Input>
-                                        <InputRightAddon children="cm" />
-                                    </InputGroup>
-                                </View>
-                                <View style={{ flexDirection: "column" }}>
-                                    <Text style={styles.info_head}>Weight</Text>
-                                    <InputGroup>
-                                        <Input size="lg" placeholder='Weight' w={(screenWidth - 175) / 2}></Input>
-                                        <InputRightAddon children="kg" />
-                                    </InputGroup>
-                                </View>
-                            </View>
+                          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                              <View style={{ flexDirection: "column" }}>
+                                  <Text style={styles.info_head}>Height</Text>
+                                  <InputGroup>
+                                      <Input size="lg" placeholder='Height' w={(screenWidth - 175) / 2}></Input>
+                                      <InputRightAddon children="cm" />
+                                  </InputGroup>
+                              </View>
+                              <View style={{ flexDirection: "column" }}>
+                                  <Text style={styles.info_head}>Weight</Text>
+                                  <InputGroup>
+                                      <Input size="lg" placeholder='Weight' w={(screenWidth - 175) / 2}></Input>
+                                      <InputRightAddon children="kg" />
+                                  </InputGroup>
+                              </View>
+                          </View>
 
-                            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                                <Button style={styles.exit_button} color="575efb" onPress={() => navigation.goBack()}>Exit</Button>
-                                <Button style={styles.save_button}>Save</Button>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-            </View>
-        </ScrollView>
-    );
+                          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            <TouchableOpacity style={styles.exit_button} onPress={() => navigation.goBack()}>
+                              <Text style={{fontWeight:'600',color:'white',fontSize:19}}>Exit</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.save_button}>
+                              <Text style={{fontWeight:'600',color:'white',fontSize:19}}>Save</Text>
+                            </TouchableOpacity>
+                          </View>
+                      </View>
+                  </View>
+              </View>
+          </View>
+      </ScrollView>
+  );
 }
 
 
@@ -163,13 +179,17 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: 25,
         borderRadius: 50,
+        justifyContent:"center",
+        alignItems:'center',
     },
     save_button: {
-        backgroundColor: "#575dfb",
+        backgroundColor: "#776dff",
         width: (screenWidth - 70) / 2,
         height: 50,
         marginTop: 25,
         borderRadius: 50,
+        justifyContent:"center",
+        alignItems:'center',
     },
     birth_select: {
         width: screenWidth - 50,
@@ -178,8 +198,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: "space-between",
         alignItems: "center"
-    }
-}
-)
+    },
+
+  })
 
 export default PersonDetails;
