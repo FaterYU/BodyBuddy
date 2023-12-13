@@ -18,7 +18,7 @@ function CourseCard() {
   };
   return (
     <TouchableOpacity style={styles.container} onPress={goToCourse}>
-      <View style={styles.img}>
+      <View>
         <Image
           source={require('../assets/courses/pexels-pixabay-235922.jpg')}
           style={styles.img}

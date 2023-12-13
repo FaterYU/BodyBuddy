@@ -22,7 +22,7 @@ const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [eventTime, setEventTime] = useState('');
+  const [eventTime, setEventTime] = useState("00:00 - 00:00");
   const [eventContent, setEventContent] = useState('');
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -64,105 +64,25 @@ const AgendaScreen = () => {
     todayDate.getMonth() + 1
   }-${todayDate.getDate()}`;
 
-  const loadItems = day => {
+  const loadItems = (day) => {
     const currentItems = items || {};
-    const postData = [
-      {
-        activityDate: {
-          year: 2023,
-          month: 12,
-          day: 6,
-        },
-        activityList: [
-          {
-            activityId: 2,
-            activityDate: {
-              year: 2023,
-              month: 12,
-              day: 6,
-            },
-            startTime: {
-              hour: 12,
-              minute: 12,
-            },
-            activityEndTime: {
-              hour: 22,
-              minute: 12,
-            },
-            activityContent: 'I am activity',
-            activityCourse: null,
-          },
-          {
-            activityId: 3,
-            activityDate: {
-              year: 2023,
-              month: 12,
-              day: 6,
-            },
-            startTime: {
-              hour: 12,
-              minute: 12,
-            },
-            activityEndTime: {
-              hour: 22,
-              minute: 12,
-            },
-            activityContent: 'I am activity',
-            activityCourse: null,
-          },
-          {
-            activityId: 1,
-            activityDate: {
-              year: 2023,
-              month: 12,
-              day: 6,
-            },
-            startTime: {
-              hour: 12,
-              minute: 12,
-            },
-            activityEndTime: {
-              hour: 22,
-              minute: 12,
-            },
-            activityContent: 'I am activity',
-            activityCourse: {
-              id: 1,
-              name: 'Push-up training • Upper body strength burst more easily!',
-              photo: 'push_up_training.jpg',
-            },
-          },
-        ],
+    var postData;
+    const url = "http://bodybuddy.fater.top/api/users/getCalendarActivity";
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      {
-        activityDate: {
-          year: 2023,
-          month: 12,
-          day: 7,
-        },
-        activityList: [
-          {
-            activityId: 2,
-            activityDate: {
-              year: 2023,
-              month: 12,
-              day: 7,
-            },
-            startTime: {
-              hour: 12,
-              minute: 12,
-            },
-            activityEndTime: {
-              hour: 22,
-              minute: 12,
-            },
-            activityContent: 'I am activity',
-            activityCourse: null,
-          },
-        ],
-      },
-    ];
-    setTimeout(() => {
+      body: JSON.stringify({
+        uid: 1,
+      }),
+    };
+
+    fetch(url, requestOptions)
+    .then(response => response.json())
+    .then(result => {
+      postData = result;
+
       for (let i = -10; i < 15; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
         const strTime = timeToString(time);
@@ -185,9 +105,9 @@ const AgendaScreen = () => {
         for (let j = 0; j < Data[i].activityList.length; j++) {
           currentItems[date].push({
             startTime:
-              Data[i].activityList[j].startTime.hour +
+              Data[i].activityList[j].activityStartTime.hour +
               ':' +
-              Data[i].activityList[j].startTime.minute,
+              Data[i].activityList[j].activityStartTime.minute,
             endTime:
               Data[i].activityList[j].activityEndTime.hour +
               ':' +
@@ -198,8 +118,9 @@ const AgendaScreen = () => {
           });
         }
       }
-      setItems({...currentItems});
-    }, 1000);
+      setItems({ ...currentItems });
+    })
+    .catch(error => console.log('error', error));
   };
 
   const renderItem = (reservation, isFirst) => {
@@ -210,19 +131,20 @@ const AgendaScreen = () => {
       <TouchableOpacity
         style={[styles.item]}
         onPress={() => {
-          setEventTime(reservation.startTime); // 设置日程的开始时间
-          setEventContent(reservation.content); // 设置日程的内容
+          setEventTime(reservation.startTime+" - "+reservation.endTime);
+          setEventContent(reservation.content);
           setShowModal(true);
-          console.log('press');
           return true;
         }}
         onLongPress={() => {
           setShowDeleteModal(true);
-          console.log('long press');
           return true;
         }}>
-        <Text style={{fontSize, color}}>{reservation.startTime}</Text>
-        <Text style={{fontSize, color}}>{reservation.endTime}</Text>
+        <View style={{flexDirection:'row'}}>
+          <Text style={{fontSize, color}}>{reservation.startTime}</Text>
+          <Text style={{fontSize, color}}> - </Text>
+          <Text style={{fontSize, color}}>{reservation.endTime}</Text>
+        </View>
         <Text style={{fontSize, color}}>{reservation.content}</Text>
       </TouchableOpacity>
     );
@@ -291,18 +213,39 @@ const AgendaScreen = () => {
               <Modal.Body>
                 <FormControl>
                   <FormControl.Label>时间</FormControl.Label>
-                  {/* <Input value={eventTime} onChangeText={setEventTime} /> */}
-
-                  {/* <View onPress={showTimepicker} title="Show time picker!" /> */}
-                  <TouchableOpacity onPress={showTimepicker}>
-                    <Text
-                      style={{
-                        fontSize: 22,
-                        backgroundColor: 'rgba(220,220,220,0.4)',
-                      }}>
-                      {date.toTimeString()}
-                    </Text>
-                  </TouchableOpacity>
+                  <View style={{flexDirection:'row', alignItems:'center',height:40, justifyContent:'space-between'}}>
+                    <TouchableOpacity onPress={showTimepicker} style={{
+                      width:'44%',
+                      height:40,
+                      alignItems:'center',
+                      backgroundColor: 'rgba(200,200,200,0.4)',
+                      justifyContent:'center',
+                      borderRadius:4,
+                    }}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                        }}>
+                        {date.toTimeString().slice(0, 8)}
+                      </Text>
+                    </TouchableOpacity>
+                    <Text style={{fontSize:40, alignSelf:"center", lineHeight:42}}> - </Text>
+                    <TouchableOpacity onPress={showTimepicker} style={{
+                      width:'44%',
+                      height:40,
+                      alignItems:'center',
+                      backgroundColor: 'rgba(200,200,200,0.4)',
+                      justifyContent:'center',
+                      borderRadius:4,
+                    }}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                        }}>
+                        {date.toTimeString().slice(0, 8)}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </FormControl>
                 <FormControl mt="3">
                   <FormControl.Label>内容</FormControl.Label>

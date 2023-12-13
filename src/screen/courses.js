@@ -12,14 +12,18 @@ import React, {useState, useEffect} from 'react';
 import {SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
-import {createStackNavigator} from '@react-navigation/stack';
-import {useRoute} from '@react-navigation/native';
-
 const screenWidth = Dimensions.get('window').width;
-const Stack = createStackNavigator();
 
 function CoursesScreen({navigation}) {
   const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    setSearch('');
+    navigation.navigate('SearchScreen', { searchContent: search });
+  };
+  const updateSearch = (text) => {
+    setSearch(text);
+  };
 
   var currentDate = new Date();
   const todayWeek = currentDate.getDay();
@@ -28,13 +32,6 @@ function CoursesScreen({navigation}) {
 
   const goToCalendar = () => {
     navigation.navigate('Calendar');
-  };
-  const updateSearch = text => {
-    setSearch(text);
-  };
-  const handleSearch = () => {
-    setSearch('');
-    navigation.navigate('SearchScreen', {searchContent: search});
   };
 
   return (

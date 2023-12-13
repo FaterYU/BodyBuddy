@@ -22,11 +22,22 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Tab, TabView, SearchBar} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
+import CourseCard from './courseCard';
 
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
 
 export const WaterfallList = ({tabIndex, renderData}) => {
+  var data;
+  if(tabIndex===0){
+    data = renderData.moments;
+  }else if(tabIndex===1){
+    data = renderData.courses;
+  }else if(tabIndex===2){
+    data = renderData.users;
+  }else if(tabIndex===3){
+    data = renderData.poses;
+  }
   const navigation = useNavigation();
 
   const HeaderComponent = () => <View style={styles.headerComp}></View>;
@@ -174,17 +185,17 @@ const SearchScreen = ({navigation}) => {
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
+              title="课程"
+              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              buttonStyle={styles.selectButton}
+            />
+            <Tab.Item
               title="关注"
               titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
               title="用户"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
-              buttonStyle={styles.selectButton}
-            />
-            <Tab.Item
-              title="课程"
               titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />

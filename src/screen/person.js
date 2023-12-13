@@ -97,7 +97,7 @@ function PersonScreen() {
               <View
                 style={{
                   flexDirection: 'row',
-                  alignContent: 'space-around',
+                  alignContent: 'center',
                   justifyContent: 'space-between',
                   marginTop: 10,
                 }}>
@@ -107,7 +107,7 @@ function PersonScreen() {
                     color: '#4969ff',
                     fontSize: 20,
                     lineHeight: 30,
-                    marginLeft: 10,
+                    paddingLeft:10,
                     marginTop: -5,
                   }}>
                   Moments Data
@@ -135,7 +135,7 @@ function PersonScreen() {
               <View
                 style={{
                   flexDirection: 'row',
-                  alignContent: 'space-around',
+                  alignContent: 'center',
                   justifyContent: 'space-between',
                   marginTop: 10,
                 }}>
@@ -145,7 +145,7 @@ function PersonScreen() {
                     color: '#4969ff',
                     fontSize: 20,
                     lineHeight: 30,
-                    marginLeft: 10,
+                    paddingLeft:10,
                     marginTop: -5,
                   }}>
                   Health Data
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.28,
     justifyContent: 'space-around',
     alignItems: 'center',
+    paddingHorizontal:10,
     flexDirection: 'row',
   },
   dataCard: {
