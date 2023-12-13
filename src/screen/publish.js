@@ -166,10 +166,11 @@ const PublishScreen = ({navigation}) => {
                 borderRadius="10"
                 onPress={async () => {
                   var imageSrc = await selectImage();
+                  var uriList = [];
                   imageSrc.forEach(item => {
-                    var uri = item.uri;
-                    setImageSourceList([...imageSourceList, uri]);
+                    uriList.push(item.uri);
                   });
+                  setImageSourceList([...imageSourceList, ...uriList]);
                   onToggle();
                 }}
                 icon={
@@ -210,10 +211,11 @@ const PublishScreen = ({navigation}) => {
                 borderRadius="10"
                 onPress={async () => {
                   var imageSrc = await takePhoto();
+                  var uriList = [];
                   imageSrc.forEach(item => {
-                    var uri = item.uri;
-                    setImageSourceList([...imageSourceList, uri]);
+                    uriList.push(item.uri);
                   });
+                  setImageSourceList([...imageSourceList, ...uriList]);
                   onToggle();
                 }}
                 icon={
