@@ -23,10 +23,17 @@ import {
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {selectImage, takePhoto} from '../components/imagePicker';
+import MomentsService from '../services/moments.service';
 
 const PublishScreen = ({navigation}) => {
   const {isOpen, onToggle} = useDisclose();
   const [imageSourceList, setImageSourceList] = useState([]);
+
+  const publishMoment = () => {
+    MomentsService.findALL().then(res => {
+      console.log(res.data);
+    });
+  };
 
   return (
     <View>
@@ -36,7 +43,7 @@ const PublishScreen = ({navigation}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={publishMoment()}>
           <MaterialCommunityIcons
             name="close"
             size={36}

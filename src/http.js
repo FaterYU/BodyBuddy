@@ -4,5 +4,6 @@ export default axios.create({
   baseURL: 'http://bodybuddy.fater.top/api',
   headers: {
     'Content-type': 'application/json',
+    'If-Modified-Since': '0',
   },
 });
