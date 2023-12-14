@@ -8,13 +8,13 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "release": "cd android && gradlew assembleRelease"
+    "release": "cd android && gradlew assembleRelease",
+    "clean": "cd android && gradlew clean"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/datetimepicker": "^7.6.2",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
