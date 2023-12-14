@@ -10,16 +10,40 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Avatar} from '@rneui/themed';
+import { useEffect, useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WaterfallList} from './community';
 import {useNavigation} from '@react-navigation/native';
+import { MMKV } from '../../App';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 function PersonScreen() {
   const navigation = useNavigation();
-
+  const [userName, setUserName] = useState('');
+  // get user name
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://bodybuddy.fater.top/api/users/getName';
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({uid: MMKV.getInt('userId')}),
+      };
+      try {
+        const response = await fetch(url, requestOptions);
+        const json = await response.json();
+        setUserName(json.userName);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }
+  ,[]);
   return (
     <FlatList
       style={styles.container}
@@ -52,7 +76,7 @@ function PersonScreen() {
                     marginTop: 6,
                     marginLeft: 8,
                   }}>
-                  UserName
+                  {userName}
                 </Text>
                 <View
                   style={{

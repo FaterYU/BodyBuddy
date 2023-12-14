@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { MMKV } from 'react-native-mmkv'
+import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
 
 import {NativeBaseProvider} from 'native-base';
 import 'react-native-gesture-handler';
@@ -25,6 +27,13 @@ import PersonDetails from './src/screen/person_details';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+// export const storage = new MMKV({
+//   id: `user-${userId}-storage`,
+//   path: `${USER_DIRECTORY}/storage`,
+//   encryptionKey: 'hunter2'
+// })
+// export const storage = new MMKV()
+export const MMKV = new MMKVLoader().initialize();
 
 const MainTabs = () => {
   return (
@@ -89,6 +98,15 @@ const MainTabs = () => {
 };
 
 export default function MyTabs() {
+  React.useEffect(() => {
+    const initializeMMKV = async () => {
+      await MMKV.setIntAsync('userId', 0);
+      const result = await MMKV.getIntAsync('userId');
+      console.log(result);
+    }
+    initializeMMKV();
+  }
+  , []);
   return (
     <NativeBaseProvider>
       <NavigationContainer>
