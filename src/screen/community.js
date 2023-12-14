@@ -73,6 +73,8 @@ export const WaterfallList = ({tabIndex}) => {
   const CardList = ({item}) => {
     const marginTop = item.id % numColumns === 1 ? -30 : 8;
     const height = 240;
+    const photo =
+      'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
 
     return (
       <Box alignItems="center" style={[styles.cardList, {height, marginTop}]}>
@@ -87,9 +89,12 @@ export const WaterfallList = ({tabIndex}) => {
             borderWidth="1">
             <Box style={{backgroundColor: 'rgba(120,180,240,0.8)'}}>
               <AspectRatio w="100%" ratio={3 / 2}>
-                {/* <Image source={{
-                uri: ""
-              }} alt="image" /> */}
+                <Image
+                  source={{
+                    uri: photo,
+                  }}
+                  alt="image"
+                />
               </AspectRatio>
             </Box>
             <View style={{paddingTop: 6, paddingLeft: 8}}>

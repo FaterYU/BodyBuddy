@@ -45,7 +45,7 @@ class UploadFilesService {
    */
   downloadFile(data) {
     // data:{name:'filename'}
-    return http.post('/download', data, {responseType: 'blob'});
+    return http.get('/download', data);
   }
 }
 export default new UploadFilesService();
