@@ -26,7 +26,7 @@ import {
   Camera,
   useCameraDevices,
 } from 'react-native-vision-camera';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import Video from 'react-native-video';
 
 const VideoScreen = ({navigation}) => {
   useEffect(() => {
@@ -67,6 +67,15 @@ const VideoScreen = ({navigation}) => {
               style={{alignSelf: 'flex-start', marginTop: 14, marginLeft: 14}}
             />
           </TouchableOpacity>
+          <Video
+            source={{
+              uri: 'http://bodybuddy.fater.top/api/files/download?name=Aerial pedaling.mp4',
+            }}
+            style={{flex: 1}}
+            controls={true}
+            resizeMode="cover"
+            poster="http://bodybuddy.fater.top/api/files/download?name=Aerial pedaling.jpg"
+          />
         </View>
 
         <View style={styles.sideCard}>
@@ -86,7 +95,6 @@ const VideoScreen = ({navigation}) => {
               style={{}}
             />
           </TouchableOpacity>
-
           <View style={styles.camera}>
             <Frame />
           </View>
@@ -116,6 +124,18 @@ const VideoScreen = ({navigation}) => {
   );
 };
 
+// const VideoPlayer = () => {
+//   return (
+//     <View style={styles.container}>
+//       <Video
+//         source={{uri: 'https://example.com/path/to/your/video.mp4'}} // 替换为实际视频的 URL
+//         style={styles.video}
+//         controls={true}
+//       />
+//     </View>
+//   );
+// };
+
 const Frame = () => {
   const device = useCameraDevice('front');
   const FrameProcessor = useFrameProcessor(frame => {
@@ -136,7 +156,7 @@ const Frame = () => {
 const styles = StyleSheet.create({
   video: {
     height: '100%',
-    backgroundColor: 'gray',
+    // backgroundColor: 'gray',
     width: '80%',
   },
   camera: {
