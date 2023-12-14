@@ -21,9 +21,11 @@ function RegisterScreen({navigation}) {
   const [phoneNum, setPhoneNum] = useState('');
   const [password, setPassword] = useState('');
 
+  // 消息提示
   function showToast(Text) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
+  // 新建用户（注册）
   const Register = () => {
     const url = "http://bodybuddy.fater.top/api/users/create";
     const requestOptions = {
@@ -37,6 +39,7 @@ function RegisterScreen({navigation}) {
       }),
     };
     if (email && password && username && phoneNum) {
+      // 获取请求结果
       fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
@@ -45,7 +48,7 @@ function RegisterScreen({navigation}) {
             showToast('Sign Up Successfully!');
             navigation.navigate('HomeScreen');
           } else {
-            showToast('Sign Up failed!');
+            showToast('Sign Up Failed!');
           }
         });
     }else{
@@ -164,9 +167,7 @@ function RegisterScreen({navigation}) {
           Register
         </Text>
       </TouchableOpacity>
-
       </KeyboardAwareScrollView>
-
     </View>
   );
 }

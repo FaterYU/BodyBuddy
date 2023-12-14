@@ -97,17 +97,20 @@ export const WaterfallList = ({tabIndex}) => {
                 />
               </AspectRatio>
             </Box>
-            <View style={{paddingTop: 6, paddingLeft: 8}}>
+            {/* 卡片文本 */}
+            <View style={{paddingTop: 4, paddingHorizontal: 4}}>
               <Text
                 style={{
                   color: 'black',
                   alignSelf: 'flex-start',
-                  fontSize: 18,
+                  fontSize: 17,
                   fontWeight: 'bold',
+
+                  overflow:'hidden'
                 }}>
                 {item.content.title}
               </Text>
-              <Text stylie={{marginTop: 4}}>{item.content.text}</Text>
+              <Text style={{marginTop: 4, height:36, fontSize:12, lineHeight:12,overflow:'hidden'}}>{item.content.text}</Text>
             </View>
             <View style={{position: 'absolute', bottom: 6, left: 8}}>
               <Text style={{fontSize: 12}}>发布时间：12:00</Text>
