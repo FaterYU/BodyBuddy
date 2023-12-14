@@ -24,6 +24,7 @@ import {
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Tab, TabView, SearchBar} from '@rneui/themed';
+import { MMKV } from '../../App';
 import {useNavigation} from '@react-navigation/native';
 
 const numColumns = 2;
@@ -41,12 +42,13 @@ export const WaterfallList = ({tabIndex}) => {
           : 'http://bodybuddy.fater.top/api/moments/getFollowMoment';
       var requestOptions;
       if (tabIndex === 1) {
+        const id = MMKV.getString('uid');
         requestOptions = {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({uid: 1}),
+          body: JSON.stringify({uid: id}),
         };
       } else if (tabIndex === 0) {
         requestOptions = {
@@ -79,7 +81,11 @@ export const WaterfallList = ({tabIndex}) => {
     return (
       <Box alignItems="center" style={[styles.cardList, {height, marginTop}]}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('CommunityDetailScreen')}>
+          onPress={() => {
+            navigation.navigate('CommunityDetailScreen',{
+              momentId: item.id,
+            });
+          }}>
           <Box
             style={styles.cardItem}
             maxW="80"

@@ -12,12 +12,41 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
-import React, {useRef} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
+// import { createStackNavigator } from '@react-navigation/stack';
 
 import CourseCard from './courseCard';
 const screenWidth = Dimensions.get('window').width;
 
-function CommunityDetail({navigation}) {
+function CommunityDetail({navigation, route}) {
+  const [data, setData] = useState([]);
+  const id = route.params.momentId;
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://bodybuddy.fater.top/api/moments/findOne';
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id: id}),
+      };
+      try {
+        const response = await fetch(url, requestOptions);
+        const json = await response.json();
+        setData(json);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [id]);
+  console.log("data: ",data);
+  if (!data || data.length === 0) {
+    return(
+      <View style={{justifyContent:'center',alignItems:'center',flex:1,height:'100%'}}>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{backgroundColor: 'gray', height: 300, width: '100%'}}>
@@ -39,16 +68,16 @@ function CommunityDetail({navigation}) {
       </View>
       {/* <ImageSlider /> */}
       <Text style={{color: 'black', paddingHorizontal: 26, paddingTop: 16}}>
-        锻炼后30分钟是运动恢复的绝佳时机，可参照以下建议来进行运动恢复
-        {'\n'}
-        1.饮水补充:在运动后的30分钟内，补充身体所失去的水分是非常重要的。通过饮用适量的水或运动饮料，可以帮助补充体内的水分和电解质，并促进身体的水平衡恢复。
-        {'\n'}
-        2.营养摄入:运动后的30分钟内，适当摄入营养是为肌肉恢复和修复提供能量和营养物质的关键时期。优先选择含有高质量蛋白质和碳水化合物的食物，如瘦肉、鸡蛋、全麦面包或水果等，以促进肌肉的修复和能量的恢复。
-        {'\n'}
-        3.轻度拉伸和放松:进行适度的拉伸和放松活动可以帮助减少肌肉酸痛和僵硬感。重点关注运动所涉及的肌肉群，并进行缓慢而温和的拉伸动作，有助于恢复肌肉的弹性和灵活性。
-        {'\n'}
+        {data.content.text}
       </Text>
-      <CourseCard />
+      <CourseCard
+        courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
+        courseName={"HIIT燃脂-臀推初级"}
+        courseTime={30}
+        courseCalorie={300}
+        courseLevel={'零基础'}
+        finishTTime={2}
+      />
       <Text
         style={{
           alignSelf: 'flex-start',
@@ -83,6 +112,7 @@ const ImageSlider = ({images}) => {
     </Swiper>
   );
 };
+
 const CommentCard = () => {
   return (
     <View style={{flexDirection: 'row', width: '100%', height: 80}}>

@@ -76,7 +76,7 @@ function PersonScreen() {
                     marginTop: 6,
                     marginLeft: 8,
                   }}>
-                  {userName}
+                  {userName?userName:'Username'}
                 </Text>
                 <View
                   style={{
