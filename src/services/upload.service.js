@@ -30,7 +30,7 @@ class UploadFilesService {
     formData.append('file', file);
     // formData.append('type', type);
     // formData.append('uploader', uploader);
-    return http.post('/upload', formData, {
+    return http.post('/files/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -45,7 +45,7 @@ class UploadFilesService {
    */
   downloadFile(data) {
     // data:{name:'filename'}
-    return http.get('/download', data);
+    return http.get('/files/download', data);
   }
 }
 export default new UploadFilesService();
