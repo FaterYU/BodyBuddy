@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  ImageBackground,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
+import { Image } from 'react-native-svg';
 const screenWidth = Dimensions.get('window').width;
 
 function CoursesScreen({navigation}) {
@@ -134,8 +136,8 @@ function CoursesScreen({navigation}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
-          <CourseCard />
-          <CourseCard />
+          <CourseCard courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')} courseName={"HIIT燃脂-臀推初级"} courseTime={30} courseCalorie={300} courseLevel={'零基础'} finishTTime={2} />
+          <CourseCard courseImg={require('../assets/courses/pexels-pixabay-235922.jpg')} courseName={"HIIT燃脂-臀推初级"} courseTime={22} courseCalorie={200} courseLevel={'零基础'} finishTTime={2} />
         </View>
       </View>
       <View style={{width: '100%'}}>
@@ -157,18 +159,19 @@ function CoursesScreen({navigation}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
-          <RecommendCourse />
-          <RecommendCourse />
-          <RecommendCourse />
+          <RecommendCourse courseName={"腹肌训练入门"} takeTime={"20"} kalorie={'81'} level={'零基础'} BGimg={require('../assets/courses/pexels-li-sun-2294361.jpg')} />
+          <RecommendCourse courseName={"腰腹核心训练"} takeTime={"20"} kalorie={'131'} level={'零基础'} BGimg={require('../assets/courses/pexels-li-sun-2294363.jpg')} />
+          <RecommendCourse courseName={"每日有氧"} takeTime={"30"} kalorie={'221'} level={'零基础'} BGimg={require('../assets/courses/pexels-pixabay-40751.jpg')} />
         </View>
       </View>
     </ScrollView>
   );
 }
 
-const RecommendCourse = () => {
+const RecommendCourse = ({courseName, takeTime, kalorie, level, BGimg}) => {
   return (
-    <View
+    <ImageBackground
+      source={BGimg}
       style={{
         backgroundColor: 'rgba(180,180,180,1)',
         marginBottom: 10,
@@ -180,7 +183,7 @@ const RecommendCourse = () => {
         justifyContent: 'flex-end',
       }}>
       <Text style={{color: 'white', fontSize: 17, marginLeft: 10}}>
-        腹肌训练入门
+        {courseName}
       </Text>
       <View
         style={{
@@ -189,16 +192,16 @@ const RecommendCourse = () => {
           marginBottom: 6,
         }}>
         <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-          20分钟
+          {takeTime}分钟
         </Text>
         <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-          81千卡
+          {kalorie}千卡
         </Text>
         <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-          零基础
+          {level}
         </Text>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
