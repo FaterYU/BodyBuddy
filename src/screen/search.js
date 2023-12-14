@@ -27,17 +27,8 @@ import CourseCard from './courseCard';
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
 
-export const WaterfallList = ({tabIndex, renderData}) => {
-  var data;
-  if(tabIndex===0){
-    data = renderData.moments;
-  }else if(tabIndex===1){
-    data = renderData.courses;
-  }else if(tabIndex===2){
-    data = renderData.users;
-  }else if(tabIndex===3){
-    data = renderData.poses;
-  }
+const WaterfallList = ({renderData}) => {
+  const data = renderData;
   const navigation = useNavigation();
 
   const HeaderComponent = () => <View style={styles.headerComp}></View>;
@@ -96,6 +87,42 @@ export const WaterfallList = ({tabIndex, renderData}) => {
     />
   );
 };
+
+const CourseList = ({renderData}) => {
+  console.log("data",renderData[0])
+  return (
+    <ScrollView contentContainerStyle={{marginTop:10}} >
+      {renderData.map((item, index) => {
+        return <CourseCard
+                courseId={index}
+                courseName={item.name}
+                courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
+                courseTime={item.duration}
+                courseCalorie={item.calorie}
+                courseLevel={'初级'}
+                finishTime={item.practiced}
+              />;
+        }
+      )}
+    </ScrollView>
+  );
+};
+
+function ResolveSearch({tabIndex, renderData}){
+  var data;
+  // console.log("photo:",renderData.courses[0].photo)
+  if(tabIndex===0){
+    data = renderData.moments;
+    return(<WaterfallList renderData={data} />)
+  }else if(tabIndex===1){
+    data = renderData.courses;
+    return(<CourseList renderData={data}/>)
+  }else if(tabIndex===2){
+    data = renderData.users;
+  }else if(tabIndex===3){
+    data = renderData.poses;
+  }
+}
 
 const SearchScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
@@ -210,7 +237,7 @@ const SearchScreen = ({navigation}) => {
             width: '100%',
             alignItems: 'center',
           }}>
-          <WaterfallList tabIndex={index} renderData={data} />
+          <ResolveSearch tabIndex={index} renderData={data} />
         </TabView.Item>
         <TabView.Item
           style={{
@@ -218,7 +245,7 @@ const SearchScreen = ({navigation}) => {
             width: '100%',
             alignItems: 'center',
           }}>
-          <WaterfallList tabIndex={index} renderData={data} />
+          <ResolveSearch tabIndex={index} renderData={data} />
         </TabView.Item>
         <TabView.Item
           style={{

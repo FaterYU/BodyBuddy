@@ -16,35 +16,40 @@ import React, {useRef, useState} from 'react';
 const screenWidth = Dimensions.get('window').width;
 
 function RegisterScreen({navigation}) {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
   const [password, setPassword] = useState('');
+
   function showToast(Text) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
-  const Login = () => {
-    const url = "http://bodybuddy.fater.top/api/users/login";
+  const Register = () => {
+    const url = "http://bodybuddy.fater.top/api/users/create";
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
+        username:username,
         email: email,
         password: password,
+        phone: phoneNum,
       }),
     };
-    if (email && password) {
+    if (email && password && username && phoneNum) {
       fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data);
           if (data.status == 200) {
-            console.log('Login success');
-            showToast('Login Successfully!');
+            showToast('Sign Up Successfully!');
             navigation.navigate('HomeScreen');
           } else {
-            showToast('Login failed!');
-            console.log('Login failed');
+            showToast('Sign Up failed!');
           }
         });
+    }else{
+      showToast('Please Complete Your Information!');
     }
   };
 
@@ -100,12 +105,12 @@ function RegisterScreen({navigation}) {
               color="#575dfb"
             />
             <TextInput
-              style={styles.inpu}
+              style={styles.input}
               placeholder="Username"
               paddingRight={25}
               fontSize={16}
-              onChangeText={text => setEmail(text)}
-              value={email}
+              onChangeText={text => setUsername(text)}
+              value={username}
               >
             </TextInput>
           </View>
@@ -116,7 +121,7 @@ function RegisterScreen({navigation}) {
               color="#575dfb"
             />
             <TextInput
-              style={styles.inpu}
+              style={styles.input}
               placeholder="Email"
               paddingRight={25}
               fontSize={16}
@@ -132,12 +137,12 @@ function RegisterScreen({navigation}) {
               color="#575dfb"
             />
             <TextInput
-              style={styles.inpu}
+              style={styles.input}
               placeholder="Phone Number"
               paddingRight={25}
               fontSize={16}
-              onChangeText={text => setEmail(text)}
-              value={email}
+              onChangeText={text => setPhoneNum(text)}
+              value={phoneNum}
               >
             </TextInput>
           </View>
@@ -150,10 +155,11 @@ function RegisterScreen({navigation}) {
               paddingRight={25}
               fontSize={16}
               onChangeText={text => setPassword(text)}
+              value={password}
               >
             </TextInput>
           </View>
-      <TouchableOpacity style={styles.loginButton} onPress={Login()}>
+      <TouchableOpacity style={styles.loginButton} onPress={Register()}>
         <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
           Register
         </Text>

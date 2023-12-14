@@ -11,7 +11,8 @@ import {useNavigation} from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 
-function CourseCard() {
+function CourseCard({courseId, courseName, courseTime, courseCalorie, courseLevel, finishTime, courseImg}) {
+  console.log(courseImg)
   const navigation = useNavigation();
   const goToCourse = () => {
     navigation.navigate('DetailsScreen');
@@ -20,7 +21,7 @@ function CourseCard() {
     <TouchableOpacity style={styles.container} onPress={goToCourse}>
       <View>
         <Image
-          source={require('../assets/courses/pexels-pixabay-235922.jpg')}
+          source={courseImg}
           style={styles.img}
         />
       </View>
@@ -31,12 +32,12 @@ function CourseCard() {
           height: 90,
         }}>
         <Text style={{fontSize: 16, fontWeight: '500', color: 'black'}}>
-          HIIT燃脂-臀腿初级
+          {courseName}
         </Text>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text style={{fontSize: 12}}>30分钟</Text>
-          <Text style={{fontSize: 12}}>200千卡</Text>
-          <Text style={{fontSize: 12}}>零基础</Text>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-start',width:'100%'}}>
+          <Text style={{fontSize: 12}}>{courseTime}分钟</Text>
+          <Text style={{fontSize: 12, marginLeft:8}}>{courseCalorie}千卡</Text>
+          <Text style={{fontSize: 12, marginLeft:8}}>{courseLevel}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <MaterialCommunityIcons
@@ -45,7 +46,7 @@ function CourseCard() {
             color="gray"
             style={{marginTop: 18}}
           />
-          <Text style={{marginTop: 16, fontSize: 13}}>已完成2次</Text>
+          <Text style={{marginTop: 16, fontSize: 13}}>已完成{finishTime}次</Text>
         </View>
       </View>
       <MaterialCommunityIcons
