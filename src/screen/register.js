@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { MMKV } from '../../App';
 import React, {useRef, useState} from 'react';
 
 const screenWidth = Dimensions.get('window').width;
 
-function RegisterScreen({navigation}) {
+const RegisterScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
@@ -26,13 +27,13 @@ function RegisterScreen({navigation}) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
   // 新建用户（注册）
-  const Register = () => {
+  function Register() {
     const url = "http://bodybuddy.fater.top/api/users/create";
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        username:username,
+        userName:username,
         email: email,
         password: password,
         phone: phoneNum,
@@ -41,15 +42,18 @@ function RegisterScreen({navigation}) {
     if (email && password && username && phoneNum) {
       // 获取请求结果
       fetch(url, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (data.status == 200) {
-            showToast('Sign Up Successfully!');
-            navigation.navigate('HomeScreen');
-          } else {
-            showToast('Sign Up Failed!');
+        .then(response => {
+          if (!response.ok) {
+            showToast('Sign Up Failed! Please Try Again!');
+            return Promise.reject('Sign Up Failed');
+          }else{
+            return response.json();
           }
+        })
+        .then(data => {
+          MMKV.setIntAsync('userId', data.uid);
+          showToast('Sign Up Successfully!');
+          navigation.navigate('Person');
         });
     }else{
       showToast('Please Complete Your Information!');
@@ -162,7 +166,7 @@ function RegisterScreen({navigation}) {
               >
             </TextInput>
           </View>
-      <TouchableOpacity style={styles.loginButton} onPress={Register()}>
+      <TouchableOpacity style={styles.loginButton} onPress={()=>Register()}>
         <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
           Register
         </Text>

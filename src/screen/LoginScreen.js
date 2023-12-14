@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { MMKV } from '../../App';
 import React, {useRef, useState} from 'react';
 
 const screenWidth = Dimensions.get('window').width;
@@ -19,9 +20,11 @@ const screenHeight = Dimensions.get('window').height;
 function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const showToast = (text, type) => {
-    ToastAndroid.show(text, ToastAndroid.SHORT,ToastAndroid.BOTTOM,25,50);
-  };
+  // 消息提示
+  function showToast(Text) {
+    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  }
+  // 登录
   const Login = () => {
     const url = "http://bodybuddy.fater.top/api/users/login";
     const requestOptions = {
@@ -34,15 +37,22 @@ function LoginScreen({navigation}) {
     };
     if (email && password) {
       fetch(url, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (data.status == 200) {
-            showToast('Login Successfully!');
-            navigation.navigate('HomeScreen');
-          } else {
-            showToast('Login failed!');
+      .then(response => {
+          // 判断登录状态
+          if (!response.ok&&response.status!=404) {
+            showToast('Login Failed: '+response.status);
+            return Promise.reject('Login Failed');
+          }else if(!response.ok&&response.status==404){
+            showToast('Login Failed: Please Check Your Email and Password!');
+            return Promise.reject('Login Failed');
+          }else{
+            return response.json();
           }
+        })
+        .then(data => {
+          MMKV.setIntAsync('userId', data.uid);
+          showToast('Login Successfully!');
+          navigation.navigate('Person');
         });
     }else{
       showToast('Please enter your email and password!');
@@ -115,7 +125,7 @@ function LoginScreen({navigation}) {
               >
             </TextInput>
           </View>
-      <TouchableOpacity style={styles.loginButton} onPress={Login}>
+      <TouchableOpacity style={styles.loginButton} onPress={()=>Login()}>
         <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
           Login
         </Text>
