@@ -9,11 +9,13 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   PanResponder,
+  TextInput,
 } from 'react-native';
+// import {Input,Icon} from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import React, {useRef, useMemo, useEffect, useState} from 'react';
-// import { createStackNavigator } from '@react-navigation/stack';
+import {MMKV} from '../../App';
 
 import CourseCard from './courseCard';
 import {ScreenHeight} from '@rneui/base';
@@ -24,19 +26,44 @@ function CommunityDetail({navigation, route}) {
   const [data, setData] = useState([]);
   const [avatar, setAvatar] = useState('');
   const [authorName, setAuthorName] = useState('');
-
-  // const [backgroundColor, setBackgroundColor] = useState('white');
-  // const scrollViewRef = useRef(null);
-
-  // const handleScroll = (event) => {
-  //   const scrollY = event.nativeEvent.contentOffset.y;
-  //   if (scrollY > 60) {
-  //     setBackgroundColor('rgba(200,200,200,0.4)');
-  //   } else {
-  //     setBackgroundColor('white');
-  //   }
-  // };
+  const [comment, setComment] = useState('');
+  const [like, setLike] = useState(false);
   const id = route.params.momentId;
+  const userId = MMKV.getString('userId');
+  const clickLike = async () => {
+    const url = like
+      ? 'http://bodybuddy.fater.top/api/moments/likeMoment'
+      : 'http://bodybuddy.fater.top/api/moments/unlikeMoment';
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({uid: userId, momentId: id}),
+    };
+    try {
+      const response = await fetch(url, requestOptions);
+      const json = await response.json();
+    } catch (error) {
+      console.log(error);
+    }
+    // const fetchData = async () => {
+    //   const url = 'http://bodybuddy.fater.top/api/moments/findOne';
+    //   const requestOptions = {
+    //     method: 'POST',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify({id: id}),
+    //   };
+    //   try {
+    //     const response = await fetch(url, requestOptions);
+    //     const json = await response.json();
+    //     setData(json);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // fetchData();
+    console.log('like:', data.like);
+    setLike(like ? false : true);
+  };
   useEffect(() => {
     const fetchData = async () => {
       const url = 'http://bodybuddy.fater.top/api/moments/findOne';
@@ -48,13 +75,12 @@ function CommunityDetail({navigation, route}) {
       try {
         const response = await fetch(url, requestOptions);
         const json = await response.json();
-        fetchAuthor(json.author);
-        setData(json);
+        fetchAuthor(json.author, json);
       } catch (error) {
         console.log(error);
       }
     };
-    const fetchAuthor = async authorId => {
+    const fetchAuthor = async (authorId, data) => {
       const url = 'http://bodybuddy.fater.top/api/users/findOne';
       const requestOptions = {
         method: 'POST',
@@ -66,12 +92,13 @@ function CommunityDetail({navigation, route}) {
         const json = await response.json();
         setAvatar(json.photo);
         setAuthorName(json.userName);
+        setData(data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [id]);
+  }, [id, like]);
   if (!data || data.length === 0) {
     return (
       <View
@@ -85,6 +112,12 @@ function CommunityDetail({navigation, route}) {
       </View>
     );
   }
+  const likeHandler = () => {
+    setLike(like ? false : true);
+  };
+  const likeHandler = () => {
+    setLike(like ? false : true);
+  };
   return (
     <View>
       <View
@@ -118,14 +151,22 @@ function CommunityDetail({navigation, route}) {
         <Text style={{marginLeft: 8, color: 'black', fontSize: 16}}>
           {authorName}
         </Text>
+        <View
+          style={{
+            position: 'absolute',
+            right: 20,
+            borderWidth: 1.3,
+            borderColor: '#575dfb',
+            borderRadius: 30,
+            paddingHorizontal: 18,
+            paddingVertical: 6,
+          }}>
+          <Text style={{color: '#575dfb'}}>follow</Text>
+        </View>
       </View>
-      <ScrollView
-        contentContainerStyle={styles.container}
-        // ref={scrollViewRef}
-        // onScroll={handleScroll}
-      >
+      <ScrollView contentContainerStyle={styles.container}>
         <ImageSlider images={data.content.photo} />
-        <View style={{backgroundColor: 'white'}}>
+        <View style={{backgroundColor: 'white', alignItems: 'center'}}>
           <Text
             style={{
               color: 'black',
@@ -165,6 +206,82 @@ function CommunityDetail({navigation, route}) {
           <CommentCard />
         </View>
       </ScrollView>
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          zIndex: 1000,
+          backgroundColor: 'white',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          width: '100%',
+          height: 54,
+          alignItems: 'center',
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            marginLeft: 8,
+            borderWidth: 1,
+            borderColor: '#ccc',
+            borderRadius: 20,
+            height: 38,
+            width: '42%',
+            paddingHorizontal: 8,
+          }}>
+          <MaterialCommunityIcons
+            name="pencil-plus-outline"
+            size={25}
+            // color="#575dfb"
+          />
+          <TextInput
+            placeholder="Say Something..."
+            fontSize={15}
+            onChangeText={text => setComment(text)}
+            value={comment}
+            style={{width: '80%', marginBottom: -2}}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              fontSize: 14,
+              marginRight: 4,
+              height: 24,
+            }}>
+            {data.like}
+          </Text>
+          <TouchableOpacity onPress={() => clickLike()}>
+            {like ? (
+              <MaterialCommunityIcons name="heart" size={24} color="red" />
+            ) : (
+              <MaterialCommunityIcons name="heart-outline" size={24} />
+            )}
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 14,
+              marginLeft: 10,
+              marginRight: 4,
+              height: 24,
+            }}>
+            comment
+          </Text>
+          <MaterialCommunityIcons
+            style={{marginRight: 8}}
+            name="comment-processing-outline"
+            size={24}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -207,7 +324,6 @@ const CommentCard = () => {
         size={15}
         style={{alignSelf: 'flex-start', marginTop: 16}}
       />
-      {/* <MaterialCommunityIcons name="heart" color={'red'} size={15} style={{alignSelf:'flex-start', marginTop:16}} /> */}
     </View>
   );
 };
@@ -215,6 +331,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 54,
   },
   image: {
     width: screenWidth,
