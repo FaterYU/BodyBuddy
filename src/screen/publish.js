@@ -8,6 +8,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  Picker,
+  TextInput,
 } from 'react-native';
 import React, {useEffect, useState, Component} from 'react';
 import {
@@ -23,7 +25,9 @@ import {
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {selectImage, takePhoto} from '../components/imagePicker';
+import SearchablePicker from '../components/SearchablePicker';
 import MomentsService from '../services/moments.service';
+import CoursesService from '../services/courses.service';
 import UploadFilesService from '../services/upload.service';
 
 const PublishScreen = ({navigation}) => {
@@ -31,6 +35,24 @@ const PublishScreen = ({navigation}) => {
   const [imageSourceList, setImageSourceList] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [selectedValue, setSelectedValue] = useState(null);
+  const [CourseList, setCourseList] = useState([]);
+
+  useEffect(() => {
+    const loadCourseData = () => {
+      CoursesService.findAllCourse().then(res => {
+        var courseList = [];
+        res.data.forEach(item => {
+          courseList.push({
+            label: item.name,
+            value: item.id,
+          });
+        });
+        setCourseList(courseList);
+      });
+    };
+    loadCourseData();
+  }, []);
 
   const publishMoment = async () => {
     console.log(title);
@@ -74,6 +96,11 @@ const PublishScreen = ({navigation}) => {
     MomentsService.createMoment(momentData).then(res => {
       navigation.goBack();
     });
+  };
+
+  const handleValueChange = value => {
+    console.log(value);
+    setSelectedValue(value);
   };
 
   return (
@@ -129,6 +156,16 @@ const PublishScreen = ({navigation}) => {
           onChangeText={setContent}
         />
       </View>
+      <View
+        style={{
+          width: '94%',
+          alignSelf: 'center',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <SearchablePicker data={CourseList} onValueChange={handleValueChange} />
+      </View>
+      {/* {selectedValue && <Text>Selected Value: {selectedValue}</Text>} */}
       <ScrollView
         horizontal={true}
         style={{flexDirection: 'row', marginTop: 10, padding: 10}}

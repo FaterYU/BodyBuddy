@@ -2739,6 +2739,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-picker/picker@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.npmmirror.com/@react-native-picker/picker/-/picker-2.6.1.tgz#3b20ddd1385fab0487db103dc6519570f8892e6d"
+  integrity sha512-oJftvmLOj6Y6/bF4kPcK6L83yNBALGmqNYugf94BzP0FQGpHBwimVN2ygqkQ2Sn2ZU3pGUZMs0jV6+Gku2GyYg==
+
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
   resolved "https://registry.npmmirror.com/@react-native/assets-registry/-/assets-registry-0.72.0.tgz#c82a76a1d86ec0c3907be76f7faf97a32bbed05d"
@@ -8667,6 +8672,11 @@ react-native-video@^5.2.1:
     keymirror "^0.1.1"
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
+
+react-native-vision-camera@^3.6.17:
+  version "3.6.17"
+  resolved "https://registry.npmmirror.com/react-native-vision-camera/-/react-native-vision-camera-3.6.17.tgz#5946589b0a1920dcfcc9bdffb6d2e98dad4ff4ce"
+  integrity sha512-dzkO6l6lqw48i2jQre4AXzuFZqEEzqEEVc8bfOqF4MZ/6PzdHtfjosWea0zuEdsiW13DhaFHf7XLh/+aKytx2w==
 
 react-native-worklets-core@^0.2.4:
   version "0.2.4"
