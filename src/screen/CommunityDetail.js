@@ -115,9 +115,6 @@ function CommunityDetail({navigation, route}) {
   const likeHandler = () => {
     setLike(like ? false : true);
   };
-  const likeHandler = () => {
-    setLike(like ? false : true);
-  };
   return (
     <View>
       <View
