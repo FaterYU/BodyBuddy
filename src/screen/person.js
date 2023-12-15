@@ -128,6 +128,7 @@ function PersonScreen() {
                   alignContent: 'center',
                   justifyContent: 'space-between',
                   marginTop: 10,
+                  overflow:'hidden'
                 }}>
                 <Text
                   style={{
@@ -135,7 +136,7 @@ function PersonScreen() {
                     color: '#4969ff',
                     fontSize: 20,
                     lineHeight: 30,
-                    paddingLeft:10,
+                    paddingLeft:8,
                     marginTop: -5,
                   }}>
                   Moments Data
@@ -173,7 +174,7 @@ function PersonScreen() {
                     color: '#4969ff',
                     fontSize: 20,
                     lineHeight: 30,
-                    paddingLeft:10,
+                    paddingLeft:8,
                     marginTop: -5,
                   }}>
                   Health Data
