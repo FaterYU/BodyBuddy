@@ -70,7 +70,7 @@ const PublishScreen = ({navigation}) => {
         type: 'photo',
         photo: imageNameList,
         video: [],
-        mention: [],
+        mention: selectedValue ? [selectedValue] : [],
       },
       tags: {
         tagsList: [],
