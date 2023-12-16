@@ -12,10 +12,9 @@ import {useNavigation} from '@react-navigation/native';
 const screenWidth = Dimensions.get('window').width;
 
 function CourseCard({courseId, courseName, courseTime, courseCalorie, courseLevel, finishTime, courseImg}) {
-  console.log(courseImg)
   const navigation = useNavigation();
   const goToCourse = () => {
-    navigation.navigate('DetailsScreen');
+    navigation.navigate('DetailsScreen',{id:courseId});
   };
   return (
     <TouchableOpacity style={styles.container} onPress={goToCourse}>

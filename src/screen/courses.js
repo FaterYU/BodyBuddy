@@ -136,8 +136,8 @@ function CoursesScreen({navigation}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
-          <CourseCard courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')} courseName={"HIIT燃脂-臀推初级"} courseTime={30} courseCalorie={300} courseLevel={'零基础'} finishTTime={2} />
-          <CourseCard courseImg={require('../assets/courses/pexels-pixabay-235922.jpg')} courseName={"HIIT燃脂-臀推初级"} courseTime={22} courseCalorie={200} courseLevel={'零基础'} finishTTime={2} />
+          <CourseCard courseId={1} courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')} courseName={"HIIT燃脂-臀推初级"} courseTime={30} courseCalorie={300} courseLevel={'零基础'} finishTTime={2} />
+          <CourseCard courseId={2} courseImg={require('../assets/courses/pexels-pixabay-235922.jpg')} courseName={"HIIT燃脂-臀推初级"} courseTime={22} courseCalorie={200} courseLevel={'零基础'} finishTTime={2} />
         </View>
       </View>
       <View style={{width: '100%'}}>

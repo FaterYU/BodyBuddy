@@ -23,17 +23,49 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {BorderlessButton} from 'react-native-gesture-handler';
+import React, {useState, useEffect} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-function DetailsScreen({navigation}) {
+function DetailsScreen({navigation,route}) {
+  const courseId = route.params.id;
+  const [courseData, setCourseData] = useState(null);
+  useEffect(() => {
+    const getCourseDate = () => {
+      const url = 'http://bodybuddy.fater.top/api/courses/getCourseById';
+      const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          id: courseId,
+        }),
+      };
+      fetch(url, requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setCourseData(data);
+        });
+    };
+    getCourseDate();
+  }, []);
+
   const goToVideo = () => {
     navigation.navigate('VideoScreen');
   };
+
+  const photoUrl = courseData ? 'http://bodybuddy.fater.top/api/files/download?name=' + courseData.photo : '';
+  if (courseData == null) {
+    return (
+      <View>
+        <Text>loading</Text>
+      </View>
+    );
+  }
   return (
     <ScrollView>
-      <View style={styles.top}>
+      <ImageBackground style={styles.top} source={courseData ? { uri: photoUrl } : null}>
         <View
           style={{
             width: '95%',
@@ -49,7 +81,7 @@ function DetailsScreen({navigation}) {
           </TouchableOpacity>
           <MaterialCommunityIcons name="share" size={35} color="white" />
         </View>
-        <Text style={styles.header}>HIIT燃脂.臀腿初级</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>{courseData.name}</Text>
         <View style={styles.top_list}>
           <View>
             <Text style={styles.tlhead}>时长</Text>
@@ -66,7 +98,7 @@ function DetailsScreen({navigation}) {
             <Text style={styles.tldetails}>零基础</Text>
           </View>
         </View>
-      </View>
+      </ImageBackground>
       <View style={{flexDirection: 'column', width: '100%'}}>
         <Text
           style={{
@@ -175,7 +207,6 @@ const styles = StyleSheet.create({
   top: {
     height: screenHeight * 0.33,
     width: '100%',
-    backgroundColor: 'gray',
     justifyContent: 'center',
   },
   header: {

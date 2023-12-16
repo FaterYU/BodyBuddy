@@ -19,13 +19,13 @@ import {
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { RNCamera } from 'react-native-camera';
-import {
-  useFrameProcessor,
-  useCameraDevice,
-  NoCameraDeviceError,
-  Camera,
-  useCameraDevices,
-} from 'react-native-vision-camera';
+// import {
+//   useFrameProcessor,
+//   useCameraDevice,
+//   NoCameraDeviceError,
+//   Camera,
+//   useCameraDevices,
+// } from 'react-native-vision-camera';
 import Video from 'react-native-video';
 
 const VideoScreen = ({navigation}) => {
@@ -59,19 +59,19 @@ const VideoScreen = ({navigation}) => {
           flexDirection: 'row',
         }}>
         <View style={styles.video}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={{position:'absolute',top:14,left:6,zIndex:1000}} >
             <MaterialCommunityIcons
               name="chevron-left-circle"
               size={26}
-              color="rgba(200,200,200,0.8)"
-              style={{alignSelf: 'flex-start', marginTop: 14, marginLeft: 14}}
+              color="rgba(180,180,180,0.8)"
+              style={{alignSelf: 'flex-start'}}
             />
           </TouchableOpacity>
           <Video
             source={{
               uri: 'http://bodybuddy.fater.top/api/files/download?name=Aerial pedaling.mp4',
             }}
-            style={{flex: 1}}
+            style={{flex: 1,width:'100%'}}
             controls={true}
             resizeMode="cover"
             poster="http://bodybuddy.fater.top/api/files/download?name=Aerial pedaling.jpg"
@@ -96,7 +96,7 @@ const VideoScreen = ({navigation}) => {
             />
           </TouchableOpacity>
           <View style={styles.camera}>
-            <Frame />
+            {/* <Frame /> */}
           </View>
           <View style={styles.score}>
             <Text style={{color: 'white', marginTop: 30}}>当前评分</Text>
@@ -136,22 +136,22 @@ const VideoScreen = ({navigation}) => {
 //   );
 // };
 
-const Frame = () => {
-  const device = useCameraDevice('front');
-  const FrameProcessor = useFrameProcessor(frame => {
-    'worklet';
-    console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
-  }, []);
-  if (device == null) return <NoCameraDeviceError />;
-  return (
-    <Camera
-      style={StyleSheet.absoluteFill}
-      device={device}
-      isActive={true}
-      frameProcessor={FrameProcessor}
-    />
-  );
-};
+// const Frame = () => {
+//   const device = useCameraDevice('front');
+//   const FrameProcessor = useFrameProcessor(frame => {
+//     'worklet';
+//     console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
+//   }, []);
+//   if (device == null) return <NoCameraDeviceError />;
+//   return (
+//     <Camera
+//       style={StyleSheet.absoluteFill}
+//       device={device}
+//       isActive={true}
+//       frameProcessor={FrameProcessor}
+//     />
+//   );
+// };
 
 const styles = StyleSheet.create({
   video: {
