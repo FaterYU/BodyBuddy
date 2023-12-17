@@ -26,7 +26,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 //   Camera,
 //   useCameraDevices,
 // } from 'react-native-vision-camera';
-import Video from 'react-native-video';
+// import Video from 'react-native-video';
 
 const VideoScreen = ({navigation}) => {
   useEffect(() => {

@@ -19,15 +19,15 @@ const SevenDaysCalendar = () => {
 
   const renderItem = ({item}) => (
     <View>
-      <Text style={{textAlign: 'center', marginBottom: 4}}>
+      <Text style={{textAlign: 'center', marginBottom: 10, marginTop: 10}}>
         {weekName[item.getDay()]}
       </Text>
       <View
         style={[
           styles.dayContainer,
           isToday(item) && {
-            backgroundColor: 'blue',
-            borderColor: 'blue',
+            backgroundColor: '#4969ff',
+            borderColor: '#4969ff',
             borderWidth: 2,
           },
         ]}>
@@ -60,13 +60,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dayContainer: {
-    backgroundColor: '#eee',
+    backgroundColor: '#eaeaea',
     alignItems: 'center',
     justifyContent: 'center',
     marginHorizontal: 6,
     width: 40,
     height: 40,
-    borderRadius: 20,
+    borderRadius: 10,
+    marginBottom: 5,
   },
   dayText: {
     fontSize: 16,

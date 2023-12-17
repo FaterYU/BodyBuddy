@@ -79,7 +79,7 @@ function CourseCard({
       <MaterialCommunityIcons
         name="chevron-right-circle"
         size={20}
-        color="rgba(200,200,200,0.8)"
+        color="#c3c3c3"
         style={{
           alignSelf: 'flex-start',
           marginTop: 10,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: 'rgba(220,220,220,0.4)',
+    backgroundColor: '#f2f2f2',
     marginBottom: 10,
     borderRadius: 8,
   },
