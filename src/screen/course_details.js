@@ -28,12 +28,14 @@ import {
 import {BorderlessButton} from 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FitsService from '../services/fits.service';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-function DetailsScreen({navigation,route}) {
+function DetailsScreen({navigation, route}) {
   const courseId = route.params.id;
   const [courseData, setCourseData] = useState(null);
+  const [fitId, setFitId] = useState(null);
   useEffect(() => {
     const getCourseDate = () => {
       const url = 'http://bodybuddy.fater.top/api/courses/getCourseById';
@@ -45,20 +47,37 @@ function DetailsScreen({navigation,route}) {
         }),
       };
       fetch(url, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
+        .then(response => response.json())
+        .then(data => {
           console.log(data.content.poseList);
           setCourseData(data);
-        })
+        });
     };
     getCourseDate();
   }, []);
 
   const goToVideo = () => {
-    navigation.navigate('VideoScreen');
+    FitsService.create({
+      userId: 1,
+      courseId: courseId,
+    })
+      .then(res => {
+        console.log(res.data.id);
+        setFitId(res.data.id);
+        return res.data.id;
+      })
+      .then(id => {
+        navigation.navigate('VideoScreen', {
+          id: courseId,
+          courseData: courseData,
+          fitId: id,
+        });
+      });
   };
 
-  const photoUrl = courseData ? 'http://bodybuddy.fater.top/api/files/download?name=' + courseData.photo : '';
+  const photoUrl = courseData
+    ? 'http://bodybuddy.fater.top/api/files/download?name=' + courseData.photo
+    : '';
   if (courseData == null) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -69,8 +88,11 @@ function DetailsScreen({navigation,route}) {
   return (
     <ScrollView>
       <StatusBar translucent backgroundColor="transparent" />
-      <ImageBackground style={styles.top} source={courseData ? { uri: photoUrl } : null}>
-        <View style={{flex:1,backgroundColor:'rgba(0,0,0,0.2)',paddingTop:32}}>
+      <ImageBackground
+        style={styles.top}
+        source={courseData ? {uri: photoUrl} : null}>
+        <View
+          style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)', paddingTop: 32}}>
           <View
             style={{
               width: '95%',
@@ -86,18 +108,30 @@ function DetailsScreen({navigation,route}) {
             </TouchableOpacity>
             <MaterialCommunityIcons name="share" size={35} color="white" />
           </View>
-          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>{courseData.name}</Text>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>
+            {courseData.name}
+          </Text>
           <View style={styles.top_list}>
             <View>
               <Text style={styles.tlhead}>时长</Text>
               <Text style={styles.tldetails}>2次</Text>
             </View>
-            <Divider style={styles.tl_divider} color={"rgba(240,240,240,0.1)"} orientation="vertical" width={2} />
+            <Divider
+              style={styles.tl_divider}
+              color={'rgba(240,240,240,0.1)'}
+              orientation="vertical"
+              width={2}
+            />
             <View>
               <Text style={styles.tlhead}>燃脂</Text>
               <Text style={styles.tldetails}>68千卡</Text>
             </View>
-            <Divider style={styles.tl_divider} color={"rgba(240,240,240,0.1)"} orientation="vertical" width={2} />
+            <Divider
+              style={styles.tl_divider}
+              color={'rgba(240,240,240,0.1)'}
+              orientation="vertical"
+              width={2}
+            />
             <View>
               <Text style={styles.tlhead}>难度</Text>
               <Text style={styles.tldetails}>零基础</Text>
@@ -191,20 +225,39 @@ function DetailsScreen({navigation,route}) {
       </View>
       <VStack>
         {courseData.content.poseList?.map((item, index) => {
-          const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
+          const img =
+            'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
           return (
             <View style={styles.list}>
-              <Image source={{uri:img}} style={styles.list_pic}></Image>
+              <Image source={{uri: img}} style={styles.list_pic}></Image>
               <View style={{flexDirection: 'column'}}>
                 <Text style={styles.list_head}>{item.name}</Text>
-                <View  style={{flexDirection:'row',marginLeft:16,overflow:'scroll',width:"95%",height:20}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginLeft: 16,
+                    overflow: 'scroll',
+                    width: '95%',
+                    height: 20,
+                  }}>
                   {item.tags.muscle?.map((item, index) => {
-                    if(index>1 || item.length>24){
+                    if (index > 1 || item.length > 24) {
                       return;
                     }
                     return (
-                      <View style={{backgroundColor:'rgba(140,130,250,0.8)',borderRadius:20,paddingHorizontal:6,paddingVertical:2,justifyContent:'center',alignItems:"center",marginRight:4}}>
-                        <Text style={{fontSize:12,color:'white'}}>{item}</Text>
+                      <View
+                        style={{
+                          backgroundColor: 'rgba(140,130,250,0.8)',
+                          borderRadius: 20,
+                          paddingHorizontal: 6,
+                          paddingVertical: 2,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginRight: 4,
+                        }}>
+                        <Text style={{fontSize: 12, color: 'white'}}>
+                          {item}
+                        </Text>
                       </View>
                     );
                   })}
@@ -213,8 +266,7 @@ function DetailsScreen({navigation,route}) {
               </View>
             </View>
           );
-        }
-        )}
+        })}
       </VStack>
       <View
         style={{
@@ -290,7 +342,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 10,
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
   },
   list_pic: {
     width: 125,
@@ -307,7 +359,7 @@ const styles = StyleSheet.create({
   },
   list_details: {
     marginLeft: 16,
-    marginTop:4,
+    marginTop: 4,
     fontSize: 14,
   },
   button: {
