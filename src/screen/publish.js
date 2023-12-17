@@ -54,7 +54,7 @@ const PublishScreen = ({navigation}) => {
     loadCourseData();
   }, []);
 
-  const publishMoment = () => {
+  const publishMoment = async () => {
     const postImage = async postImageList => {
       await Promise.all(
         postImageList.map(async (item, index) => {
@@ -90,7 +90,7 @@ const PublishScreen = ({navigation}) => {
         name: item.fileName,
       });
     });
-    postImage(postImageList);
+    await postImage(postImageList);
     momentData.photo = momentData.content.photo[0];
     MomentsService.createMoment(momentData).then(res => {
       navigation.goBack();

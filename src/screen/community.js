@@ -171,14 +171,14 @@ export const WaterfallList = ({tabIndex}) => {
   return (
     <MasonryList
       data={data}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={item => item.showId.toString()}
       numColumns={2}
       showsVerticalScrollIndicator={false}
       style={{
         width: '100%',
         paddingHorizontal: 6,
         justifyContent: 'center',
-        alignItems: 'center',
+        // alignItems: 'center',
         marginTop: 6,
       }}
       renderItem={({item}) => <CardList item={item} />}
