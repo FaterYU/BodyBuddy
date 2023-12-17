@@ -56,6 +56,14 @@ const PublishScreen = ({navigation}) => {
   }, []);
 
   const publishMoment = async () => {
+    if (uid == null) {
+      showToast('Please login first');
+      return;
+    }
+    if (title == '' || content == '' || imageSourceList.length == 0) {
+      showToast('Please make sure you have filled in all the information');
+      return;
+    }
     const postImage = async postImageList => {
       await Promise.all(
         postImageList.map(async (item, index) => {
