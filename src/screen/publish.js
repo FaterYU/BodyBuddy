@@ -54,9 +54,15 @@ const PublishScreen = ({navigation}) => {
     loadCourseData();
   }, []);
 
-  const publishMoment = async () => {
-    console.log(title);
-    console.log(content);
+  const publishMoment = () => {
+    const postImage = async postImageList => {
+      await Promise.all(
+        postImageList.map(async (item, index) => {
+          const res = await UploadFilesService.upload(item, event => {});
+          momentData.content.photo[index] = res.data.message;
+        }),
+      );
+    };
     const imageNameList = [];
     imageSourceList.forEach(item => {
       imageNameList.push(item.fileName);
@@ -76,7 +82,7 @@ const PublishScreen = ({navigation}) => {
         tagsList: [],
       },
     };
-    const postImageList = [];
+    var postImageList = [];
     imageSourceList.forEach(item => {
       postImageList.push({
         uri: item.uri,
@@ -84,13 +90,7 @@ const PublishScreen = ({navigation}) => {
         name: item.fileName,
       });
     });
-    await Promise.all(
-      postImageList.map(async (item, index) => {
-        const res = await UploadFilesService.upload(item, event => {
-        });
-        momentData.content.photo[index] = res.data.message;
-      }),
-    );
+    postImage(postImageList);
     momentData.photo = momentData.content.photo[0];
     MomentsService.createMoment(momentData).then(res => {
       navigation.goBack();
@@ -98,7 +98,6 @@ const PublishScreen = ({navigation}) => {
   };
 
   const handleValueChange = value => {
-    console.log(value);
     setSelectedValue(value);
   };
 

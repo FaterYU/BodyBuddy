@@ -23,7 +23,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MasonryList from '@react-native-seoul/masonry-list';
 import {Tab, TabView, SearchBar} from '@rneui/themed';
-import { MMKV } from '../../App';
+import {MMKV} from '../../App';
 import {useNavigation} from '@react-navigation/native';
 
 const numColumns = 2;
@@ -74,17 +74,15 @@ export const WaterfallList = ({tabIndex}) => {
 
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
-  const CardList = ({item,index,columnIndex}) => {
-
-    const photo = 'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
+  const CardList = ({item, index, columnIndex}) => {
+    const photo =
+      'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
 
     return (
-      <View
-        style={styles.cardList}
-      >
+      <View style={styles.cardList}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('CommunityDetailScreen',{
+            navigation.navigate('CommunityDetailScreen', {
               momentId: item.id,
             });
           }}>
@@ -102,8 +100,8 @@ export const WaterfallList = ({tabIndex}) => {
             {/* 卡片文本 */}
             <View style={{paddingTop: 4, paddingHorizontal: 10}}>
               <Text
-              numberOfLines={2}
-              ellipsizeMode="tail"
+                numberOfLines={2}
+                ellipsizeMode="tail"
                 style={{
                   color: 'black',
                   alignSelf: 'flex-start',
@@ -121,14 +119,14 @@ export const WaterfallList = ({tabIndex}) => {
                   fontSize: 14,
                   lineHeight: 16,
                   overflow: 'hidden',
-                  marginBottom:22,
-                  color:"#333333"
+                  marginBottom: 22,
+                  color: '#333333',
                 }}>
                 {item.content.text}
               </Text>
             </View>
             <View style={{position: 'absolute', bottom: 6, left: 10}}>
-              <Text style={{fontSize: 10, color: "#999999"}}>
+              <Text style={{fontSize: 10, color: '#999999'}}>
                 Published : {item.updatedAt.slice(0, 16)}
               </Text>
             </View>
@@ -138,7 +136,7 @@ export const WaterfallList = ({tabIndex}) => {
     );
   };
   // console.log(data);
-  if (MMKV.getString('uid')===null&&tabIndex===1) {
+  if (MMKV.getString('uid') === null && tabIndex === 1) {
     return (
       <View
         style={{
@@ -151,13 +149,13 @@ export const WaterfallList = ({tabIndex}) => {
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
-          style={{width:screenWidth-80,height:screenWidth-80}}
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
         />
       </View>
     );
   }
-  console.log(data)
-  if (tabIndex===0 && data.length===0) {
+  console.log(data);
+  if (tabIndex === 0 && data.length === 0) {
     return (
       <View
         style={{
@@ -171,14 +169,20 @@ export const WaterfallList = ({tabIndex}) => {
     );
   }
   return (
-  <MasonryList
-    data={data}
-    keyExtractor={item => item.id.toString()}
-    numColumns={2}
-    showsVerticalScrollIndicator={false}
-    style={{width:"100%",paddingHorizontal:6,justifyContent:"center",alignItems:"center",marginTop:6}}
-    renderItem={({item}) => <CardList item={item}/>}
-  />
+    <MasonryList
+      data={data}
+      keyExtractor={item => item.id.toString()}
+      numColumns={2}
+      showsVerticalScrollIndicator={false}
+      style={{
+        width: '100%',
+        paddingHorizontal: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 6,
+      }}
+      renderItem={({item}) => <CardList item={item} />}
+    />
   );
 };
 
@@ -188,9 +192,9 @@ const CommunityScreen = ({navigation}) => {
 
   const handleSearch = () => {
     setSearch('');
-    navigation.navigate('SearchScreen', { searchContent: search });
+    navigation.navigate('SearchScreen', {searchContent: search});
   };
-  const updateSearch = (text) => {
+  const updateSearch = text => {
     setSearch(text);
   };
 
@@ -210,21 +214,21 @@ const CommunityScreen = ({navigation}) => {
             // onChangeText={updateSearch}
             // value={search}
           /> */}
-                <SearchBar
-        inputStyle={{
-          fontSize: 16,
-        }}
-        placeholder="Search Here..."
-        round={true}
-        lightTheme
-        showCancel
-        platform="android"
-        containerStyle={styles.containerStyle}
-        inputContainerStyle={styles.inputContainerStyle}
-        onSubmitEditing={handleSearch}
-        onChangeText={updateSearch}
-        value={search}
-      />
+          <SearchBar
+            inputStyle={{
+              fontSize: 16,
+            }}
+            placeholder="Search Here..."
+            round={true}
+            lightTheme
+            showCancel
+            platform="android"
+            containerStyle={styles.containerStyle}
+            inputContainerStyle={styles.inputContainerStyle}
+            onSubmitEditing={handleSearch}
+            onChangeText={updateSearch}
+            value={search}
+          />
           <TouchableOpacity
             onPress={() => navigation.navigate('PublishScreen')}>
             <MaterialCommunityIcons
@@ -284,11 +288,11 @@ const CommunityScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  cardList:{
-    width:"100%",
-    justifyContent:"center",
-    alignItems:"center",
-    marginBottom:8,
+  cardList: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   container: {
     justifyContent: 'center',
