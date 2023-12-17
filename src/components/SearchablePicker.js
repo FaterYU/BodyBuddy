@@ -11,10 +11,17 @@ const SearchablePicker = ({data, onValueChange}) => {
     pickerRef.current.focus();
   };
 
-  const filteredData = data.filter(item =>
-    searchQuery === '' || searchQuery === null
-      ? true
-      : item.label.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredData = [
+    {
+      label: 'Empty Option (Press to select...)',
+      value: null,
+    },
+  ].concat(
+    data.filter(item =>
+      searchQuery === '' || searchQuery === null
+        ? true
+        : item.label.toLowerCase().includes(searchQuery.toLowerCase()),
+    ),
   );
 
   return (
@@ -31,13 +38,13 @@ const SearchablePicker = ({data, onValueChange}) => {
         ref={pickerRef}
         selectedValue={selectedItem}
         mode="dropdown"
-        numberOfLines={2}
+        numberOfLines={3}
         onValueChange={(itemValue, itemIndex) => {
           onValueChange(itemValue); // Call the callback with the selected value
           setSelectedItem(itemValue); // Set selectedItem to the selected value
         }}
         style={{
-          width: '80%',
+          width: '95%',
         }}
         itemStyle={{
           backgroundColor: 'grey',

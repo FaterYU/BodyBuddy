@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     ImageBackground,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Avatar } from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -21,27 +22,29 @@ function PersonDetails({navigation}) {
   const [avatar, setAvatar] = useState(null);
   return (
       <ScrollView>
-          <View style={{ backgroundColor: "#e9eaff" }}>
+          <View style={{ backgroundColor: "#ffffff" }}>
               <ImageBackground source={require('../assets/backgrounds/rain_glass.jpg')} style={{height:screenHeight*0.35}}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 12, marginTop: 12, zIndex:1000}}>
-                    <MaterialCommunityIcons name="chevron-left" size={36} color="#b6b7cc" />
-                </TouchableOpacity>
-                <Text style={styles.head}>Personal Profile</Text>
-                <TouchableOpacity
-                  style={styles.avatar}
-                  onPress={async () => {
-                    var imageSrc = await selectImage();
-                    setAvatar(imageSrc[0]);
-                  }}
-                >
-                    <Avatar
-                        source={{
-                          uri: avatar?avatar.uri:"https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg",
-                        }}
-                        size={150}
-                        rounded
-                      />
-                </TouchableOpacity>
+                <LinearGradient colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0)']} style={{height:screenHeight*0.35 }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 12, marginTop: 12, zIndex:1000}}>
+                        <MaterialCommunityIcons name="chevron-left" size={36} color="#b6b7cc" />
+                    </TouchableOpacity>
+                    <Text style={styles.head}>Personal Profile</Text>
+                    <TouchableOpacity
+                    style={styles.avatar}
+                    onPress={async () => {
+                        var imageSrc = await selectImage();
+                        setAvatar(imageSrc[0]);
+                    }}
+                    >
+                        <Avatar
+                            source={{
+                            uri: avatar?avatar.uri:"https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg",
+                            }}
+                            size={150}
+                            rounded
+                        />
+                    </TouchableOpacity>
+                </LinearGradient>
               </ImageBackground>
               <View style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40, height: screenHeight * 0.75, marginTop:-40, backgroundColor: "white", elevation:6 }}>
                   <View>
@@ -89,7 +92,7 @@ function PersonDetails({navigation}) {
 
                           <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             <TouchableOpacity style={styles.exit_button} onPress={() => navigation.goBack()}>
-                              <Text style={{fontWeight:'600',color:'white',fontSize:19}}>Exit</Text>
+                              <Text style={{fontWeight:'600',color:'#4869ff',fontSize:19}}>Exit</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.save_button}>
                               <Text style={{fontWeight:'600',color:'white',fontSize:19}}>Save</Text>
@@ -158,7 +161,7 @@ const styles = StyleSheet.create({
     head: {
         textAlign: "center",
         fontSize: 18,
-        color: "#05011f",
+        color: "#ffffff",
         marginTop: -30,
         fontWeight: "600"
     },
@@ -174,16 +177,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     exit_button: {
-        backgroundColor: "#dcddfe",
+        backgroundColor: "transparent",
         width: (screenWidth - 70) / 2,
         height: 50,
         marginTop: 25,
         borderRadius: 50,
         justifyContent:"center",
         alignItems:'center',
+        borderWidth: 1.8,
+        borderColor: "#4869ff",
     },
     save_button: {
-        backgroundColor: "#776dff",
+        backgroundColor: "#4869ff",
         width: (screenWidth - 70) / 2,
         height: 50,
         marginTop: 25,

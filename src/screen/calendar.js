@@ -15,48 +15,74 @@ import {
   FormControl,
   Popover,
 } from 'native-base';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {DateTimePickerAndroid} from '@react-native-community/datetimepicker';
+import UsersService from '../services/users.service';
+import CoursesService from '../services/courses.service';
+import SearchablePicker from '../components/SearchablePicker';
+import CourseCard from './courseCard';
 
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [eventTime, setEventTime] = useState("00:00 - 00:00");
+  const [eventTime, setEventTime] = useState({startTime: '', endTime: ''});
   const [eventContent, setEventContent] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [CourseList, setCourseList] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [forceItem, setForceItem] = useState(null);
 
-  const createNewAct = ({startTime, endTime, content, course}) => {
-    const url = 'http://bodybuddy.fater.top/api/users/addCalendarActivity';
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uid: 1,
-        activityDate: {
-          year: 2023,
-          month: 12,
-          day: 6,
-        },
-        startTime: {
-          hour: 12,
-          minute: 12,
-        },
-        activityEndTime: {
-          hour: 22,
-          minute: 12,
-        },
-        activityContent: 'I am activity',
-        activityCourseId: 1,
-      }),
+  useEffect(() => {
+    const loadCourseData = () => {
+      CoursesService.findAllCourse().then(res => {
+        var courseList = [];
+        res.data.forEach(item => {
+          courseList.push({
+            label: item.name,
+            value: item.id,
+          });
+        });
+        setCourseList(courseList);
+      });
     };
-    fetch(url, requestOptions)
-      .then(response => response.json())
-      .catch(error => console.log('error', error));
+    loadCourseData();
+  }, []);
+
+  const addCalendarActivity = () => {
+    var postData = {
+      uid: 1,
+      activityDate: {
+        year: startDate.getFullYear(),
+        month: startDate.getMonth() + 1,
+        day: startDate.getDate(),
+      },
+      activityStartTime: {
+        hour: startDate.getHours(),
+        minute: startDate.getMinutes(),
+      },
+      activityEndTime: {
+        hour: endDate.getHours(),
+        minute: endDate.getMinutes(),
+      },
+      activityContent: eventContent,
+      activityCourseId: selectedCourse,
+    };
+    console.log(postData);
+    UsersService.addCalendarActivity(postData).then(
+      response => {
+        setStartDate(new Date());
+        setEndDate(new Date());
+        setEventContent('');
+      },
+      error => {
+        console.log(error);
+      },
+    );
   };
 
   const todayDate = new Date();
@@ -64,63 +90,48 @@ const AgendaScreen = () => {
     todayDate.getMonth() + 1
   }-${todayDate.getDate()}`;
 
-  const loadItems = (day) => {
-    const currentItems = items || {};
+  const loadItems = originDay => {
+    var currentItems = items || {};
     var postData;
-    const url = "http://bodybuddy.fater.top/api/users/getCalendarActivity";
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        uid: 1,
-      }),
-    };
-
-    fetch(url, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      postData = result;
-
-      for (let i = -10; i < 15; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = timeToString(time);
-        if (!currentItems[strTime]) {
-          currentItems[strTime] = [];
+    UsersService.getCalendarActivity({uid: 1})
+      .then(response => {
+        postData = response.data;
+        for (let i = -10; i < 15; i++) {
+          const time = originDay.timestamp + i * 24 * 60 * 60 * 1000;
+          const strTime = timeToString(time);
+          if (!currentItems[strTime]) {
+            currentItems[strTime] = [];
+          }
         }
-      }
-      const dataLength = Object.keys(postData).length;
-      const Data = postData;
-      for (let i = 0; i < dataLength; i++) {
-        const month =
-          Data[i].activityDate.month < 10
-            ? '0' + Data[i].activityDate.month
-            : Data[i].activityDate.month;
-        const day =
-          Data[i].activityDate.day < 10
-            ? '0' + Data[i].activityDate.day
-            : Data[i].activityDate.day;
-        const date = Data[i].activityDate.year + '-' + month + '-' + day;
-        for (let j = 0; j < Data[i].activityList.length; j++) {
-          currentItems[date].push({
-            startTime:
-              Data[i].activityList[j].activityStartTime.hour +
-              ':' +
-              Data[i].activityList[j].activityStartTime.minute,
-            endTime:
-              Data[i].activityList[j].activityEndTime.hour +
-              ':' +
-              Data[i].activityList[j].activityEndTime.minute,
-            content: Data[i].activityList[j].activityContent,
-            course: Data[i].activityList[j].activityCourse,
-            day: date,
-          });
+        const dataLength = Object.keys(postData).length;
+        const Data = postData;
+        for (let i = 0; i < dataLength; i++) {
+          var month = Data[i].activityDate.month.toFixed(0).padStart(2, '0');
+          var day = Data[i].activityDate.day.toFixed(0).padStart(2, '0');
+          var date = Data[i].activityDate.year + '-' + month + '-' + day;
+          currentItems[date] = [];
+          for (let j = 0; j < Data[i].activityList.length; j++) {
+            currentItems[date].push({
+              activityId: Data[i].activityList[j].activityId,
+              startTime:
+                Data[i].activityList[j].activityStartTime.hour +
+                ':' +
+                Data[i].activityList[j].activityStartTime.minute,
+              endTime:
+                Data[i].activityList[j].activityEndTime.hour +
+                ':' +
+                Data[i].activityList[j].activityEndTime.minute,
+              content: Data[i].activityList[j].activityContent,
+              course: Data[i].activityList[j].activityCourse,
+              day: date,
+            });
+          }
         }
-      }
-      setItems({ ...currentItems });
-    })
-    .catch(error => console.log('error', error));
+        setItems(currentItems);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const renderItem = (reservation, isFirst) => {
@@ -131,21 +142,38 @@ const AgendaScreen = () => {
       <TouchableOpacity
         style={[styles.item]}
         onPress={() => {
-          setEventTime(reservation.startTime+" - "+reservation.endTime);
+          setEventTime(reservation.startTime + ' - ' + reservation.endTime);
           setEventContent(reservation.content);
+          setSelectedCourse(reservation.course.id);
           setShowModal(true);
           return true;
         }}
         onLongPress={() => {
+          setForceItem(reservation.activityId);
           setShowDeleteModal(true);
           return true;
         }}>
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection: 'row'}}>
           <Text style={{fontSize, color}}>{reservation.startTime}</Text>
           <Text style={{fontSize, color}}> - </Text>
           <Text style={{fontSize, color}}>{reservation.endTime}</Text>
         </View>
         <Text style={{fontSize, color}}>{reservation.content}</Text>
+        {reservation.course && (
+          <CourseCard
+            courseImg={{
+              uri:
+                'http://bodybuddy.fater.top/api/files/download?name=' +
+                reservation.course.photo,
+            }}
+            courseName={reservation.course.name}
+            courseTime={30}
+            courseCalorie={300}
+            courseLevel={'零基础'}
+            finishTTime={2}
+            adaptWidthRate={0.8}
+          />
+        )}
       </TouchableOpacity>
     );
   };
@@ -154,20 +182,20 @@ const AgendaScreen = () => {
     return (
       <TouchableOpacity
         style={[styles.emptyDate]}
-        onPress={() => setShowModal(true)}>
+        onPress={() => {
+          setStartDate(new Date());
+          setEndDate(new Date());
+          setEventContent('');
+          setSelectedCourse(null);
+          setShowModal(true);
+        }}>
         <Text>暂未添加日程</Text>
       </TouchableOpacity>
     );
   };
 
   const rowHasChanged = (r1, r2) => {
-    return (
-      r1.content !== r2.content ||
-      r1.startTime !== r2.startTime ||
-      r1.endTime !== r2.endTime ||
-      r1.course !== r2.course ||
-      r1.day !== r2.day
-    );
+    return r1.activityId !== r2.activityId;
   };
 
   const timeToString = time => {
@@ -175,26 +203,107 @@ const AgendaScreen = () => {
     return pdate.toISOString().split('T')[0];
   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setDate(currentDate);
+  // TODO: time confilct check and alert
+  const onStartDateChange = (event, selectedDate) => {
+    var currentDate = startDate;
+    currentDate.setDate(selectedDate.getDate());
+    setStartDate(currentDate);
+  };
+  const onStartTimeChange = (event, selectedDate) => {
+    var currentDate = startDate;
+    currentDate.setHours(selectedDate.getHours());
+    currentDate.setMinutes(selectedDate.getMinutes());
+    setStartDate(currentDate);
   };
 
-  const showMode = currentMode => {
+  const onEndDateChange = (event, selectedDate) => {
+    var currentDate = endDate;
+    currentDate.setDate(selectedDate.getDate());
+    setEndDate(currentDate);
+  };
+  const onEndTimeChange = (event, selectedDate) => {
+    var currentDate = endDate;
+    currentDate.setHours(selectedDate.getHours());
+    currentDate.setMinutes(selectedDate.getMinutes());
+    setEndDate(currentDate);
+  };
+
+  const showStartTimeMode = currentMode => {
     DateTimePickerAndroid.open({
-      value: date,
-      onChange,
+      value: startDate,
+      onChange: currentMode === 'date' ? onStartDateChange : onStartTimeChange,
       mode: currentMode,
       is24Hour: true,
     });
   };
 
-  const showTimepicker = () => {
-    showMode('time');
+  const showEndTimeMode = currentMode => {
+    DateTimePickerAndroid.open({
+      value: endDate,
+      onChange: currentMode === 'date' ? onEndDateChange : onEndTimeChange,
+      mode: currentMode,
+      is24Hour: true,
+    });
+  };
+
+  const showStartTimeTimepicker = () => {
+    showStartTimeMode('time');
+  };
+  const showStartDateTimepicker = () => {
+    showStartTimeMode('date');
+  };
+
+  const showEndTimeTimepicker = () => {
+    showEndTimeMode('time');
+  };
+  const showEndDateTimepicker = () => {
+    showEndTimeMode('date');
+  };
+
+  const handleValueChange = value => {
+    console.log(value);
+    setSelectedCourse(value);
+  };
+
+  const handleDelete = () => {
+    if (forceItem === null) {
+      Alert.alert('删除失败', '请重试', [{text: '确定'}]);
+      return;
+    }
+    UsersService.deleteCalendarActivity({uid: 1, activityId: forceItem}).then(
+      response => {
+        setForceItem(null);
+      },
+      error => {
+        console.log(error);
+      },
+    );
   };
 
   return (
     <>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={{fontSize: 20, marginLeft: 10}}>日程</Text>
+        <TouchableOpacity
+          onPress={() => {
+            setStartDate(new Date());
+            setEndDate(new Date());
+            setEventContent('');
+            setSelectedCourse(null);
+            setShowModal(true);
+          }}
+          style={{
+            width: 40,
+            height: 40,
+            alignItems: 'center',
+            backgroundColor: 'rgba(200,200,200,0.4)',
+            justifyContent: 'center',
+            borderRadius: 4,
+            marginRight: 10,
+          }}>
+          <MaterialCommunityIcons name="plus-circle" size={40} color="blue" />
+        </TouchableOpacity>
+      </View>
       <Agenda
         items={items}
         loadItemsForMonth={loadItems}
@@ -212,37 +321,109 @@ const AgendaScreen = () => {
               <Modal.Header>填写日程</Modal.Header>
               <Modal.Body>
                 <FormControl>
-                  <FormControl.Label>时间</FormControl.Label>
-                  <View style={{flexDirection:'row', alignItems:'center',height:40, justifyContent:'space-between'}}>
-                    <TouchableOpacity onPress={showTimepicker} style={{
-                      width:'44%',
-                      height:40,
-                      alignItems:'center',
-                      backgroundColor: 'rgba(200,200,200,0.4)',
-                      justifyContent:'center',
-                      borderRadius:4,
+                  <FormControl.Label>开始时间</FormControl.Label>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      height: 40,
+                      justifyContent: 'space-between',
                     }}>
+                    <TouchableOpacity
+                      onPress={showStartDateTimepicker}
+                      style={{
+                        width: '44%',
+                        height: 40,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        justifyContent: 'center',
+                        borderRadius: 4,
+                      }}>
                       <Text
                         style={{
                           fontSize: 20,
                         }}>
-                        {date.toTimeString().slice(0, 8)}
+                        {startDate.toDateString().slice(4, 10)}
                       </Text>
                     </TouchableOpacity>
-                    <Text style={{fontSize:40, alignSelf:"center", lineHeight:42}}> - </Text>
-                    <TouchableOpacity onPress={showTimepicker} style={{
-                      width:'44%',
-                      height:40,
-                      alignItems:'center',
-                      backgroundColor: 'rgba(200,200,200,0.4)',
-                      justifyContent:'center',
-                      borderRadius:4,
-                    }}>
+                    <Text
+                      style={{
+                        fontSize: 40,
+                        alignSelf: 'center',
+                        lineHeight: 42,
+                      }}>
+                      {' '}
+                      -{' '}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={showStartTimeTimepicker}
+                      style={{
+                        width: '44%',
+                        height: 40,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        justifyContent: 'center',
+                        borderRadius: 4,
+                      }}>
                       <Text
                         style={{
                           fontSize: 20,
                         }}>
-                        {date.toTimeString().slice(0, 8)}
+                        {startDate.toTimeString().slice(0, 5)}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </FormControl>
+                <FormControl>
+                  <FormControl.Label>结束时间</FormControl.Label>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      height: 40,
+                      justifyContent: 'space-between',
+                    }}>
+                    <TouchableOpacity
+                      onPress={showEndDateTimepicker}
+                      style={{
+                        width: '44%',
+                        height: 40,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        justifyContent: 'center',
+                        borderRadius: 4,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                        }}>
+                        {endDate.toDateString().slice(4, 10)}
+                      </Text>
+                    </TouchableOpacity>
+                    <Text
+                      style={{
+                        fontSize: 40,
+                        alignSelf: 'center',
+                        lineHeight: 42,
+                      }}>
+                      {' '}
+                      -{' '}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={showEndTimeTimepicker}
+                      style={{
+                        width: '44%',
+                        height: 40,
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        justifyContent: 'center',
+                        borderRadius: 4,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                        }}>
+                        {endDate.toTimeString().slice(0, 5)}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -250,6 +431,13 @@ const AgendaScreen = () => {
                 <FormControl mt="3">
                   <FormControl.Label>内容</FormControl.Label>
                   <Input value={eventContent} onChangeText={setEventContent} />
+                </FormControl>
+                <FormControl mt="3">
+                  <FormControl.Label>课程</FormControl.Label>
+                  <SearchablePicker
+                    data={CourseList}
+                    onValueChange={handleValueChange}
+                  />
                 </FormControl>
               </Modal.Body>
               <Modal.Footer>
@@ -264,6 +452,7 @@ const AgendaScreen = () => {
                   </Button>
                   <Button
                     onPress={() => {
+                      addCalendarActivity();
                       setShowModal(false);
                     }}>
                     Save
@@ -296,9 +485,10 @@ const AgendaScreen = () => {
                     Cancel
                   </Button>
                   <Button
+                    colorScheme="red"
                     onPress={() => {
+                      handleDelete();
                       setShowDeleteModal(false);
-                      colorScheme = 'red';
                     }}>
                     Delete
                   </Button>

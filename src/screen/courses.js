@@ -15,6 +15,7 @@ import {SearchBar} from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
 import { Image } from 'react-native-svg';
+import LinearGradient from 'react-native-linear-gradient';
 const screenWidth = Dimensions.get('window').width;
 
 function CoursesScreen({navigation}) {
@@ -38,11 +39,11 @@ function CoursesScreen({navigation}) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={{backgroundColor: "#ffffff"}}>
       <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
         <Text
           style={{
-            color: 'blue',
+            color: '#4969ff',
             fontSize: 26,
             fontWeight: 'bold',
             marginLeft: 10,
@@ -76,7 +77,7 @@ function CoursesScreen({navigation}) {
           marginTop: -4,
         }}
         inputContainerStyle={{
-          backgroundColor: 'rgba(220,220,220,0.4)',
+          backgroundColor: '#f6f6f6',
           borderRadius: 20,
           height: 40,
         }}
@@ -92,20 +93,20 @@ function CoursesScreen({navigation}) {
             paddingTop: 8,
           }}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 12}}>累计运动</Text>
-            <Text style={{fontSize: 16, color: 'black', marginTop: 10}}>
+            <Text style={{fontSize: 14}}>累计运动</Text>
+            <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               68分钟
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 12}}>完成天数</Text>
-            <Text style={{fontSize: 16, color: 'black', marginTop: 10}}>
+            <Text style={{fontSize: 14}}>完成天数</Text>
+            <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               2/28天
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 12}}>累计消耗</Text>
-            <Text style={{fontSize: 16, color: 'black', marginTop: 10}}>
+            <Text style={{fontSize: 14}}>累计消耗</Text>
+            <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               82分钟
             </Text>
           </View>
@@ -115,7 +116,7 @@ function CoursesScreen({navigation}) {
           activeOpacity={0.4}
           style={styles.planButton}
           onPress={goToCalendar}>
-          <Text style={{color: 'white'}}>查看今日训练计划</Text>
+          <Text style={{color: 'white', fontSize: 15,fontWeight: "bold", marginBottom: 2}}>查看今日训练计划</Text>
         </TouchableOpacity>
       </View>
       <View style={{width: '100%'}}>
@@ -124,9 +125,8 @@ function CoursesScreen({navigation}) {
             color: 'black',
             fontSize: 16,
             fontWeight: 'bold',
-            marginLeft: 16,
-            marginBottom: 4,
-            marginTop: 8,
+            marginLeft: 20,
+            marginVertical: 10
           }}>
           最近课程
         </Text>
@@ -147,9 +147,8 @@ function CoursesScreen({navigation}) {
             color: 'black',
             fontSize: 16,
             fontWeight: 'bold',
-            marginLeft: 16,
-            marginBottom: 4,
-            marginTop: 8,
+            marginLeft: 20,
+            marginVertical: 10
           }}>
           推荐课程
         </Text>
@@ -174,34 +173,32 @@ const RecommendCourse = ({courseName, takeTime, kalorie, level, BGimg}) => {
     <ImageBackground
       source={BGimg}
       style={{
-        backgroundColor: 'rgba(180,180,180,1)',
         marginBottom: 10,
-        paddingLeft: 16,
         height: 100,
         width: screenWidth - 20,
-        borderRadius: 2,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      }}>
-      <Text style={{color: 'white', fontSize: 17, marginLeft: 10}}>
-        {courseName}
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          marginBottom: 6,
-        }}>
-        <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-          {takeTime}分钟
-        </Text>
-        <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-          {kalorie}千卡
-        </Text>
-        <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-          {level}
-        </Text>
-      </View>
+        borderRadius: 8,
+        overflow:'hidden',}}>
+        <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']} style={{height: 100 , flexDirection: 'column', justifyContent: 'flex-end', overflow:'hidden',paddingLeft: 10}}>
+          <Text style={{color: 'white', fontSize: 17, marginLeft: 10}}>
+            {courseName}
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              marginBottom: 6,
+            }}>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+              {takeTime}分钟
+            </Text>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+              {kalorie}千卡
+            </Text>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+              {level}
+            </Text>
+          </View>
+        </LinearGradient>
     </ImageBackground>
   );
 };
@@ -218,12 +215,12 @@ const styles = StyleSheet.create({
     width: screenWidth - 20,
     alignSelf: 'center',
     borderRadius: 10,
-    backgroundColor: 'rgba(220,220,220,0.4)',
+    backgroundColor: '#f6f6f6',
   },
   planButton: {
     width: screenWidth - 56,
     alignSelf: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#4969ff',
     height: 32,
     borderRadius: 18,
     justifyContent: 'center',
