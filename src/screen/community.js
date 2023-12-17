@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from 'react';
-// import { Tab, Text, TabView } from '@rneui/themed';
-// import { FlatList, View } from 'react-native';
 import {
   Text,
   View,
@@ -23,6 +21,7 @@ import {
   Toast,
 } from 'native-base';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MasonryList from '@react-native-seoul/masonry-list';
 import {Tab, TabView, SearchBar} from '@rneui/themed';
 import { MMKV } from '../../App';
 import {useNavigation} from '@react-navigation/native';
@@ -72,29 +71,24 @@ export const WaterfallList = ({tabIndex}) => {
 
   const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
-  const CardList = ({item}) => {
-    const marginTop = item.id % numColumns === 1 ? -30 : 8;
-    const height = 240;
-    const photo =
-      'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
-
+  const CardList = ({item,index,columnIndex}) => {
+    // 奇数id margin-left: 8, margin-right: 4，偶数id margin-left: 4, margin-right: 8
+    const marginLeft = columnIndex % 2 === 0 ? -20 : 0;
+    const marginRight = columnIndex % 2 === 0 ? 30 : 14;
+    const photo = 'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
     return (
-      <Box alignItems="center" style={[styles.cardList, {height, marginTop}]}>
+      <View
+        style={[styles.cardList,{marginLeft,marginRight}]}
+      >
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('CommunityDetailScreen',{
               momentId: item.id,
             });
           }}>
-          <Box
-            style={styles.cardItem}
-            maxW="80"
-            rounded="lg"
-            overflow="hidden"
-            borderColor="coolGray.200"
-            borderWidth="1">
+          <View style={styles.cardItem}>
             <Box style={{backgroundColor: 'rgba(120,180,240,0.8)'}}>
-              <AspectRatio w="100%" ratio={3 / 2}>
+              <AspectRatio w="100%" ratio={3 / 3.2}>
                 <Image
                   source={{
                     uri: photo,
@@ -106,23 +100,26 @@ export const WaterfallList = ({tabIndex}) => {
             {/* 卡片文本 */}
             <View style={{paddingTop: 4, paddingHorizontal: 4}}>
               <Text
+              numberOfLines={2}
+              ellipsizeMode="tail"
                 style={{
                   color: 'black',
                   alignSelf: 'flex-start',
                   fontSize: 17,
                   fontWeight: 'bold',
-
                   overflow: 'hidden',
                 }}>
                 {item.content.title}
               </Text>
               <Text
+                numberOfLines={3}
+                ellipsizeMode="tail"
                 style={{
                   marginTop: 4,
-                  height: 36,
                   fontSize: 12,
-                  lineHeight: 12,
+                  lineHeight: 14,
                   overflow: 'hidden',
+                  marginBottom:28,
                 }}>
                 {item.content.text}
               </Text>
@@ -132,21 +129,21 @@ export const WaterfallList = ({tabIndex}) => {
                 Published : {item.updatedAt.slice(0, 16)}
               </Text>
             </View>
-          </Box>
+          </View>
         </TouchableOpacity>
-      </Box>
+      </View>
     );
   };
 
   return (
-    <FlatList
-      data={data}
-      renderItem={CardList}
-      keyExtractor={item => item.id.toString()}
-      numColumns={numColumns}
-      ListHeaderComponent={HeaderComponent}
-      contentContainerStyle={styles.flatListContent}
-    />
+<MasonryList
+  data={data}
+  keyExtractor={item => item.id.toString()}
+  numColumns={2}
+  showsVerticalScrollIndicator={false}
+  style={{width:"100%",paddingHorizontal:6,justifyContent:"center",alignItems:"center",marginTop:6}}
+  renderItem={({item}) => <CardList item={item}/>}
+/>
   );
 };
 
@@ -228,6 +225,12 @@ const CommunityScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  cardList:{
+    width:"100%",
+    justifyContent:"center",
+    alignItems:"center",
+    marginBottom:8,
+  },
   container: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -252,14 +255,14 @@ const styles = StyleSheet.create({
     paddingTop: 34,
   },
   cardItem: {
-    flex: 1,
-    marginLeft: 4,
-    marginRight: 4,
     borderRadius: 10,
     backgroundColor: 'rgba(248,248,248,0.9)',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: screenWidth / numColumns - 16,
+    borderColor:"rgba(200,200,200,1)",
+    borderWidth:0.6,
+    overflow: 'hidden',
   },
   view: {
     flexDirection: 'row',
