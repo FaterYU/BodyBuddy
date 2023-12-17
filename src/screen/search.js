@@ -35,7 +35,6 @@ const WaterfallList = ({renderData}) => {
     setData(renderData);
   }
   ,[renderData]);
-  console.log("data:",data)
   const navigation = useNavigation();
 
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
@@ -100,7 +99,7 @@ const WaterfallList = ({renderData}) => {
       </View>
     );
   };
-  if (!renderData) {
+  if (!renderData || renderData===undefined) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -142,7 +141,7 @@ const PoseList = ({renderData}) => {
                 <Text style={styles.list_head}>{item.name}</Text>
                 <View  style={{flexDirection:'row',marginLeft:16,overflow:'scroll',width:"95%",height:20}}>
                   {item.tags.muscle?.map((item, index) => {
-                    if(index>1 || item.length>24){
+                    if(index>1 || item.length>20){
                       return;
                     }
                     return (
@@ -163,6 +162,18 @@ const PoseList = ({renderData}) => {
 }
 
 const CourseList = ({renderData}) => {
+  if (renderData===undefined){
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Network Error!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width:screenWidth-80,height:screenWidth-80}}
+        />
+      </View>
+    )
+  }
   if (renderData.length === 0) {
     return (
       <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
@@ -194,6 +205,18 @@ const CourseList = ({renderData}) => {
 };
 
 const UserList = ({renderData}) => {
+  if (renderData===undefined){
+    return(
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Network Error!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width:screenWidth-80,height:screenWidth-80}}
+        />
+      </View>
+    )
+  }
   if (renderData.length === 0) {
     return (
       <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
@@ -207,15 +230,44 @@ const UserList = ({renderData}) => {
     );
   }
   return (
-    <ScrollView contentContainerStyle={{marginTop:10}} >
+    <ScrollView contentContainerStyle={{marginTop:10}} style={{flex:1,width:'100%'}} >
       {renderData.map((item, index) => {
+        const [follow, setFollow] = useState(false);
+
         const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
         return (
-          <View style={styles.list}>
-            <Image source={{uri:item.avatar}} style={styles.list_pic} alt="pose"></Image>
-            <View style={{flexDirection: 'column'}}>
+          <View style={{
+            width: '100%',
+            height: 54,
+            paddingHorizontal:16,
+            flexDirection: 'row',
+            alignItems:'center',
+            marginBottom:8,
+            marginTop:6,
+            justifyContent:'space-between',
+          }}>
+            <View style={{flexDirection: 'row',flex:1,height:'100%',alignItems:'center'}}>
+            <Image source={{uri:img}} style={{
+              width: 54,
+              height: 54,
+              backgroundColor: 'gray',
+              marginLeft: 0,
+              borderRadius: 10,
+            }} alt="pose"></Image>
               <Text style={styles.list_head}>{item.userName}</Text>
             </View>
+            <TouchableOpacity onPress={()=>setFollow(!follow)}>
+              <View style={{
+                borderRadius: 20,
+                borderWidth:2,
+                borderColor:"rgba(80,150,240,0.8)",
+                paddingHorizontal:16,
+                paddingVertical:4,
+                backgroundColor:follow?"rgba(80,150,240,0.8)":"white",
+              }}>
+                <Text style={{color:follow?"white":'rgba(80,150,240,0.8)'}}>{follow?"followed":"follow"}</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         )
         }
@@ -226,6 +278,9 @@ const UserList = ({renderData}) => {
 
 function ResolveSearch({tabIndex, renderData}){
   var data;
+  if(!renderData || renderData===undefined){
+    return;
+  }
   if(tabIndex===0){
     data = renderData.moments;
     return(<WaterfallList renderData={data} />)
@@ -237,6 +292,7 @@ function ResolveSearch({tabIndex, renderData}){
     return(<PoseList renderData={data}/>)
   }else if(tabIndex===3){
     data = renderData.users;
+    return(<UserList renderData={data}/>)
   }
 }
 
@@ -261,9 +317,6 @@ const SearchScreen = ({navigation}) => {
         }),
       };
       try {
-        if (searchContent === '') {
-          return;
-        }
         const response = await fetch(url, requestOptions);
         const allData = await response.json();
         setData(allData);
@@ -274,20 +327,6 @@ const SearchScreen = ({navigation}) => {
     fetchData();
   }, []);
 
-  // if (data===undefined || data===null) {
-  //   return (
-  //     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
-  //     </View>
-  //   );
-  // }else if(data.length === 0){
-  //   console.log(data)
-  //   return (
-  //     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-  //       <ActivityIndicator size="large" color="#0000ff" />
-  //     </View>
-  //   );
-  // }
   return (
     <>
       <View style={styles.container}>
