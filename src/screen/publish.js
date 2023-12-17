@@ -103,7 +103,7 @@ const PublishScreen = ({navigation}) => {
         name: item.fileName,
       });
     });
-    postImage(postImageList);
+    await postImage(postImageList);
     momentData.photo = momentData.content.photo[0];
     MomentsService.createMoment(momentData).then(res => {
       navigation.goBack();
