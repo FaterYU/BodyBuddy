@@ -15,7 +15,10 @@ import {WaterfallList} from './community';
 
 const screenWidth = Dimensions.get('window').width;
 
-const CourseFinish = ({navigation}) => {
+const CourseFinish = ({navigation, route}) => {
+  const fitId = route.params.fitId;
+  const score = Math.round(route.params.score * 100) / 100;
+  const duration = route.params.duration;
   const goToHome = () => {
     navigation.navigate('Courses');
   };
@@ -53,19 +56,25 @@ const CourseFinish = ({navigation}) => {
               style={{
                 width: 280,
                 height: 270,
-                marginTop:-80,
+                marginTop: -80,
                 borderRadius: 40,
                 marginBottom: 16,
-                marginLeft:8,
+                marginLeft: 8,
               }}
             />
-            <View style={{flexDirection:'row'}}>
-              <Text style={{fontSize: 40, color: 'black', fontWeight: 'bold', marginTop:-80}}>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  fontSize: 40,
+                  color: 'black',
+                  fontWeight: 'bold',
+                  marginTop: -80,
+                }}>
                 训练完成
               </Text>
               <Image
                 source={require('../assets/icons/礼花哥.png')}
-                style={{width:36, height:36, marginTop:-68, marginLeft:10}}
+                style={{width: 36, height: 36, marginTop: -68, marginLeft: 10}}
               />
             </View>
             <View style={styles.trainData}>
@@ -76,7 +85,7 @@ const CourseFinish = ({navigation}) => {
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-                  95
+                  {score}
                 </Text>
               </View>
               <View
@@ -92,7 +101,13 @@ const CourseFinish = ({navigation}) => {
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-                  23:59
+                  {Math.floor(duration / 60)
+                    .toString()
+                    .padStart(2, '0') +
+                    ':' +
+                    Math.floor(duration % 60)
+                      .toString()
+                      .padStart(2, '0')}
                 </Text>
               </View>
               <View

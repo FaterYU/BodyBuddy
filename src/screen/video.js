@@ -18,7 +18,6 @@ import {
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import {
   useFrameProcessor,
   useCameraDevice,
@@ -27,8 +26,13 @@ import {
   useCameraDevices,
 } from 'react-native-vision-camera';
 import Video from 'react-native-video';
+import FitsService from '../services/fits.service';
+import CoursesService from '../services/courses.service';
 
-const VideoScreen = ({navigation}) => {
+const VideoScreen = ({navigation, route}) => {
+  const courseId = route.params.id;
+  const courseData = route.params.courseData;
+  const fitId = route.params.fitId;
   useEffect(() => {
     // 设置为横屏
     Orientation.lockToLandscape();
@@ -38,7 +42,27 @@ const VideoScreen = ({navigation}) => {
       Orientation.lockToPortrait();
     };
   }, []); // 确保这个 effect 只在组件挂载和卸载时执行
+
   const [isVisible, setIsVisible] = useState(false);
+  const [scoreList, setScoreList] = useState([]);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const getData = () => {
+      FitsService.getScore({
+        id: fitId,
+      })
+        .then(res => {
+          setScoreList(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+    getData();
+  }, [fitId]);
+
   const showGoBackButton = () => {
     setIsVisible(true);
     setTimeout(() => {
@@ -47,7 +71,15 @@ const VideoScreen = ({navigation}) => {
   };
   const finishCourse = () => {
     Orientation.lockToPortrait();
-    navigation.navigate('CourseFinish');
+    FitsService.getOneFitScoreById({
+      id: fitId,
+    }).then(res => {
+      navigation.navigate('CourseFinish', {
+        fitId: fitId,
+        score: res.data.totalScore,
+        duration: duration,
+      });
+    });
   };
   return (
     <TouchableWithoutFeedback onPress={showGoBackButton}>
@@ -59,7 +91,9 @@ const VideoScreen = ({navigation}) => {
           flexDirection: 'row',
         }}>
         <View style={styles.video}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={{position:'absolute',top:14,left:6,zIndex:1000}} >
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{position: 'absolute', top: 14, left: 6, zIndex: 1000}}>
             <MaterialCommunityIcons
               name="chevron-left-circle"
               size={26}
@@ -69,12 +103,22 @@ const VideoScreen = ({navigation}) => {
           </TouchableOpacity>
           <Video
             source={{
-              uri: 'http://bodybuddy.fater.top/api/files/download?name=Aerial pedaling.mp4',
+              uri:
+                'http://bodybuddy.fater.top/api/files/download?name=' +
+                courseData.content.poseList[0].video,
             }}
-            style={{flex: 1,width:'100%'}}
+            style={{flex: 1, width: '100%'}}
             controls={true}
             resizeMode="cover"
-            poster="http://bodybuddy.fater.top/api/files/download?name=Aerial pedaling.jpg"
+            poster={
+              'http://bodybuddy.fater.top/api/files/download?name=' +
+              courseData.content.poseList[0].photo
+            }
+            onProgress={process => {
+              setCurrentTime(process.currentTime);
+              setDuration(process.playableDuration);
+            }}
+            onEnd={finishCourse}
           />
         </View>
 
@@ -97,50 +141,26 @@ const VideoScreen = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.camera}>
             <Frame />
+            <Frame />
           </View>
           <View style={styles.score}>
             <Text style={{color: 'white', marginTop: 30}}>当前评分</Text>
             <Text style={{color: 'white', fontSize: 44, fontWeight: 700}}>
-              93
+              {Math.round(scoreList[Math.round(currentTime * 2)])}
             </Text>
             <Text style={{color: 'white', marginBottom: 30}}>继续保持</Text>
           </View>
         </View>
-
-        {/* <Video
-                    ref={ref = this.Video = ref}
-                    source={{uri: "url"}}
-                    poster={"url"}
-                    paused={paused}
-                    onProgress={({currentTime}) => {}}
-                    onLoad={({duration}) => {}}
-                    onEnd={() => {}}
-                    resizeMode="cover"
-                    posterResizeMode="cover"
-                    style={style}
-                /> */}
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-// const VideoPlayer = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Video
-//         source={{uri: 'https://example.com/path/to/your/video.mp4'}} // 替换为实际视频的 URL
-//         style={styles.video}
-//         controls={true}
-//       />
-//     </View>
-//   );
-// };
-
 const Frame = () => {
   const device = useCameraDevice('front');
   const FrameProcessor = useFrameProcessor(frame => {
     'worklet';
-    console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
+    // console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
   }, []);
   if (device == null) return <NoCameraDeviceError />;
   return (
@@ -156,20 +176,20 @@ const Frame = () => {
 const styles = StyleSheet.create({
   video: {
     height: '100%',
-    // backgroundColor: 'gray',
-    width: '80%',
+    backgroundColor: 'gray',
+    flexDirection: 'column',
+    width: '65%',
   },
   camera: {
-    height: '50%',
+    flex: 1,
+    aspectRatio: 9 / 16,
+    transform: [{rotate: '90deg'}],
     backgroundColor: 'rgba(200,200,200,0.8)',
-    width: '100%',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: '65%',
   },
   sideCard: {
     height: '100%',
-    width: '20%',
+    width: '35%',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -177,7 +197,7 @@ const styles = StyleSheet.create({
   score: {
     backgroundColor: 'rgba(70,210,90,1)',
     width: '100%',
-    height: '50%',
+    height: '40%',
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
