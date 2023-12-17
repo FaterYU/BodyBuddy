@@ -42,6 +42,9 @@ export const WaterfallList = ({tabIndex}) => {
       var requestOptions;
       if (tabIndex === 1) {
         const id = MMKV.getString('uid');
+        if (id === null) {
+          return;
+        }
         requestOptions = {
           method: 'POST',
           headers: {
@@ -69,16 +72,15 @@ export const WaterfallList = ({tabIndex}) => {
     fetchData();
   }, [tabIndex]);
 
-  const HeaderComponent = () => <View style={styles.headerComp}></View>;
+  // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
   const CardList = ({item,index,columnIndex}) => {
-    // 奇数id margin-left: 8, margin-right: 4，偶数id margin-left: 4, margin-right: 8
-    const marginLeft = columnIndex % 2 === 0 ? -20 : 0;
-    const marginRight = columnIndex % 2 === 0 ? 30 : 14;
+
     const photo = 'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
+
     return (
       <View
-        style={[styles.cardList,{marginLeft,marginRight}]}
+        style={styles.cardList}
       >
         <TouchableOpacity
           onPress={() => {
@@ -87,7 +89,7 @@ export const WaterfallList = ({tabIndex}) => {
             });
           }}>
           <View style={styles.cardItem}>
-            <Box style={{backgroundColor: 'rgba(120,180,240,0.8)'}}>
+            <Box style={{backgroundColor: 'rgba(180,180,240,0.8)'}}>
               <AspectRatio w="100%" ratio={3 / 3.2}>
                 <Image
                   source={{
@@ -134,27 +136,68 @@ export const WaterfallList = ({tabIndex}) => {
       </View>
     );
   };
-
+  // console.log(data);
+  if (MMKV.getString('uid')===null&&tabIndex===1) {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <Text>You Haven't Login Yet!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width:screenWidth-80,height:screenWidth-80}}
+        />
+      </View>
+    );
+  }
+  console.log(data)
+  if (tabIndex===0 && data.length===0) {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+  }
   return (
-<MasonryList
-  data={data}
-  keyExtractor={item => item.id.toString()}
-  numColumns={2}
-  showsVerticalScrollIndicator={false}
-  style={{width:"100%",paddingHorizontal:6,justifyContent:"center",alignItems:"center",marginTop:6}}
-  renderItem={({item}) => <CardList item={item}/>}
-/>
+  <MasonryList
+    data={data}
+    keyExtractor={item => item.id.toString()}
+    numColumns={2}
+    showsVerticalScrollIndicator={false}
+    style={{width:"100%",paddingHorizontal:6,justifyContent:"center",alignItems:"center",marginTop:6}}
+    renderItem={({item}) => <CardList item={item}/>}
+  />
   );
 };
 
 const CommunityScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
+  const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    setSearch('');
+    navigation.navigate('SearchScreen', { searchContent: search });
+  };
+  const updateSearch = (text) => {
+    setSearch(text);
+  };
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.view}>
-          <SearchBar
+          {/* <SearchBar
             inputStyle={styles.input}
             placeholder="Search Here..."
             round={true}
@@ -165,7 +208,22 @@ const CommunityScreen = ({navigation}) => {
             inputContainerStyle={styles.inputContainerStyle}
             // onChangeText={updateSearch}
             // value={search}
-          />
+          /> */}
+                <SearchBar
+        inputStyle={{
+          fontSize: 16,
+        }}
+        placeholder="Search Here..."
+        round={true}
+        lightTheme
+        showCancel
+        platform="android"
+        containerStyle={styles.containerStyle}
+        inputContainerStyle={styles.inputContainerStyle}
+        onSubmitEditing={handleSearch}
+        onChangeText={updateSearch}
+        value={search}
+      />
           <TouchableOpacity
             onPress={() => navigation.navigate('PublishScreen')}>
             <MaterialCommunityIcons

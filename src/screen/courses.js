@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   ImageBackground,
+  StatusBar,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {SearchBar} from '@rneui/themed';

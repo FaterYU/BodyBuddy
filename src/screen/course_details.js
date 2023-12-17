@@ -15,12 +15,15 @@ import {
   StyleSheet,
   Dimensions,
   SafeAreaView,
+  ActivityIndicator,
   FlatList,
   ReactFragment,
   ImageBackground,
   TouchableOpacity,
   TouchableHighlight,
   TouchableWithoutFeedback,
+  StatusBar,
+  Image,
 } from 'react-native';
 import {BorderlessButton} from 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
@@ -44,9 +47,9 @@ function DetailsScreen({navigation,route}) {
       fetch(url, requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log(data.content.poseList);
           setCourseData(data);
-        });
+        })
     };
     getCourseDate();
   }, []);
@@ -58,44 +61,47 @@ function DetailsScreen({navigation,route}) {
   const photoUrl = courseData ? 'http://bodybuddy.fater.top/api/files/download?name=' + courseData.photo : '';
   if (courseData == null) {
     return (
-      <View>
-        <Text>loading</Text>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
   return (
     <ScrollView>
+      <StatusBar translucent backgroundColor="transparent" />
       <ImageBackground style={styles.top} source={courseData ? { uri: photoUrl } : null}>
-        <View
-          style={{
-            width: '95%',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons
-              name="chevron-left"
-              size={40}
-              color="white"
-            />
-          </TouchableOpacity>
-          <MaterialCommunityIcons name="share" size={35} color="white" />
-        </View>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>{courseData.name}</Text>
-        <View style={styles.top_list}>
-          <View>
-            <Text style={styles.tlhead}>时长</Text>
-            <Text style={styles.tldetails}>2次</Text>
+        <View style={{flex:1,backgroundColor:'rgba(0,0,0,0.2)',paddingTop:32}}>
+          <View
+            style={{
+              width: '95%',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons
+                name="chevron-left"
+                size={40}
+                color="white"
+              />
+            </TouchableOpacity>
+            <MaterialCommunityIcons name="share" size={35} color="white" />
           </View>
-          <Divider style={styles.tl_divider} orientation="vertical" width={2} />
-          <View>
-            <Text style={styles.tlhead}>燃脂</Text>
-            <Text style={styles.tldetails}>68千卡</Text>
-          </View>
-          <Divider style={styles.tl_divider} orientation="vertical" width={2} />
-          <View>
-            <Text style={styles.tlhead}>难度</Text>
-            <Text style={styles.tldetails}>零基础</Text>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>{courseData.name}</Text>
+          <View style={styles.top_list}>
+            <View>
+              <Text style={styles.tlhead}>时长</Text>
+              <Text style={styles.tldetails}>2次</Text>
+            </View>
+            <Divider style={styles.tl_divider} color={"rgba(240,240,240,0.1)"} orientation="vertical" width={2} />
+            <View>
+              <Text style={styles.tlhead}>燃脂</Text>
+              <Text style={styles.tldetails}>68千卡</Text>
+            </View>
+            <Divider style={styles.tl_divider} color={"rgba(240,240,240,0.1)"} orientation="vertical" width={2} />
+            <View>
+              <Text style={styles.tlhead}>难度</Text>
+              <Text style={styles.tldetails}>零基础</Text>
+            </View>
           </View>
         </View>
       </ImageBackground>
@@ -106,7 +112,27 @@ function DetailsScreen({navigation,route}) {
             fontSize: 20,
             fontWeight: '700',
             margin: 10,
-            marginTop: 20,
+            marginTop: 14,
+          }}>
+          课前准备
+        </Text>
+        <Text
+          style={{
+            color: '#6E6E6E',
+            fontSize: 16,
+            margin: 10,
+            marginTop: 4,
+            paddingHorizontal: 12,
+          }}>
+          {courseData.content.prepare}
+        </Text>
+        <Text
+          style={{
+            color: '#333333',
+            fontSize: 20,
+            fontWeight: '700',
+            margin: 10,
+            marginTop: 2,
           }}>
           课程介绍
         </Text>
@@ -115,12 +141,10 @@ function DetailsScreen({navigation,route}) {
             color: '#6E6E6E',
             fontSize: 16,
             margin: 10,
-            marginTop: 10,
+            marginTop: 4,
             paddingHorizontal: 12,
           }}>
-          HIIT通过短暂高强度的运动和休息的交替重复进行，
-          能在单位时间内就达到非常高的能量消耗效果，
-          对于快节奏生活的都市人群来说这是一种非常不错的训练方式。
+          {courseData.content.description}
         </Text>
         <View style={styles.trainData}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
@@ -166,27 +190,31 @@ function DetailsScreen({navigation,route}) {
         </View>
       </View>
       <VStack>
-        <View style={styles.list}>
-          <View style={styles.list_pic}></View>
-          <View style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
-            <Text style={styles.list_head}>臀部动态拉伸</Text>
-            <Text style={styles.list_details}>10次</Text>
-          </View>
-        </View>
-        <View style={styles.list}>
-          <View style={styles.list_pic}></View>
-          <View style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
-            <Text style={styles.list_head}>正踢腿</Text>
-            <Text style={styles.list_details}>16次</Text>
-          </View>
-        </View>
-        <View style={styles.list}>
-          <View style={styles.list_pic}></View>
-          <View style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
-            <Text style={styles.list_head}>俯身转体</Text>
-            <Text style={styles.list_details}>8次</Text>
-          </View>
-        </View>
+        {courseData.content.poseList?.map((item, index) => {
+          const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
+          return (
+            <View style={styles.list}>
+              <Image source={{uri:img}} style={styles.list_pic}></Image>
+              <View style={{flexDirection: 'column'}}>
+                <Text style={styles.list_head}>{item.name}</Text>
+                <View  style={{flexDirection:'row',marginLeft:16,overflow:'scroll',width:"95%",height:20}}>
+                  {item.tags.muscle?.map((item, index) => {
+                    if(index>1 || item.length>24){
+                      return;
+                    }
+                    return (
+                      <View style={{backgroundColor:'rgba(140,130,250,0.8)',borderRadius:20,paddingHorizontal:6,paddingVertical:2,justifyContent:'center',alignItems:"center",marginRight:4}}>
+                        <Text style={{fontSize:12,color:'white'}}>{item}</Text>
+                      </View>
+                    );
+                  })}
+                </View>
+                <Text style={styles.list_details}>{item.like} likes</Text>
+              </View>
+            </View>
+          );
+        }
+        )}
       </VStack>
       <View
         style={{
@@ -233,7 +261,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   tl_divider: {
-    color: '#E4E4E4',
+    backgroundColor: 'rgba(255,255,255,1)',
     marginVertical: 30,
   },
   tldetails: {
@@ -262,6 +290,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 10,
     flexDirection: 'row',
+    alignItems:'center',
   },
   list_pic: {
     width: 125,
@@ -271,14 +300,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   list_head: {
-    marginLeft: 15,
-    marginTop: 5,
+    marginLeft: 16,
+    marginVertical: 4,
     color: '#333333',
     fontSize: 18,
   },
   list_details: {
-    marginLeft: 15,
-    fontSize: 16,
+    marginLeft: 16,
+    marginTop:4,
+    fontSize: 14,
   },
   button: {
     width: '90%',
