@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Image,
   Picker,
-  ToastAndroid,
   TextInput,
 } from 'react-native';
 import React, {useEffect, useState, Component} from 'react';
@@ -30,7 +29,7 @@ import SearchablePicker from '../components/SearchablePicker';
 import MomentsService from '../services/moments.service';
 import CoursesService from '../services/courses.service';
 import UploadFilesService from '../services/upload.service';
-import { MMKV } from '../../App';
+import {MMKV} from '../../App';
 
 const PublishScreen = ({navigation}) => {
   const {isOpen, onToggle} = useDisclose();
@@ -40,9 +39,6 @@ const PublishScreen = ({navigation}) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [CourseList, setCourseList] = useState([]);
   const uid = MMKV.getString('uid');
-  function showToast(Text) {
-    ToastAndroid.show(Text, ToastAndroid.SHORT);
-  }
   useEffect(() => {
     const loadCourseData = () => {
       CoursesService.findAllCourse().then(res => {
@@ -59,15 +55,7 @@ const PublishScreen = ({navigation}) => {
     loadCourseData();
   }, []);
 
-  const publishMoment = () => {
-    if (uid == null) {
-      showToast('Please login first');
-      return;
-    }
-    if (title == '' || content == '' || imageSourceList.length == 0) {
-      showToast('Please make sure you have filled in all the information');
-      return;
-    }
+  const publishMoment = async () => {
     const postImage = async postImageList => {
       await Promise.all(
         postImageList.map(async (item, index) => {
@@ -115,13 +103,13 @@ const PublishScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{backgroundColor:"rgba(247,247,247,1)"}}>
+    <View style={{backgroundColor: 'rgba(247,247,247,1)'}}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundColor:'white'
+          backgroundColor: 'white',
         }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons
@@ -174,7 +162,7 @@ const PublishScreen = ({navigation}) => {
           alignSelf: 'center',
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop:12,
+          marginTop: 12,
         }}>
         <SearchablePicker data={CourseList} onValueChange={handleValueChange} />
       </View>
@@ -246,7 +234,6 @@ const PublishScreen = ({navigation}) => {
                   },
                 },
               }}>
-
               <IconButton
                 mb="4"
                 variant="solid"
