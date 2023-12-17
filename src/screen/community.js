@@ -235,7 +235,7 @@ const CommunityScreen = ({navigation}) => {
               name="plus-circle"
               style={{marginLeft: 4}}
               size={40}
-              color="blue"
+              color="#4969ff"
             />
           </TouchableOpacity>
         </View>
@@ -244,7 +244,7 @@ const CommunityScreen = ({navigation}) => {
             value={index}
             onChange={e => setIndex(e)}
             indicatorStyle={{
-              backgroundColor: 'blue',
+              backgroundColor: '#4969ff',
               borderRadius: 1,
               height: 2,
               width: '50%',

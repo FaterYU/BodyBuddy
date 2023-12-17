@@ -141,6 +141,7 @@ const VideoScreen = ({navigation, route}) => {
           </TouchableOpacity>
           <View style={styles.camera}>
             <Frame />
+            <Frame />
           </View>
           <View style={styles.score}>
             <Text style={{color: 'white', marginTop: 30}}>当前评分</Text>

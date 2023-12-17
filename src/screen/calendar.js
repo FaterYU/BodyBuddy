@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Alert, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Alert, StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {
   Input,
@@ -22,6 +22,7 @@ import UsersService from '../services/users.service';
 import CoursesService from '../services/courses.service';
 import SearchablePicker from '../components/SearchablePicker';
 import CourseCard from './courseCard';
+import { MMKV } from '../../App';
 
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
@@ -36,7 +37,22 @@ const AgendaScreen = () => {
   const [CourseList, setCourseList] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [forceItem, setForceItem] = useState(null);
+  const uid=MMKV.getString('uid');
 
+  useEffect(() => {
+    if (startDate > endDate) {
+      setEndDate(startDate);
+    }
+    // 每次修改日程后重新加载日程
+    if (showModal === false) {
+      loadItems({timestamp: new Date().getTime()});
+    }
+    loadItems({timestamp: new Date().getTime()});
+    // 重新渲染日程
+    setItems(items);
+    console.log(startDate, endDate)
+  }
+  , [startDate, endDate]);
   useEffect(() => {
     const loadCourseData = () => {
       CoursesService.findAllCourse().then(res => {
@@ -135,8 +151,8 @@ const AgendaScreen = () => {
   };
 
   const renderItem = (reservation, isFirst) => {
-    const fontSize = isFirst ? 16 : 14;
-    const color = isFirst ? 'black' : '#43515c';
+    const fontSize =16;
+    const color = 'black' ;
 
     return (
       <TouchableOpacity
@@ -154,9 +170,9 @@ const AgendaScreen = () => {
           return true;
         }}>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize, color}}>{reservation.startTime}</Text>
-          <Text style={{fontSize, color}}> - </Text>
-          <Text style={{fontSize, color}}>{reservation.endTime}</Text>
+          <Text style={{fontSize, color, fontWeight:"bold"}}>{reservation.startTime}</Text>
+          <Text style={{fontSize, color, fontWeight:"bold"}}> - </Text>
+          <Text style={{fontSize, color, fontWeight:"bold"}}>{reservation.endTime}</Text>
         </View>
         <Text style={{fontSize, color}}>{reservation.content}</Text>
         {reservation.course && (
@@ -279,11 +295,18 @@ const AgendaScreen = () => {
       },
     );
   };
-
+  
+  // if (uid === null) {
+  //   return (
+  //     <View>
+  //       <Text>请先登录</Text>
+  //     </View>
+  //   );
+  // }
   return (
     <>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{fontSize: 20, marginLeft: 10}}>日程</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',backgroundColor:'white'}}>
+        <Text style={{fontSize: 20, marginLeft: 22, alignSelf:'center'}}>日程</Text>
         <TouchableOpacity
           onPress={() => {
             setStartDate(new Date());
@@ -296,12 +319,12 @@ const AgendaScreen = () => {
             width: 40,
             height: 40,
             alignItems: 'center',
-            backgroundColor: 'rgba(200,200,200,0.4)',
             justifyContent: 'center',
+            alignSelf:'center',
             borderRadius: 4,
             marginRight: 10,
           }}>
-          <MaterialCommunityIcons name="plus-circle" size={40} color="blue" />
+          <MaterialCommunityIcons name="plus-circle" size={40} color="rgba(80,150,240,0.8)" />
         </TouchableOpacity>
       </View>
       <Agenda
@@ -321,27 +344,27 @@ const AgendaScreen = () => {
               <Modal.Header>填写日程</Modal.Header>
               <Modal.Body>
                 <FormControl>
-                  <FormControl.Label>开始时间</FormControl.Label>
+                  <FormControl.Label><Text style={{fontSize:18,fontWeight:'bold'}}>From</Text></FormControl.Label>
                   <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
                       height: 40,
-                      justifyContent: 'space-between',
+                      justifyContent: 'flex-start',
                     }}>
                     <TouchableOpacity
                       onPress={showStartDateTimepicker}
                       style={{
-                        width: '44%',
                         height: 40,
                         alignItems: 'center',
                         backgroundColor: 'rgba(200,200,200,0.4)',
                         justifyContent: 'center',
                         borderRadius: 4,
+                        paddingHorizontal:6,
                       }}>
                       <Text
                         style={{
-                          fontSize: 20,
+                          fontSize: 16,
                         }}>
                         {startDate.toDateString().slice(4, 10)}
                       </Text>
@@ -367,7 +390,7 @@ const AgendaScreen = () => {
                       }}>
                       <Text
                         style={{
-                          fontSize: 20,
+                          fontSize: 16,
                         }}>
                         {startDate.toTimeString().slice(0, 5)}
                       </Text>
@@ -375,27 +398,27 @@ const AgendaScreen = () => {
                   </View>
                 </FormControl>
                 <FormControl>
-                  <FormControl.Label>结束时间</FormControl.Label>
+                  <FormControl.Label><Text style={{fontSize:18,fontWeight:'bold'}}>To</Text></FormControl.Label>
                   <View
                     style={{
                       flexDirection: 'row',
                       alignItems: 'center',
                       height: 40,
-                      justifyContent: 'space-between',
+                      justifyContent: 'flex-start',
                     }}>
                     <TouchableOpacity
                       onPress={showEndDateTimepicker}
                       style={{
-                        width: '44%',
                         height: 40,
                         alignItems: 'center',
                         backgroundColor: 'rgba(200,200,200,0.4)',
                         justifyContent: 'center',
                         borderRadius: 4,
+                        paddingHorizontal:6,
                       }}>
                       <Text
                         style={{
-                          fontSize: 20,
+                          fontSize: 16,
                         }}>
                         {endDate.toDateString().slice(4, 10)}
                       </Text>
@@ -421,7 +444,7 @@ const AgendaScreen = () => {
                       }}>
                       <Text
                         style={{
-                          fontSize: 20,
+                          fontSize: 16,
                         }}>
                         {endDate.toTimeString().slice(0, 5)}
                       </Text>
@@ -430,7 +453,7 @@ const AgendaScreen = () => {
                 </FormControl>
                 <FormControl mt="3">
                   <FormControl.Label>内容</FormControl.Label>
-                  <Input value={eventContent} onChangeText={setEventContent} />
+                  <TextInput value={eventContent} onChangeText={setEventContent} placeholder={eventContent} style={{borderWidth:2,borderColor:'rgba(80,150,240,0.8)',borderRadius:10,overflow:'hidden'}} />
                 </FormControl>
                 <FormControl mt="3">
                   <FormControl.Label>课程</FormControl.Label>
@@ -451,6 +474,7 @@ const AgendaScreen = () => {
                     Cancel
                   </Button>
                   <Button
+                    style={{backgroundColor:'rgba(80,150,240,0.8)'}}
                     onPress={() => {
                       addCalendarActivity();
                       setShowModal(false);

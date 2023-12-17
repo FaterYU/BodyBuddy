@@ -102,12 +102,13 @@ const PublishScreen = ({navigation}) => {
   };
 
   return (
-    <View>
+    <View style={{backgroundColor:"rgba(247,247,247,1)"}}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          backgroundColor:'white'
         }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons
@@ -122,7 +123,7 @@ const PublishScreen = ({navigation}) => {
           <View
             style={{
               paddingHorizontal: 4,
-              backgroundColor: 'blue',
+              backgroundColor: '#575dfb',
               width: 60,
               height: 28,
               justifyContent: 'center',
@@ -137,7 +138,7 @@ const PublishScreen = ({navigation}) => {
       </View>
       <View style={{marginLeft: '2%', width: '90%'}}>
         <Input
-          placeholder="标题"
+          placeholder="Title"
           variant="unstyled"
           size="2xl"
           value={title}
@@ -146,8 +147,8 @@ const PublishScreen = ({navigation}) => {
       </View>
       <View style={{width: '94%', alignSelf: 'center'}}>
         <TextArea
-          placeholder="说点什么..."
-          containerStyle={{border: 1, borderColor: 'gray'}}
+          placeholder="Share something here..."
+          containerStyle={{border: 2, borderColor: '#575dfb'}}
           h={160}
           style={styles.inputContent}
           value={content}
@@ -231,29 +232,11 @@ const PublishScreen = ({navigation}) => {
                   },
                 },
               }}>
+
               <IconButton
                 mb="4"
                 variant="solid"
-                bg="indigo.500"
-                colorScheme="indigo"
-                borderRadius="10"
-                icon={
-                  <Icon
-                    as={MaterialCommunityIcons}
-                    size="10"
-                    name="map-marker"
-                    _dark={{
-                      color: 'warmGray.50',
-                    }}
-                    color="warmGray.50"
-                  />
-                }
-              />
-              <IconButton
-                mb="4"
-                variant="solid"
-                bg="yellow.400"
-                colorScheme="yellow"
+                bg="#575dfb"
                 borderRadius="10"
                 onPress={async () => {
                   var imageSrc = await selectImage();
@@ -279,26 +262,7 @@ const PublishScreen = ({navigation}) => {
               <IconButton
                 mb="4"
                 variant="solid"
-                bg="teal.400"
-                colorScheme="teal"
-                borderRadius="10"
-                icon={
-                  <Icon
-                    as={MaterialCommunityIcons}
-                    _dark={{
-                      color: 'warmGray.50',
-                    }}
-                    size="10"
-                    name="video"
-                    color="warmGray.50"
-                  />
-                }
-              />
-              <IconButton
-                mb="4"
-                variant="solid"
-                bg="red.500"
-                colorScheme="red"
+                bg="rgba(80,150,240,1)"
                 borderRadius="10"
                 onPress={async () => {
                   var imageSrc = await takePhoto();
@@ -363,7 +327,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 10,
     marginBottom: 10,
-    padding: 10,
+    padding: 16,
     fontSize: 16,
     flexWrap: 'wrap',
   },

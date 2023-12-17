@@ -253,7 +253,7 @@ const SearchScreen = ({navigation}) => {
               name="chevron-left"
               style={{marginLeft: -10, marginRight: 4}}
               size={40}
-              color="blue"
+              color="#4969ff"
             />
           </TouchableOpacity>
           <SearchBar
@@ -283,7 +283,7 @@ const SearchScreen = ({navigation}) => {
             value={index}
             onChange={e => setIndex(e)}
             indicatorStyle={{
-              backgroundColor: 'blue',
+              backgroundColor: '#4969ff',
               borderRadius: 1,
               height: 2,
               width: '25%',
