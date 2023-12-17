@@ -87,7 +87,6 @@ const PublishScreen = ({navigation}) => {
     await Promise.all(
       postImageList.map(async (item, index) => {
         const res = await UploadFilesService.upload(item, event => {
-          // console.log(event);
         });
         momentData.content.photo[index] = res.data.message;
       }),
@@ -165,7 +164,7 @@ const PublishScreen = ({navigation}) => {
         }}>
         <SearchablePicker data={CourseList} onValueChange={handleValueChange} />
       </View>
-      {/* {selectedValue && <Text>Selected Value: {selectedValue}</Text>} */}
+      {/* {selectedValue && <Text>Selected Value: {selectedValue} </Text>} */}
       <ScrollView
         horizontal={true}
         style={{flexDirection: 'row', marginTop: 10, padding: 10}}
@@ -366,6 +365,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     padding: 10,
+    fontSize: 16,
     flexWrap: 'wrap',
   },
 });

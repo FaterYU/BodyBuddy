@@ -107,7 +107,7 @@ export const WaterfallList = ({tabIndex}) => {
                 style={{
                   color: 'black',
                   alignSelf: 'flex-start',
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: 'bold',
                   overflow: 'hidden',
                 }}>
@@ -119,7 +119,7 @@ export const WaterfallList = ({tabIndex}) => {
                 style={{
                   marginTop: 6,
                   fontSize: 14,
-                  lineHeight: 14,
+                  lineHeight: 16,
                   overflow: 'hidden',
                   marginBottom:22,
                   color:"#333333"
