@@ -11,18 +11,30 @@ import {useNavigation} from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 
-function CourseCard({courseId, courseName, courseTime, courseCalorie, courseLevel, finishTime, courseImg}) {
+function CourseCard({
+  courseId,
+  courseName,
+  courseTime,
+  courseCalorie,
+  courseLevel,
+  finishTime,
+  courseImg,
+  adaptWidthRate = 1,
+}) {
+  const containerWidth = adaptWidthRate * screenWidth - 20;
   const navigation = useNavigation();
   const goToCourse = () => {
-    navigation.navigate('DetailsScreen',{id:courseId});
+    navigation.navigate('DetailsScreen', {id: courseId});
   };
   return (
-    <TouchableOpacity style={styles.container} onPress={goToCourse}>
+    <TouchableOpacity
+      style={{
+        ...styles.container,
+        width: containerWidth,
+      }}
+      onPress={goToCourse}>
       <View>
-        <Image
-          source={courseImg}
-          style={styles.img}
-        />
+        <Image source={courseImg} style={styles.img} />
       </View>
       <View
         style={{
@@ -30,13 +42,27 @@ function CourseCard({courseId, courseName, courseTime, courseCalorie, courseLeve
           justifyContent: 'space-around',
           height: 90,
         }}>
-        <Text style={{fontSize: 16, fontWeight: '500', color: 'black'}}>
+        <Text
+          numberOfLines={3}
+          ellipsizeMode="tail"
+          style={{
+            fontSize: 16,
+            fontWeight: '500',
+            color: 'black',
+            width: containerWidth - 135,
+          }}>
           {courseName}
         </Text>
-        <View style={{flexDirection: 'row', justifyContent: 'flex-start',width:'100%'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            width: '100%',
+            marginTop: 8,
+          }}>
           <Text style={{fontSize: 12}}>{courseTime}分钟</Text>
-          <Text style={{fontSize: 12, marginLeft:8}}>{courseCalorie}千卡</Text>
-          <Text style={{fontSize: 12, marginLeft:8}}>{courseLevel}</Text>
+          <Text style={{fontSize: 12, marginLeft: 8}}>{courseCalorie}千卡</Text>
+          <Text style={{fontSize: 12, marginLeft: 8}}>{courseLevel}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <MaterialCommunityIcons
@@ -45,7 +71,9 @@ function CourseCard({courseId, courseName, courseTime, courseCalorie, courseLeve
             color="gray"
             style={{marginTop: 18}}
           />
-          <Text style={{marginTop: 16, fontSize: 13}}>已完成{finishTime}次</Text>
+          <Text style={{marginTop: 16, fontSize: 13}}>
+            已完成{finishTime}次
+          </Text>
         </View>
       </View>
       <MaterialCommunityIcons
@@ -55,7 +83,6 @@ function CourseCard({courseId, courseName, courseTime, courseCalorie, courseLeve
         style={{
           alignSelf: 'flex-start',
           marginTop: 10,
-          marginLeft: screenWidth - 294,
         }}
       />
     </TouchableOpacity>
@@ -68,7 +95,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: 'rgba(220,220,220,0.4)',
-    width: screenWidth - 20,
     marginBottom: 10,
     borderRadius: 8,
   },
