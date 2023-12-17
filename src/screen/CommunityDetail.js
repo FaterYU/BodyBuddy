@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   PanResponder,
+  ActivityIndicator,
   TextInput,
 } from 'react-native';
 // import {Input,Icon} from 'native-base';
@@ -28,6 +29,8 @@ function CommunityDetail({navigation, route}) {
   const [authorName, setAuthorName] = useState('');
   const [comment, setComment] = useState('');
   const [like, setLike] = useState(false);
+  const [atComment, setAtComment] = useState(false);
+
   const id = route.params.momentId;
   const userId = MMKV.getString('userId');
   const clickLike = async () => {
@@ -98,7 +101,7 @@ function CommunityDetail({navigation, route}) {
       }
     };
     fetchData();
-  }, [id, like]);
+  }, [id, like, atComment]);
   if (!data || data.length === 0) {
     return (
       <View
@@ -108,7 +111,7 @@ function CommunityDetail({navigation, route}) {
           flex: 1,
           height: '100%',
         }}>
-        <Text>Loading...</Text>
+        <ActivityIndicator size="large" color="#575dfb" />
       </View>
     );
   }
@@ -163,12 +166,14 @@ function CommunityDetail({navigation, route}) {
       </View>
       <ScrollView contentContainerStyle={styles.container}>
         <ImageSlider images={data.content.photo} />
-        <View style={{backgroundColor: 'white', alignItems: 'center'}}>
+        <View style={{backgroundColor: 'white', alignItems: 'center',width:"100%"}}>
           <Text
             style={{
               color: 'black',
-              paddingHorizontal: 26,
+              paddingHorizontal: 16,
               paddingVertical: 16,
+              textAlign: 'left',
+              width: '100%',
             }}>
             {data.content.text}
           </Text>
@@ -187,7 +192,7 @@ function CommunityDetail({navigation, route}) {
               marginLeft: 12,
               marginTop: -4,
             }}>
-            发布于11月29日 22:00
+            Published : {data.updatedAt.slice(0, 16)}
           </Text>
           <View
             style={{
@@ -214,34 +219,35 @@ function CommunityDetail({navigation, route}) {
           width: '100%',
           height: 54,
           alignItems: 'center',
+          paddingHorizontal:8
         }}>
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
-            marginLeft: 8,
             borderWidth: 1,
             borderColor: '#ccc',
             borderRadius: 20,
             height: 38,
-            width: '42%',
+            width: atComment? '100%':'58%',
             paddingHorizontal: 8,
           }}>
           <MaterialCommunityIcons
             name="pencil-plus-outline"
             size={25}
-            // color="#575dfb"
           />
           <TextInput
             placeholder="Say Something..."
             fontSize={15}
             onChangeText={text => setComment(text)}
             value={comment}
-            style={{width: '80%', marginBottom: -2}}
+            style={{width: '88%', marginBottom: -2}}
+            onFocus={()=>{setAtComment(true)}}
+            onBlur={()=>{setAtComment(false)}}
           />
         </View>
-        <View
+        { !atComment && <View
           style={{
             flexDirection: 'row',
             height: '100%',
@@ -277,7 +283,7 @@ function CommunityDetail({navigation, route}) {
             name="comment-processing-outline"
             size={24}
           />
-        </View>
+        </View>}
       </View>
     </View>
   );

@@ -32,8 +32,9 @@ function CoursesScreen({navigation}) {
   var currentDate = new Date();
   const todayWeek = currentDate.getDay();
   const weekName = ['日', '一', '二', '三', '四', '五', '六'];
-  currentDate = currentDate.toLocaleDateString().slice(0, -5);
-
+  const currentMonth=currentDate.getMonth()+1;
+  const currentDay=currentDate.getDate();
+  currentDate = currentMonth+"/"+currentDay;
   const goToCalendar = () => {
     navigation.navigate('Calendar');
   };
