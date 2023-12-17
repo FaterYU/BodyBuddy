@@ -9,6 +9,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import {Avatar} from '@rneui/themed';
 import { useEffect, useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -48,52 +49,54 @@ function PersonScreen() {
     <FlatList
       style={styles.container}
       ListHeaderComponent={() => (
-        <View style={{backgroundColor: "#ffffff"}}>
-            <TouchableOpacity style={{postion:'absolute', left:screenWidth-34, top:12, zIndex:1000}} onPress={()=>navigation.navigate("PersonDetails")}>
-              <MaterialCommunityIcons name="lead-pencil" size={26}  color={'#cccccc'}/>
+        <View>
+            <TouchableOpacity style={{postion:'absolute', left:screenWidth-34, top:15, zIndex:1000}} onPress={()=>navigation.navigate("PersonDetails")}>
+              <MaterialCommunityIcons name="lead-pencil" size={26}  color={'#ffffff'}/>
             </TouchableOpacity>
           <ImageBackground style={styles.userBackground} source={require("../assets/backgrounds/rain_glass.jpg")}>
-            <View style={styles.userInfo}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('LoginScreen');
-                }}>
-                <Avatar
-                  source={{
-                    uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
-                  }}
-                  size={76}
-                  containerStyle={styles.avatar}
-                  rounded
-                />
-              </TouchableOpacity>
-              <View style={{flexDirection: 'column'}}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 22,
-                    fontWeight: 'bold',
-                    marginTop: 6,
-                    marginLeft: 8,
+            <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']} style={{height: screenHeight * 0.26 ,width: '100%', flexDirection: 'column', justifyContent: 'flex-end'}}>
+              <View style={styles.userInfo}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate('LoginScreen');
                   }}>
-                  {userName?userName:'Username'}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    flexWrap: 'nowrap',
-                    flex: 1,
-                    width: '100%',
-                  }}>
-                  <View style={styles.fab}>
-                    <Text style={styles.fabText}>Community Master</Text>
-                  </View>
-                  <View style={styles.fab}>
-                    <Text style={styles.fabText}>Medal 1</Text>
+                  <Avatar
+                    source={{
+                      uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
+                    }}
+                    size={76}
+                    containerStyle={styles.avatar}
+                    rounded
+                  />
+                </TouchableOpacity>
+                <View style={{flexDirection: 'column'}}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 22,
+                      fontWeight: 'bold',
+                      marginTop: 6,
+                      marginLeft: 8,
+                    }}>
+                    {userName?userName:'Username'}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      flexWrap: 'nowrap',
+                      flex: 1,
+                      width: '100%',
+                    }}>
+                    <View style={styles.fab}>
+                      <Text style={styles.fabText}>Community Master</Text>
+                    </View>
+                    <View style={styles.fab}>
+                      <Text style={styles.fabText}>Medal 1</Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
+            </LinearGradient>
           </ImageBackground>
           <View style={styles.fansList}>
             <TouchableOpacity
@@ -137,7 +140,7 @@ function PersonScreen() {
                     fontSize: 20,
                     lineHeight: 30,
                     paddingLeft:8,
-                    marginTop: -5,
+                    
                   }}>
                   Moments Data
                 </Text>
@@ -170,7 +173,6 @@ function PersonScreen() {
                     fontSize: 20,
                     lineHeight: 30,
                     paddingLeft:8,
-                    marginTop: -5,
                   }}>
                   Health Data
                 </Text>
@@ -190,7 +192,20 @@ function PersonScreen() {
         </View>
       )}
       ListFooterComponent={() => (
+        
         <View style={styles.waterfall}>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 18,
+              fontWeight: 'bold',
+              marginLeft: 20,
+              marginBottom: 10,
+              marginTop: -20,
+              alignSelf:"flex-start"
+            }}>
+            MyMoments
+          </Text>
           <WaterfallList tabIndex={0} />
         </View>
       )}
@@ -203,7 +218,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     // justifyContent:'flex-start',
-    backgroundColor: 'rgba(248,248,248,1)',
+    backgroundColor: '#ffffff',
   },
   userBackground: {
     display: 'flex',
@@ -215,6 +230,7 @@ const styles = StyleSheet.create({
   },
   userInfo: {
     marginLeft: 20,
+    marginBottom: 70,
     flexDirection: 'row',
   },
   avatar: {
@@ -258,10 +274,11 @@ const styles = StyleSheet.create({
   },
   dataCard: {
     backgroundColor: 'white',
-    elevation: 1,
     width: '44%',
     borderRadius: 6,
     height: '80%',
+    elevation: 5,
+    
   },
   waterfall: {
     alignItems: 'center',

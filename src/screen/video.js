@@ -18,16 +18,6 @@ import {
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-<<<<<<< HEAD
-import { RNCamera } from 'react-native-camera';
-import {
-  useFrameProcessor,
-  useCameraDevice,
-  NoCameraDeviceError,
-  Camera,
-  useCameraDevices,
-} from 'react-native-vision-camera';
-=======
 // import { RNCamera } from 'react-native-camera';
 // import {
 //   useFrameProcessor,
@@ -36,8 +26,7 @@ import {
 //   Camera,
 //   useCameraDevices,
 // } from 'react-native-vision-camera';
->>>>>>> d160ed182c615705ba9f9a014e07f6ce7663dc29
-import Video from 'react-native-video';
+// import Video from 'react-native-video';
 
 const VideoScreen = ({navigation}) => {
   useEffect(() => {

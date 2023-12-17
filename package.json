@@ -38,11 +38,8 @@
     "react-native-gesture-handler": "^2.14.0",
     "react-native-image-picker": "^7.1.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
-<<<<<<< HEAD
     "react-native-linear-gradient": "^2.8.3",
-=======
     "react-native-masonry-list": "^2.16.1",
->>>>>>> d160ed182c615705ba9f9a014e07f6ce7663dc29
     "react-native-mmkv-storage": "^0.9.1",
     "react-native-orientation-locker": "^1.6.0",
     "react-native-permissions": "^4.0.0",

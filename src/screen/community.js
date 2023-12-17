@@ -98,14 +98,14 @@ export const WaterfallList = ({tabIndex}) => {
               </AspectRatio>
             </Box>
             {/* 卡片文本 */}
-            <View style={{paddingTop: 4, paddingHorizontal: 4}}>
+            <View style={{paddingTop: 4, paddingHorizontal: 10}}>
               <Text
               numberOfLines={2}
               ellipsizeMode="tail"
                 style={{
                   color: 'black',
                   alignSelf: 'flex-start',
-                  fontSize: 17,
+                  fontSize: 18,
                   fontWeight: 'bold',
                   overflow: 'hidden',
                 }}>
@@ -115,17 +115,18 @@ export const WaterfallList = ({tabIndex}) => {
                 numberOfLines={3}
                 ellipsizeMode="tail"
                 style={{
-                  marginTop: 4,
-                  fontSize: 12,
+                  marginTop: 6,
+                  fontSize: 14,
                   lineHeight: 14,
                   overflow: 'hidden',
-                  marginBottom:28,
+                  marginBottom:22,
+                  color:"#333333"
                 }}>
                 {item.content.text}
               </Text>
             </View>
-            <View style={{position: 'absolute', bottom: 6, left: 8}}>
-              <Text style={{fontSize: 12}}>
+            <View style={{position: 'absolute', bottom: 6, left: 10}}>
+              <Text style={{fontSize: 10, color: "#999999"}}>
                 Published : {item.updatedAt.slice(0, 16)}
               </Text>
             </View>
@@ -255,13 +256,11 @@ const styles = StyleSheet.create({
     paddingTop: 34,
   },
   cardItem: {
-    borderRadius: 10,
-    backgroundColor: 'rgba(248,248,248,0.9)',
+    borderRadius: 6,
+    backgroundColor: '#f7f7f7',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: screenWidth / numColumns - 16,
-    borderColor:"rgba(200,200,200,1)",
-    borderWidth:0.6,
     overflow: 'hidden',
   },
   view: {
