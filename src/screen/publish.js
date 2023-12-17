@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   Picker,
+  ToastAndroid,
   TextInput,
 } from 'react-native';
 import React, {useEffect, useState, Component} from 'react';
@@ -29,6 +30,7 @@ import SearchablePicker from '../components/SearchablePicker';
 import MomentsService from '../services/moments.service';
 import CoursesService from '../services/courses.service';
 import UploadFilesService from '../services/upload.service';
+import { MMKV } from '../../App';
 
 const PublishScreen = ({navigation}) => {
   const {isOpen, onToggle} = useDisclose();
@@ -37,7 +39,10 @@ const PublishScreen = ({navigation}) => {
   const [content, setContent] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
   const [CourseList, setCourseList] = useState([]);
-
+  const uid = MMKV.getString('uid');
+  function showToast(Text) {
+    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  }
   useEffect(() => {
     const loadCourseData = () => {
       CoursesService.findAllCourse().then(res => {
@@ -55,6 +60,14 @@ const PublishScreen = ({navigation}) => {
   }, []);
 
   const publishMoment = () => {
+    if (uid == null) {
+      showToast('Please login first');
+      return;
+    }
+    if (title == '' || content == '' || imageSourceList.length == 0) {
+      showToast('Please make sure you have filled in all the information');
+      return;
+    }
     const postImage = async postImageList => {
       await Promise.all(
         postImageList.map(async (item, index) => {
@@ -161,6 +174,7 @@ const PublishScreen = ({navigation}) => {
           alignSelf: 'center',
           flexDirection: 'row',
           alignItems: 'center',
+          marginTop:12,
         }}>
         <SearchablePicker data={CourseList} onValueChange={handleValueChange} />
       </View>

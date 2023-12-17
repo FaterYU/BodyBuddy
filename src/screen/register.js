@@ -66,10 +66,10 @@ const RegisterScreen = ({navigation}) => {
         <MaterialCommunityIcons name="chevron-left-circle" color="#575dfb" size={40} />
       </TouchableOpacity>
       <KeyboardAwareScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center',width:screenWidth }}
         resetScrollToCoords={{ x: 0, y: 0 }}
         scrollEnabled={true}
-        style={{marginTop:-120}}
+        style={{marginTop:20}}
       >
       <View style={{flexDirection:'row',alignItems:'flex-end',justifyContent:'flex-start',width:'100%',marginBottom:-6}}>
         <View>
@@ -180,6 +180,8 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    flex:1,
+    backgroundColor:"rgba(250,250,250,1)"
   },
   login: {
     flexDirection: 'row',

@@ -24,6 +24,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import CourseCard from './courseCard';
 import MasonryList from '@react-native-seoul/masonry-list';
+import {MMKV} from '../../App';
 
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
@@ -160,6 +161,7 @@ const PoseList = ({renderData}) => {
     </ScrollView>
   );
 }
+
 const CourseList = ({renderData}) => {
   if (renderData.length === 0) {
     return (
@@ -191,6 +193,37 @@ const CourseList = ({renderData}) => {
   );
 };
 
+const UserList = ({renderData}) => {
+  if (renderData.length === 0) {
+    return (
+      <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+        <Text>No User Was Found!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width:screenWidth-80,height:screenWidth-80}}
+        />
+      </View>
+    );
+  }
+  return (
+    <ScrollView contentContainerStyle={{marginTop:10}} >
+      {renderData.map((item, index) => {
+        const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
+        return (
+          <View style={styles.list}>
+            <Image source={{uri:item.avatar}} style={styles.list_pic} alt="pose"></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text style={styles.list_head}>{item.userName}</Text>
+            </View>
+          </View>
+        )
+        }
+      )}
+    </ScrollView>
+  );
+};
+
 function ResolveSearch({tabIndex, renderData}){
   var data;
   if(tabIndex===0){
@@ -201,7 +234,6 @@ function ResolveSearch({tabIndex, renderData}){
     return(<CourseList renderData={data}/>)
   }else if(tabIndex===2){
     data = renderData.poses;
-    console.log(data)
     return(<PoseList renderData={data}/>)
   }else if(tabIndex===3){
     data = renderData.users;
@@ -212,6 +244,7 @@ const SearchScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [data, setData] = useState([]);
   const route = useRoute();
+  const uid = MMKV.getString('uid');
   const {searchContent} = route.params;
 
   useEffect(() => {
@@ -228,6 +261,9 @@ const SearchScreen = ({navigation}) => {
         }),
       };
       try {
+        if (searchContent === '') {
+          return;
+        }
         const response = await fetch(url, requestOptions);
         const allData = await response.json();
         setData(allData);
@@ -238,6 +274,20 @@ const SearchScreen = ({navigation}) => {
     fetchData();
   }, []);
 
+  // if (data===undefined || data===null) {
+  //   return (
+  //     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+  //       <ActivityIndicator size="large" color="#0000ff" />
+  //     </View>
+  //   );
+  // }else if(data.length === 0){
+  //   console.log(data)
+  //   return (
+  //     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+  //       <ActivityIndicator size="large" color="#0000ff" />
+  //     </View>
+  //   );
+  // }
   return (
     <>
       <View style={styles.container}>

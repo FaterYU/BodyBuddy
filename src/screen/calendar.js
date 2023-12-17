@@ -53,6 +53,7 @@ const AgendaScreen = () => {
     console.log(startDate, endDate)
   }
   , [startDate, endDate]);
+
   useEffect(() => {
     const loadCourseData = () => {
       CoursesService.findAllCourse().then(res => {
@@ -295,7 +296,7 @@ const AgendaScreen = () => {
       },
     );
   };
-  
+
   // if (uid === null) {
   //   return (
   //     <View>
@@ -357,7 +358,7 @@ const AgendaScreen = () => {
                       style={{
                         height: 40,
                         alignItems: 'center',
-                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        backgroundColor: 'rgba(80,150,240,0.16)',
                         justifyContent: 'center',
                         borderRadius: 4,
                         paddingHorizontal:6,
@@ -384,7 +385,7 @@ const AgendaScreen = () => {
                         width: '44%',
                         height: 40,
                         alignItems: 'center',
-                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        backgroundColor: 'rgba(80,150,240,0.16)',
                         justifyContent: 'center',
                         borderRadius: 4,
                       }}>
@@ -411,7 +412,7 @@ const AgendaScreen = () => {
                       style={{
                         height: 40,
                         alignItems: 'center',
-                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        backgroundColor: 'rgba(80,150,240,0.16)',
                         justifyContent: 'center',
                         borderRadius: 4,
                         paddingHorizontal:6,
@@ -438,7 +439,7 @@ const AgendaScreen = () => {
                         width: '44%',
                         height: 40,
                         alignItems: 'center',
-                        backgroundColor: 'rgba(200,200,200,0.4)',
+                        backgroundColor: 'rgba(80,150,240,0.16)',
                         justifyContent: 'center',
                         borderRadius: 4,
                       }}>
@@ -452,11 +453,11 @@ const AgendaScreen = () => {
                   </View>
                 </FormControl>
                 <FormControl mt="3">
-                  <FormControl.Label>内容</FormControl.Label>
+                  <FormControl.Label><Text style={{fontSize:18,fontWeight:'bold'}}>Content</Text></FormControl.Label>
                   <TextInput value={eventContent} onChangeText={setEventContent} placeholder={eventContent} style={{borderWidth:2,borderColor:'rgba(80,150,240,0.8)',borderRadius:10,overflow:'hidden'}} />
                 </FormControl>
                 <FormControl mt="3">
-                  <FormControl.Label>课程</FormControl.Label>
+                  <FormControl.Label><Text style={{fontSize:18,fontWeight:'bold'}}>Courses</Text></FormControl.Label>
                   <SearchablePicker
                     data={CourseList}
                     onValueChange={handleValueChange}

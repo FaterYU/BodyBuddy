@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirectionL: 'column',
+    flex: 1,
     backgroundColor: "#ffffff"
   },
   login: {
