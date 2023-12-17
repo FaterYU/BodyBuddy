@@ -27,11 +27,7 @@ const screenHeight = Dimensions.get('window').height;
 
 function FollowersScreen({navigation}) {
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-      }}>
+    <View style={{backgroundColor:'white'}}>
       <View style={styles.top}>
         <View
           style={{
@@ -53,21 +49,28 @@ function FollowersScreen({navigation}) {
           </Text>
         </View>
       </View>
-      <View style={{flexDirection: 'column', flex: 1}}>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-        <UserCard></UserCard>
-      </View>
-    </ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+        }}
+        >
+        <View style={{flexDirection: 'column', flex: 1}}>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+          <UserCard></UserCard>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 

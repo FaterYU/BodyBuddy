@@ -1,9 +1,10 @@
 import React, {useState, useRef} from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, TextInput, Text, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
 const SearchablePicker = ({data, onValueChange}) => {
   const pickerRef = useRef();
+  const inputRef = useRef();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -13,7 +14,7 @@ const SearchablePicker = ({data, onValueChange}) => {
 
   const filteredData = [
     {
-      label: 'Empty Option (Press to select...)',
+      label: '',
       value: null,
     },
   ].concat(
@@ -27,33 +28,43 @@ const SearchablePicker = ({data, onValueChange}) => {
   return (
     <View style={styles.container}>
       <TextInput
+        ref={inputRef}
         style={styles.input}
         placeholder="Search..."
         onChangeText={text => {
           setSearchQuery(text);
-          // onPickerPress();
+          if(text === '' || text === null){}else{
+            onPickerPress();
+            inputRef.current.focus();
+          }
         }}
+
+        // onFocus={onPickerPress}
       />
       <Picker
         ref={pickerRef}
         selectedValue={selectedItem}
         mode="dropdown"
+        dropdownIconColor="white"
         numberOfLines={3}
         onValueChange={(itemValue, itemIndex) => {
           onValueChange(itemValue); // Call the callback with the selected value
           setSelectedItem(itemValue); // Set selectedItem to the selected value
         }}
         style={{
-          width: '95%',
+          width: '100%',
+          backgroundColor: 'rgba(80,150,240,0.8)',
+          color: 'white',
         }}
         itemStyle={{
-          backgroundColor: 'grey',
+          backgroundColor: 'red',
           color: 'blue',
-          fontFamily: 'Ebrima',
-          fontSize: 17,
+          fontSize: 16,
         }}>
         {filteredData.map((item, index) => (
-          <Picker.Item key={index} label={item.label} value={item.value} />
+          <Picker.Item style={{color:'rgba(80,150,240,0.8)',fontWeight:"700"}} key={index} label={item.label} value={item.value}>
+            <View style={{backgroundColor:'green'}}><Text>12345</Text></View>
+          </Picker.Item>
         ))}
       </Picker>
     </View>
@@ -66,14 +77,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: 'rgba(80,150,240,0.8)',
   },
   input: {
     height: 40,
-    width: '80%',
-    marginBottom: 10,
-    borderColor: 'gray',
-    borderWidth: 1,
+    width: '100%',
     paddingLeft: 10,
+    backgroundColor: 'rgba(80,150,240,0.1)',
   },
 });
 
