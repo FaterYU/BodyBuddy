@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import { RNCamera } from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
 import {
   useFrameProcessor,
   useCameraDevice,

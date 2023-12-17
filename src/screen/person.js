@@ -48,7 +48,7 @@ function PersonScreen() {
     <FlatList
       style={styles.container}
       ListHeaderComponent={() => (
-        <View>
+        <View style={{backgroundColor: "#ffffff"}}>
             <TouchableOpacity style={{postion:'absolute', left:screenWidth-34, top:12, zIndex:1000}} onPress={()=>navigation.navigate("PersonDetails")}>
               <MaterialCommunityIcons name="lead-pencil" size={26}  color={'#cccccc'}/>
             </TouchableOpacity>
@@ -141,11 +141,6 @@ function PersonScreen() {
                   }}>
                   Moments Data
                 </Text>
-                <MaterialCommunityIcons
-                  name="chevron-right"
-                  size={26}
-                  color="#4969ff"
-                />
               </View>
               <Text style={{marginTop: 10, marginLeft: 10}}>Total</Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
@@ -179,11 +174,6 @@ function PersonScreen() {
                   }}>
                   Health Data
                 </Text>
-                <MaterialCommunityIcons
-                  name="chevron-right"
-                  size={26}
-                  color="#4969ff"
-                />
               </View>
               <Text style={{marginTop: 10, marginLeft: 10}}>Weight</Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>

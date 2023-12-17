@@ -6,6 +6,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import { MMKV } from 'react-native-mmkv'
 import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
+import { SvgXml } from 'react-native-svg';
+
 
 import {NativeBaseProvider} from 'native-base';
 import 'react-native-gesture-handler';
@@ -24,6 +26,7 @@ import FollowersScreen from './src/screen/FollowersScreen';
 import SearchScreen from './src/screen/search';
 import RegisterScreen from './src/screen/register';
 import PersonDetails from './src/screen/person_details';
+import { couresesActiveSvg,couresesInactiveSvg, calendarInactiveSvg, calendarActiveSvg, communityInactiveSvg, communityActiveSvg, profileInactiveSvg, profileActiveSvg } from './src/components/barSvgCode'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -41,7 +44,7 @@ const MainTabs = () => {
       initialRouteName="CommunityScreen"
       screenOptions={{
         headerShown: false, // 隐藏标题栏
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: '#4969ff',
         scrollEnabled: true,
         animationEnabled: true,
       }}>
@@ -50,8 +53,8 @@ const MainTabs = () => {
         component={CoursesScreen}
         options={({route}) => ({
           tabBarLabel: 'Courses',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="human" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            focused ? <SvgXml xml={couresesActiveSvg} width="60%" height="60%" /> : <SvgXml xml={couresesInactiveSvg} width="75%" height="75%" />
           ),
         })}
       />
@@ -60,12 +63,8 @@ const MainTabs = () => {
         component={CalendarScreen}
         options={{
           tabBarLabel: 'Calendar',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="calendar-month"
-              color={color}
-              size={size}
-            />
+          tabBarIcon: ({focused}) => (
+            focused ? <SvgXml xml={calendarActiveSvg} width="70%" height="70%" /> : <SvgXml xml={calendarInactiveSvg} width="70%" height="70%" />
           ),
         }}
       />
@@ -74,12 +73,8 @@ const MainTabs = () => {
         component={CommunityScreen}
         options={{
           tabBarLabel: 'Community',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="home-city"
-              color={color}
-              size={size}
-            />
+          tabBarIcon: ({focused}) => (
+            focused ? <SvgXml xml={communityActiveSvg} width="70%" height="70%" /> : <SvgXml xml={communityInactiveSvg} width="70%" height="70%" />
           ),
         }}
       />
@@ -88,8 +83,8 @@ const MainTabs = () => {
         component={PersonScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            focused ? <SvgXml xml={profileActiveSvg} width="60%" height="60%" /> : <SvgXml xml={profileInactiveSvg} width="60%" height="60%" />
           ),
         }}
       />

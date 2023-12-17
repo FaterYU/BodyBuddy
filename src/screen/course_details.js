@@ -32,7 +32,7 @@ function DetailsScreen({navigation}) {
     navigation.navigate('VideoScreen');
   };
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: "#ffffff"}}>
       <View style={styles.top}>
         <View
           style={{
@@ -47,7 +47,7 @@ function DetailsScreen({navigation}) {
               color="white"
             />
           </TouchableOpacity>
-          <MaterialCommunityIcons name="share" size={35} color="white" />
+          <MaterialCommunityIcons name="share" size={35} color="#FAFAFA" />
         </View>
         <Text style={styles.header}>HIIT燃脂.臀腿初级</Text>
         <View style={styles.top_list}>

@@ -73,14 +73,15 @@ function LoginScreen({navigation}) {
       <Image
         source={require('../assets/icons/小跑哥.png')}
         style={{
-          width: 360,
-          height: 360,
+          width: 400,
+          height: 400,
+          marginBottom: -20
         }}
       />
       <Text
         style={{
           alignSelf: 'flex-start',
-          fontSize: 32,
+          fontSize: 36,
           fontWeight: '800',
           color: '#575dfb',
           paddingHorizontal: 40,
@@ -125,19 +126,19 @@ function LoginScreen({navigation}) {
               >
             </TextInput>
           </View>
-      <TouchableOpacity style={styles.loginButton} onPress={()=>Login()}>
-        <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
-          Login
-        </Text>
-      </TouchableOpacity>
       <TouchableOpacity
-        style={{alignSelf: 'flex-end', marginRight: 42, marginTop: 6, flexDirection:'row', justifyContent:'center', alignItems:'flex-end',alignItems:'center'}}
+        style={{alignSelf: 'flex-end', marginRight: 42,  flexDirection:'row', justifyContent:'center', alignItems:'flex-end',alignItems:'center'}}
         onPress={() => navigation.navigate('RegisterScreen')}>
         <Text style={{marginRight:6, fontSize:13}}>
           Don't have an account?
         </Text>
         <Text style={{color: '#575dfb', fontSize: 16, fontWeight: '600', textDecorationLine:'underline' }}>
           Register
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton} onPress={()=>Login()}>
+        <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
+          Login
         </Text>
       </TouchableOpacity>
       </KeyboardAwareScrollView>
@@ -153,6 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirectionL: 'column',
+    backgroundColor: "#ffffff"
   },
   login: {
     flexDirection: 'row',

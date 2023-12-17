@@ -8595,6 +8595,11 @@ react-native-keyboard-aware-scroll-view@^0.9.5:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
+react-native-linear-gradient@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.npmmirror.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
+  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
+
 react-native-mmkv-storage@^0.9.1:
   version "0.9.1"
   resolved "https://registry.npmmirror.com/react-native-mmkv-storage/-/react-native-mmkv-storage-0.9.1.tgz#0db7e8c1726713dce68704bb8795dc64096c8cbb"
@@ -8672,11 +8677,6 @@ react-native-video@^5.2.1:
     keymirror "^0.1.1"
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
-
-react-native-vision-camera@^3.6.17:
-  version "3.6.17"
-  resolved "https://registry.npmmirror.com/react-native-vision-camera/-/react-native-vision-camera-3.6.17.tgz#5946589b0a1920dcfcc9bdffb6d2e98dad4ff4ce"
-  integrity sha512-dzkO6l6lqw48i2jQre4AXzuFZqEEzqEEVc8bfOqF4MZ/6PzdHtfjosWea0zuEdsiW13DhaFHf7XLh/+aKytx2w==
 
 react-native-worklets-core@^0.2.4:
   version "0.2.4"
