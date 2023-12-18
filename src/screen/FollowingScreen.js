@@ -44,7 +44,16 @@ function FollowingScreen({navigation}) {
   }, []);
   if(followList.length===0){
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:"white",height:"100%",width:"100%"}}>
+          <TouchableOpacity onPress={() => navigation.goBack()}
+            style={{position:"absolute",top:12,left:12,zIndex:1000}}
+          >
+            <MaterialCommunityIcons
+              name="chevron-left"
+              size={40}
+              color="rgba(30, 30, 30, 1)"
+            />
+          </TouchableOpacity>
         <Text>No Following User</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
