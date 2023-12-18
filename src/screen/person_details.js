@@ -24,6 +24,8 @@ import {Avatar} from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {selectImage, takePhoto} from '../components/imagePicker';
+import UsersService from '../services/users.service';
+import UploadFilesService from '../services/upload.service';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -32,14 +34,15 @@ function PersonDetails({navigation}) {
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
   const [avatar, setAvatar] = useState(null);
-  const [gender, setGender] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
+  const [gender, setGender] = useState('Male');
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [photoName, setPhotoName] = useState(null);
 
   const userId = global.storage.getNumber('uid');
 
   useEffect(() => {
-    const url = "http://bodybuddy.fater.top/api/users/findOne";
+    const url = 'http://bodybuddy.fater.top/api/users/findOne';
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -55,15 +58,56 @@ function PersonDetails({navigation}) {
         setHeight(data.infomation.height);
         setWeight(data.infomation.weight);
       });
-  }
-  , []);
+  }, [userId]);
 
-  if (avatar===null) {
+  const updateInfo = async () => {
+    const postImage = async Image => {
+      const res = await UploadFilesService.upload(Image, event => {});
+      setPhotoName(res.data.message);
+    };
+    var Image = {
+      uri: avatar.uri,
+      type: 'image/jpeg',
+      name: avatar.fileName,
+    };
+    await postImage(Image);
+    console.log({
+      uid: userId,
+      userName: name,
+      phone: tel,
+      photo: photoName,
+      infomation: {
+        gender: gender,
+        height: height,
+        weight: weight,
+      },
+    });
+    UsersService.update({
+      uid: userId,
+      userName: name,
+      phone: tel,
+      photo: photoName,
+      infomation: {
+        gender: gender,
+        height: height,
+        weight: weight,
+      },
+    })
+      .then(res => {
+        console.log(res);
+        navigation.goBack();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  if (avatar === null) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="#4869ff" />
       </View>
-    )
+    );
   }
   return (
     <ScrollView>
@@ -74,7 +118,7 @@ function PersonDetails({navigation}) {
           style={{height: screenHeight * 0.38}}>
           <LinearGradient
             colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0)']}
-            style={{height: screenHeight * 0.35,paddingTop:20}}>
+            style={{height: screenHeight * 0.35, paddingTop: 20}}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={{marginLeft: 12, marginTop: 12, zIndex: 1000}}>
@@ -89,6 +133,7 @@ function PersonDetails({navigation}) {
               style={styles.avatar}
               onPress={async () => {
                 var imageSrc = await selectImage();
+                console.log(imageSrc);
                 setAvatar(imageSrc[0]);
               }}>
               <Avatar
@@ -130,9 +175,14 @@ function PersonDetails({navigation}) {
                   size="lg"
                   placeholder="Name"
                   value={name}
-                  style={styles.input} />
+                  style={styles.input}
+                />
                 <Text style={styles.info_head}>Telephone Number</Text>
-                <Input size="lg" placeholder="Tel" value={tel} style={styles.input}></Input>
+                <Input
+                  size="lg"
+                  placeholder="Tel"
+                  value={tel}
+                  style={styles.input}></Input>
               </View>
               {/* <View style={{flexDirection: 'column'}}>
                 <Text style={styles.info_head}>Birthday</Text>
@@ -147,7 +197,9 @@ function PersonDetails({navigation}) {
               </View> */}
 
               <View>
-                <Text style={styles.info_head} value={gender}>Gender</Text>
+                <Text style={styles.info_head} value={gender}>
+                  Gender
+                </Text>
                 <FormControl
                   w="3/4"
                   maxW="300"
@@ -208,7 +260,9 @@ function PersonDetails({navigation}) {
                     Exit
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.save_button}>
+                <TouchableOpacity
+                  style={styles.save_button}
+                  onPress={updateInfo}>
                   <Text
                     style={{fontWeight: '600', color: 'white', fontSize: 19}}>
                     Save

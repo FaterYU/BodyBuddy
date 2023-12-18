@@ -19,5 +19,8 @@ class UsersService {
   getFollowedList(data) {
     return http.post('/users/getFollowedList', data);
   }
+  update(data) {
+    return http.put('/users/update', data);
+  }
 }
 export default new UsersService();
