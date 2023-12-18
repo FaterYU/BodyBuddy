@@ -32,7 +32,7 @@ function CommunityDetail({navigation, route}) {
 
   const id = route.params.momentId;
   const userId = 1;
-  const clickLike = async () => {
+  const clickLike = () => {
     const url = like
       ? global.storage.getString('serverDomain') + 'moments/likeMoment'
       : global.storage.getString('serverDomain') + 'moments/unlikeMoment';
@@ -42,8 +42,7 @@ function CommunityDetail({navigation, route}) {
       body: JSON.stringify({uid: userId, momentId: id}),
     };
     try {
-      const response = await fetch(url, requestOptions);
-      const json = await response.json();
+      const response = fetch(url, requestOptions);
     } catch (error) {
       console.log(error);
     }
@@ -83,6 +82,7 @@ function CommunityDetail({navigation, route}) {
       }
     };
     const fetchAuthor = async (authorId, data) => {
+      console.log('call fetchAuthor');
       const url = global.storage.getString('serverDomain') + 'users/findOne';
       const requestOptions = {
         method: 'POST',
@@ -100,7 +100,7 @@ function CommunityDetail({navigation, route}) {
       }
     };
     fetchData();
-  }, [id, like, atComment]);
+  }, [id, atComment]);
   if (!data || data.length === 0) {
     return (
       <View
@@ -300,16 +300,17 @@ function CommunityDetail({navigation, route}) {
 }
 
 const ImageSlider = ({images}) => {
+  var imagesList = [];
   for (let i = 0; i < images.length; i++) {
-    const photo =
+    var photo =
       global.storage.getString('serverDomain') +
       'files/download?name=' +
       images[i];
-    images[i] = photo;
+    imagesList.push(photo);
   }
   return (
     <Swiper style={styles.wrapper} showsButtons={false} showsPagination={false}>
-      {images.map((image, index) => (
+      {imagesList.map((image, index) => (
         <View key={index} style={styles.slide}>
           <Image source={{uri: image}} style={styles.image} />
         </View>
