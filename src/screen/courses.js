@@ -21,7 +21,7 @@ import CoursesService from '../services/courses.service';
 import {useNavigation} from '@react-navigation/native';
 const screenWidth = Dimensions.get('window').width;
 
-function CoursesScreen({navigation}) {
+function CoursesScreen({navigation, route}) {
   const [search, setSearch] = useState('');
   const [totalData, setTotalData] = useState([
     {
@@ -63,7 +63,7 @@ function CoursesScreen({navigation}) {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [route.params]);
 
   var currentDate = new Date();
   const todayWeek = currentDate.getDay();
