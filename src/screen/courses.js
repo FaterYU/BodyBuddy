@@ -231,7 +231,7 @@ function CoursesScreen({navigation, route}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
-          {recommendCourse &&
+          {/* {recommendCourse &&
             recommendCourse.map((item, index) => {
               return (
                 <RecommendCourse
@@ -248,7 +248,28 @@ function CoursesScreen({navigation, route}) {
                   }}
                 />
               );
-            })}
+            })} */}
+          <RecommendCourse
+            courseName={'腹肌训练入门'}
+            takeTime={'20'}
+            kalorie={'81'}
+            level={'零基础'}
+            BGimg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
+          />
+          <RecommendCourse
+            courseName={'腰腹核心训练'}
+            takeTime={'20'}
+            kalorie={'131'}
+            level={'零基础'}
+            BGimg={require('../assets/courses/pexels-li-sun-2294363.jpg')}
+          />
+          <RecommendCourse
+            courseName={'每日有氧'}
+            takeTime={'30'}
+            kalorie={'221'}
+            level={'零基础'}
+            BGimg={require('../assets/courses/pexels-pixabay-40751.jpg')}
+          />
         </View>
       </View>
     </ScrollView>
