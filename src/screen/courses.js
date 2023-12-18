@@ -51,7 +51,6 @@ function CoursesScreen({navigation}) {
       });
     CoursesService.getLastCourseList({uid: 1})
       .then(res => {
-        console.log(res.data);
         setLastCourse(res.data);
       })
       .catch(err => {
@@ -59,7 +58,6 @@ function CoursesScreen({navigation}) {
       });
     CoursesService.getRecommendCourseList({uid: 1})
       .then(res => {
-        console.log(res.data);
         setRecommendCourse(res.data);
       })
       .catch(err => {
@@ -204,16 +202,6 @@ function CoursesScreen({navigation}) {
                 />
               );
             })}
-
-          {/* <CourseCard
-            courseId={2}
-            courseImg={require('../assets/courses/pexels-pixabay-235922.jpg')}
-            courseName={'HIIT燃脂-臀推初级'}
-            courseTime={22}
-            courseCalorie={200}
-            courseLevel={'零基础'}
-            finishTime={2}
-          /> */}
         </View>
       </View>
       <View style={{width: '100%'}}>
