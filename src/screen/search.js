@@ -25,7 +25,6 @@ import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import CourseCard from './courseCard';
 import MasonryList from '@react-native-seoul/masonry-list';
-import {MMKV} from '../../App';
 
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
@@ -34,21 +33,21 @@ const WaterfallList = ({renderData}) => {
   const [data, setData] = useState([]);
   useEffect(() => {
     setData(renderData);
-  }
-  ,[renderData]);
+  }, [renderData]);
   const navigation = useNavigation();
 
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
   const CardList = ({item}) => {
-    const photo = 'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
+    const photo =
+      global.storage.getString('serverDomain') +
+      'files/download?name=' +
+      item.photo;
     return (
-      <View
-        style={styles.cardList}
-      >
+      <View style={styles.cardList}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('CommunityDetailScreen',{
+            navigation.navigate('CommunityDetailScreen', {
               momentId: item.id,
             });
           }}>
@@ -66,8 +65,8 @@ const WaterfallList = ({renderData}) => {
             {/* 卡片文本 */}
             <View style={{paddingTop: 4, paddingHorizontal: 4}}>
               <Text
-              numberOfLines={2}
-              ellipsizeMode="tail"
+                numberOfLines={2}
+                ellipsizeMode="tail"
                 style={{
                   color: 'black',
                   alignSelf: 'flex-start',
@@ -85,7 +84,7 @@ const WaterfallList = ({renderData}) => {
                   fontSize: 12,
                   lineHeight: 14,
                   overflow: 'hidden',
-                  marginBottom:28,
+                  marginBottom: 28,
                 }}>
                 {item.content.text}
               </Text>
@@ -100,7 +99,7 @@ const WaterfallList = ({renderData}) => {
       </View>
     );
   };
-  if (!renderData || renderData===undefined) {
+  if (!renderData || renderData === undefined) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="#0000ff" />
@@ -113,119 +112,152 @@ const WaterfallList = ({renderData}) => {
       keyExtractor={item => item.id.toString()}
       numColumns={2}
       showsVerticalScrollIndicator={false}
-      style={{width:"100%",paddingHorizontal:6,justifyContent:"center",alignItems:"center",marginTop:6}}
-      renderItem={({item}) => <CardList item={item}/>}
+      style={{
+        width: '100%',
+        paddingHorizontal: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 6,
+      }}
+      renderItem={({item}) => <CardList item={item} />}
     />
   );
 };
 const PoseList = ({renderData}) => {
   if (renderData.length === 0) {
     return (
-      <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
         <Text>No Pose Was Found!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
-          style={{width:screenWidth-80,height:screenWidth-80}}
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
         />
       </View>
     );
   }
   return (
-    <ScrollView contentContainerStyle={{marginTop:10}} >
-        {renderData.map((item, index) => {
-          const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
-          return (
-            <View style={styles.list}>
-              <Image source={{uri:img}} style={styles.list_pic} alt="pose"></Image>
-              <View style={{flexDirection: 'column'}}>
-                <Text style={styles.list_head}>{item.name}</Text>
-                <View  style={{flexDirection:'row',marginLeft:16,overflow:'scroll',width:"95%",height:20}}>
-                  {item.tags.muscle?.map((item, index) => {
-                    if(index>1 || item.length>20){
-                      return;
-                    }
-                    return (
-                      <View style={{backgroundColor:'rgba(140,130,250,0.8)',borderRadius:20,paddingHorizontal:6,paddingVertical:2,justifyContent:'center',alignItems:"center",marginRight:4}}>
-                        <Text style={{fontSize:12,color:'white'}}>{item}</Text>
-                      </View>
-                    );
-                  })}
-                </View>
-                <Text style={styles.list_details}>{item.like} likes</Text>
+    <ScrollView contentContainerStyle={{marginTop: 10}}>
+      {renderData.map((item, index) => {
+        const img =
+          global.storage.getString('serverDomain') +
+          'files/download?name=' +
+          item.photo;
+        return (
+          <View style={styles.list}>
+            <Image
+              source={{uri: img}}
+              style={styles.list_pic}
+              alt="pose"></Image>
+            <View style={{flexDirection: 'column'}}>
+              <Text style={styles.list_head}>{item.name}</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginLeft: 16,
+                  overflow: 'scroll',
+                  width: '95%',
+                  height: 20,
+                }}>
+                {item.tags.muscle?.map((item, index) => {
+                  if (index > 1 || item.length > 20) {
+                    return;
+                  }
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: 'rgba(140,130,250,0.8)',
+                        borderRadius: 20,
+                        paddingHorizontal: 6,
+                        paddingVertical: 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: 4,
+                      }}>
+                      <Text style={{fontSize: 12, color: 'white'}}>{item}</Text>
+                    </View>
+                  );
+                })}
               </View>
+              <Text style={styles.list_details}>{item.like} likes</Text>
             </View>
-          );
-        }
-        )}
+          </View>
+        );
+      })}
     </ScrollView>
   );
-}
+};
 
 const CourseList = ({renderData}) => {
-  if (renderData===undefined){
-    return(
+  if (renderData === undefined) {
+    return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Network Error!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
-          style={{width:screenWidth-80,height:screenWidth-80}}
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
         />
       </View>
-    )
+    );
   }
   if (renderData.length === 0) {
     return (
-      <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
         <Text>No Course Was Found!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
-          style={{width:screenWidth-80,height:screenWidth-80}}
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
         />
       </View>
     );
   }
   return (
-    <ScrollView contentContainerStyle={{marginTop:10}} >
+    <ScrollView contentContainerStyle={{marginTop: 10}}>
       {renderData.map((item, index) => {
-        return <CourseCard
-                courseId={index}
-                courseName={item.name}
-                courseImg={{uri: 'http://bodybuddy.fater.top/api/files/download?name='+item.photo}}
-                courseTime={item.duration}
-                courseCalorie={item.calorie}
-                courseLevel={'初级'}
-                finishTime={item.practiced}
-              />;
-        }
-      )}
+        return (
+          <CourseCard
+            courseId={index}
+            courseName={item.name}
+            courseImg={{
+              uri:
+                global.storage.getString('serverDomain') +
+                'files/download?name=' +
+                item.photo,
+            }}
+            courseTime={item.duration}
+            courseCalorie={item.calorie}
+            courseLevel={'初级'}
+            finishTime={item.practiced}
+          />
+        );
+      })}
     </ScrollView>
   );
 };
 
 const UserList = ({renderData}) => {
-  if (renderData===undefined){
-    return(
+  if (renderData === undefined) {
+    return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Network Error!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
-          style={{width:screenWidth-80,height:screenWidth-80}}
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
         />
       </View>
-    )
+    );
   }
   if (renderData.length === 0) {
     return (
-      <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
         <Text>No User Was Found!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
-          style={{width:screenWidth-80,height:screenWidth-80}}
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
         />
       </View>
     );
@@ -233,25 +265,18 @@ const UserList = ({renderData}) => {
   function showToast(Text) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
-  const FollowUser = (userId,followed) => {
-    if(userId===MMKV.getIntAsync('uid')){
-      showToast("You can't follow yourself!");
-      return;
-    }
-    if(MMKV.getIntAsync('uid')===null){
-      showToast("Please Login First!");
-      return;
-    }
-    const url = followed?'http://bodybuddy.fater.top/api/users/follow':'http://bodybuddy.fater.top/api/users/unfollow';
-    console.log(followed,url,userId);
+  const FollowUser = (userId, followed) => {
+    const url = followed
+      ? global.storage.getString('serverDomain') + 'users/follow'
+      : global.storage.getString('serverDomain') + 'users/unfollow';
+    console.log(followed, url, userId);
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // uid: 1,
-        uid: MMKV.getIntAsync('uid'),
+        uid: 1,
         followId: userId,
       }),
     };
@@ -260,75 +285,97 @@ const UserList = ({renderData}) => {
       .then(data => {
         console.log(data);
       });
-  }
+  };
 
   return (
-    <ScrollView contentContainerStyle={{marginTop:10}} style={{flex:1,width:'100%'}} >
+    <ScrollView
+      contentContainerStyle={{marginTop: 10}}
+      style={{flex: 1, width: '100%'}}>
       {renderData.map((item, index) => {
         const [follow, setFollow] = useState(item.isFollowed);
-        const myid = MMKV.getIntAsync('uid');
-        const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
+        const myid = 1;
+        const img =
+          global.storage.getString('serverDomain') +
+          'files/download?name=' +
+          item.photo;
         return (
-          <View style={{
-            width: '100%',
-            height: 54,
-            paddingHorizontal:16,
-            flexDirection: 'row',
-            alignItems:'center',
-            marginBottom:8,
-            marginTop:6,
-            justifyContent:'space-between',
-          }}>
-            <View style={{flexDirection: 'row',flex:1,height:'100%',alignItems:'center'}}>
-            <Image source={{uri:img}} style={{
-              width: 54,
+          <View
+            style={{
+              width: '100%',
               height: 54,
-              backgroundColor: 'gray',
-              marginLeft: 0,
-              borderRadius: 10,
-            }} alt="pose"></Image>
+              paddingHorizontal: 16,
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 8,
+              marginTop: 6,
+              justifyContent: 'space-between',
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                flex: 1,
+                height: '100%',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={{uri: img}}
+                style={{
+                  width: 54,
+                  height: 54,
+                  backgroundColor: 'gray',
+                  marginLeft: 0,
+                  borderRadius: 10,
+                }}
+                alt="pose"></Image>
               <Text style={styles.list_head}>{item.userName}</Text>
             </View>
-            <TouchableOpacity onPress={()=>{
-              FollowUser(item.uid,!follow);
-              setFollow(!follow);
-            }}>
-              <View style={{
-                borderRadius: 20,
-                borderWidth:2,
-                borderColor:"rgba(80,150,240,0.8)",
-                paddingHorizontal:16,
-                paddingVertical:4,
-                backgroundColor:(follow && myid)?"rgba(80,150,240,0.8)":"white",
+            <TouchableOpacity
+              onPress={() => {
+                FollowUser(item.uid, !follow);
+                setFollow(!follow);
               }}>
-                <Text style={{color:(follow && myid)?"white":'rgba(80,150,240,0.8)'}}>{(follow && myid)?"followed":"follow"}</Text>
+              <View
+                style={{
+                  borderRadius: 20,
+                  borderWidth: 2,
+                  borderColor: 'rgba(80,150,240,0.8)',
+                  paddingHorizontal: 16,
+                  paddingVertical: 4,
+                  backgroundColor:
+                    follow && myid ? 'rgba(80,150,240,0.8)' : 'white',
+                }}>
+                <Text
+                  style={{
+                    color: follow && myid ? 'white' : 'rgba(80,150,240,0.8)',
+                  }}>
+                  {follow && myid ? 'followed' : 'follow'}
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
-        )
-        }
-      )}
+        );
+      })}
     </ScrollView>
   );
 };
 
-function ResolveSearch({tabIndex, renderData}){
+function ResolveSearch({tabIndex, renderData}) {
   var data;
-  if(!renderData || renderData===undefined){
+  if (!renderData || renderData === undefined) {
     return;
   }
-  if(tabIndex===0){
+  if (tabIndex === 0) {
     data = renderData.moments;
-    return(<WaterfallList renderData={data} />)
-  }else if(tabIndex===1){
+    return <WaterfallList renderData={data} />;
+  } else if (tabIndex === 1) {
     data = renderData.courses;
-    return(<CourseList renderData={data}/>)
-  }else if(tabIndex===2){
+    return <CourseList renderData={data} />;
+  } else if (tabIndex === 2) {
     data = renderData.poses;
-    return(<PoseList renderData={data}/>)
-  }else if(tabIndex===3){
+    return <PoseList renderData={data} />;
+  } else if (tabIndex === 3) {
     data = renderData.users;
-    return(<UserList renderData={data}/>)
+    return <UserList renderData={data} />;
   }
 }
 
@@ -336,13 +383,14 @@ const SearchScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [data, setData] = useState([]);
   const route = useRoute();
-  const uid = MMKV.getIntAsync('uid');
+  const uid = 1;
   const {searchContent} = route.params;
 
   useEffect(() => {
     console.log(uid);
     const fetchData = async () => {
-      const url = 'http://bodybuddy.fater.top/api/users/globalSearch';
+      const url =
+        global.storage.getString('serverDomain') + 'users/globalSearch';
       const requestOptions = {
         method: 'POST',
         headers: {
@@ -509,15 +557,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: screenWidth / numColumns - 16,
-    borderColor:"rgba(200,200,200,1)",
-    borderWidth:0.6,
+    borderColor: 'rgba(200,200,200,1)',
+    borderWidth: 0.6,
     overflow: 'hidden',
   },
-  cardList:{
-    width:"100%",
-    justifyContent:"center",
-    alignItems:"center",
-    marginBottom:8,
+  cardList: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   list: {
     width: '90%',
@@ -525,7 +573,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 10,
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
   },
   list_pic: {
     width: 125,
@@ -542,7 +590,7 @@ const styles = StyleSheet.create({
   },
   list_details: {
     marginLeft: 16,
-    marginTop:4,
+    marginTop: 4,
     fontSize: 14,
   },
 });

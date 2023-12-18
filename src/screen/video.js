@@ -104,14 +104,16 @@ const VideoScreen = ({navigation, route}) => {
           <Video
             source={{
               uri:
-                'http://bodybuddy.fater.top/api/files/download?name=' +
+                global.storage.getString('serverDomain') +
+                'files/download?name=' +
                 courseData.content.poseList[0].video,
             }}
             style={{flex: 1, width: '100%'}}
             controls={true}
             resizeMode="cover"
             poster={
-              'http://bodybuddy.fater.top/api/files/download?name=' +
+              global.storage.getString('serverDomain') +
+              'files/download?name=' +
               courseData.content.poseList[0].photo
             }
             onProgress={process => {

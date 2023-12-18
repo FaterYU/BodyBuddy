@@ -23,7 +23,6 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MasonryList from '@react-native-seoul/masonry-list';
 import {Tab, TabView, SearchBar} from '@rneui/themed';
-import {MMKV} from '../../App';
 import {useNavigation} from '@react-navigation/native';
 
 const numColumns = 2;
@@ -37,11 +36,12 @@ export const WaterfallList = ({tabIndex}) => {
     const fetchData = async () => {
       const url =
         tabIndex === 0
-          ? 'http://bodybuddy.fater.top/api/moments/findAll'
-          : 'http://bodybuddy.fater.top/api/moments/getFollowMoment';
+          ? global.storage.getString('serverDomain') + 'moments/findAll'
+          : global.storage.getString('serverDomain') +
+            'moments/getFollowMoment';
       var requestOptions;
       if (tabIndex === 1) {
-        const id = MMKV.getString('uid');
+        const id = 1;
         if (id === null) {
           return;
         }
@@ -76,7 +76,9 @@ export const WaterfallList = ({tabIndex}) => {
 
   const CardList = ({item, index, columnIndex}) => {
     const photo =
-      'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
+      global.storage.getString('serverDomain') +
+      'files/download?name=' +
+      item.photo;
 
     return (
       <View style={styles.cardList}>
@@ -136,25 +138,24 @@ export const WaterfallList = ({tabIndex}) => {
     );
   };
   // console.log(data);
-  if (MMKV.getString('uid') === null && tabIndex === 1) {
-    return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '100%',
-          height: '100%',
-        }}>
-        <Text>You Haven't Login Yet!</Text>
-        <Image
-          source={require('../assets/backgrounds/empty.png')}
-          alt="empty"
-          style={{width: screenWidth - 80, height: screenWidth - 80}}
-        />
-      </View>
-    );
-  }
-  console.log(data);
+  // if (MMKV.getString('uid') === null && tabIndex === 1) {
+  //   return (
+  //     <View
+  //       style={{
+  //         justifyContent: 'center',
+  //         alignItems: 'center',
+  //         width: '100%',
+  //         height: '100%',
+  //       }}>
+  //       <Text>You Haven't Login Yet!</Text>
+  //       <Image
+  //         source={require('../assets/backgrounds/empty.png')}
+  //         alt="empty"
+  //         style={{width: screenWidth - 80, height: screenWidth - 80}}
+  //       />
+  //     </View>
+  //   );
+  // }
   if (tabIndex === 0 && data.length === 0) {
     return (
       <View

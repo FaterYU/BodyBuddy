@@ -16,7 +16,6 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
 import React, {useRef, useMemo, useEffect, useState} from 'react';
-import {MMKV} from '../../App';
 
 import CourseCard from './courseCard';
 import {ScreenHeight} from '@rneui/base';
@@ -32,11 +31,11 @@ function CommunityDetail({navigation, route}) {
   const [atComment, setAtComment] = useState(false);
 
   const id = route.params.momentId;
-  const userId = MMKV.getString('userId');
+  const userId = 1;
   const clickLike = async () => {
     const url = like
-      ? 'http://bodybuddy.fater.top/api/moments/likeMoment'
-      : 'http://bodybuddy.fater.top/api/moments/unlikeMoment';
+      ? global.storage.getString('serverDomain') + 'moments/likeMoment'
+      : global.storage.getString('serverDomain') + 'moments/unlikeMoment';
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -49,7 +48,7 @@ function CommunityDetail({navigation, route}) {
       console.log(error);
     }
     // const fetchData = async () => {
-    //   const url = 'http://bodybuddy.fater.top/api/moments/findOne';
+    //   const url = global.storage.getString('serverDomain') +'moments/findOne';
     //   const requestOptions = {
     //     method: 'POST',
     //     headers: {'Content-Type': 'application/json'},
@@ -69,7 +68,7 @@ function CommunityDetail({navigation, route}) {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'http://bodybuddy.fater.top/api/moments/findOne';
+      const url = global.storage.getString('serverDomain') + 'moments/findOne';
       const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -84,7 +83,7 @@ function CommunityDetail({navigation, route}) {
       }
     };
     const fetchAuthor = async (authorId, data) => {
-      const url = 'http://bodybuddy.fater.top/api/users/findOne';
+      const url = global.storage.getString('serverDomain') + 'users/findOne';
       const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -137,7 +136,10 @@ function CommunityDetail({navigation, route}) {
         </TouchableOpacity>
         <Image
           source={{
-            uri: 'http://bodybuddy.fater.top/api/files/download?name=' + avatar,
+            uri:
+              global.storage.getString('serverDomain') +
+              'files/download?name=' +
+              avatar,
           }}
           style={{
             borderColor: '#ccc',
@@ -166,7 +168,12 @@ function CommunityDetail({navigation, route}) {
       </View>
       <ScrollView contentContainerStyle={styles.container}>
         <ImageSlider images={data.content.photo} />
-        <View style={{backgroundColor: 'white', alignItems: 'center',width:"100%"}}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            alignItems: 'center',
+            width: '100%',
+          }}>
           <Text
             style={{
               color: 'black',
@@ -219,7 +226,7 @@ function CommunityDetail({navigation, route}) {
           width: '100%',
           height: 54,
           alignItems: 'center',
-          paddingHorizontal:8
+          paddingHorizontal: 8,
         }}>
         <View
           style={{
@@ -230,60 +237,63 @@ function CommunityDetail({navigation, route}) {
             borderColor: '#ccc',
             borderRadius: 20,
             height: 38,
-            width: atComment? '100%':'58%',
+            width: atComment ? '100%' : '58%',
             paddingHorizontal: 8,
           }}>
-          <MaterialCommunityIcons
-            name="pencil-plus-outline"
-            size={25}
-          />
+          <MaterialCommunityIcons name="pencil-plus-outline" size={25} />
           <TextInput
             placeholder="Say Something..."
             fontSize={15}
             onChangeText={text => setComment(text)}
             value={comment}
             style={{width: '88%', marginBottom: -2}}
-            onFocus={()=>{setAtComment(true)}}
-            onBlur={()=>{setAtComment(false)}}
+            onFocus={() => {
+              setAtComment(true);
+            }}
+            onBlur={() => {
+              setAtComment(false);
+            }}
           />
         </View>
-        { !atComment && <View
-          style={{
-            flexDirection: 'row',
-            height: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Text
+        {!atComment && (
+          <View
             style={{
-              fontSize: 14,
-              marginRight: 4,
-              height: 24,
+              flexDirection: 'row',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            {data.like}
-          </Text>
-          <TouchableOpacity onPress={() => clickLike()}>
-            {like ? (
-              <MaterialCommunityIcons name="heart" size={24} color="red" />
-            ) : (
-              <MaterialCommunityIcons name="heart-outline" size={24} />
-            )}
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 14,
-              marginLeft: 10,
-              marginRight: 4,
-              height: 24,
-            }}>
-            comment
-          </Text>
-          <MaterialCommunityIcons
-            style={{marginRight: 8}}
-            name="comment-processing-outline"
-            size={24}
-          />
-        </View>}
+            <Text
+              style={{
+                fontSize: 14,
+                marginRight: 4,
+                height: 24,
+              }}>
+              {data.like}
+            </Text>
+            <TouchableOpacity onPress={() => clickLike()}>
+              {like ? (
+                <MaterialCommunityIcons name="heart" size={24} color="red" />
+              ) : (
+                <MaterialCommunityIcons name="heart-outline" size={24} />
+              )}
+            </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 14,
+                marginLeft: 10,
+                marginRight: 4,
+                height: 24,
+              }}>
+              comment
+            </Text>
+            <MaterialCommunityIcons
+              style={{marginRight: 8}}
+              name="comment-processing-outline"
+              size={24}
+            />
+          </View>
+        )}
       </View>
     </View>
   );
@@ -292,7 +302,9 @@ function CommunityDetail({navigation, route}) {
 const ImageSlider = ({images}) => {
   for (let i = 0; i < images.length; i++) {
     const photo =
-      'http://bodybuddy.fater.top/api/files/download?name=' + images[i];
+      global.storage.getString('serverDomain') +
+      'files/download?name=' +
+      images[i];
     images[i] = photo;
   }
   return (

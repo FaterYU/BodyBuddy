@@ -191,7 +191,8 @@ function CoursesScreen({navigation, route}) {
                   courseId={item.id}
                   courseImg={{
                     uri:
-                      'http://bodybuddy.fater.top/api/files/download?name=' +
+                      global.storage.getString('serverDomain') +
+                      'files/download?name=' +
                       item.photo,
                   }}
                   courseName={item.name}
@@ -233,7 +234,8 @@ function CoursesScreen({navigation, route}) {
                   level={''}
                   BGimg={{
                     uri:
-                      'http://bodybuddy.fater.top/api/files/download?name=' +
+                      global.storage.getString('serverDomain') +
+                      'files/download?name=' +
                       item.photo,
                   }}
                 />

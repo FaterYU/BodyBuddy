@@ -38,7 +38,8 @@ function DetailsScreen({navigation, route}) {
   const [fitId, setFitId] = useState(null);
   useEffect(() => {
     const getCourseDate = () => {
-      const url = 'http://bodybuddy.fater.top/api/courses/getCourseById';
+      const url =
+        global.storage.getString('serverDomain') + 'courses/getCourseById';
       const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -76,7 +77,9 @@ function DetailsScreen({navigation, route}) {
   };
 
   const photoUrl = courseData
-    ? 'http://bodybuddy.fater.top/api/files/download?name=' + courseData.photo
+    ? global.storage.getString('serverDomain') +
+      'files/download?name=' +
+      courseData.photo
     : '';
   if (courseData == null) {
     return (
@@ -226,7 +229,9 @@ function DetailsScreen({navigation, route}) {
       <VStack>
         {courseData.content.poseList?.map((item, index) => {
           const img =
-            'http://bodybuddy.fater.top/api/files/download?name=' + item.photo;
+            global.storage.getString('serverDomain') +
+            'files/download?name=' +
+            item.photo;
           return (
             <View style={styles.list}>
               <Image source={{uri: img}} style={styles.list_pic}></Image>

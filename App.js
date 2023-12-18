@@ -4,10 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MMKVStorage from 'react-native-mmkv-storage'; // 请确保导入正确的 MMKV 库
-import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
-import { SvgXml } from 'react-native-svg';
-
+import {SvgXml} from 'react-native-svg';
 
 import {NativeBaseProvider} from 'native-base';
 import 'react-native-gesture-handler';
@@ -26,17 +23,26 @@ import FollowersScreen from './src/screen/FollowersScreen';
 import SearchScreen from './src/screen/search';
 import RegisterScreen from './src/screen/register';
 import PersonDetails from './src/screen/person_details';
-import { couresesActiveSvg,couresesInactiveSvg, calendarInactiveSvg, calendarActiveSvg, communityInactiveSvg, communityActiveSvg, profileInactiveSvg, profileActiveSvg } from './src/components/barSvgCode'
+import {
+  couresesActiveSvg,
+  couresesInactiveSvg,
+  calendarInactiveSvg,
+  calendarActiveSvg,
+  communityInactiveSvg,
+  communityActiveSvg,
+  profileInactiveSvg,
+  profileActiveSvg,
+} from './src/components/barSvgCode';
+import {MMKV} from 'react-native-mmkv';
+
+// global config
+export const storage = new MMKV();
+global.storage = storage;
+const serverDomain = global.storage.getString('serverDomain') + '';
+global.storage.set('serverDomain', serverDomain);
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-// export const storage = new MMKV({
-//   id: `user-${userId}-storage`,
-//   path: `${USER_DIRECTORY}/storage`,
-//   encryptionKey: 'hunter2'
-// })
-// export const storage = new MMKV()
-
 const MainTabs = () => {
   return (
     <Tab.Navigator
@@ -52,9 +58,12 @@ const MainTabs = () => {
         component={CoursesScreen}
         options={({route}) => ({
           tabBarLabel: 'Courses',
-          tabBarIcon: ({focused}) => (
-            focused ? <SvgXml xml={couresesActiveSvg} width="60%" height="60%" /> : <SvgXml xml={couresesInactiveSvg} width="75%" height="75%" />
-          ),
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <SvgXml xml={couresesActiveSvg} width="60%" height="60%" />
+            ) : (
+              <SvgXml xml={couresesInactiveSvg} width="75%" height="75%" />
+            ),
         })}
       />
       <Tab.Screen
@@ -62,9 +71,12 @@ const MainTabs = () => {
         component={CalendarScreen}
         options={{
           tabBarLabel: 'Calendar',
-          tabBarIcon: ({focused}) => (
-            focused ? <SvgXml xml={calendarActiveSvg} width="70%" height="70%" /> : <SvgXml xml={calendarInactiveSvg} width="70%" height="70%" />
-          ),
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <SvgXml xml={calendarActiveSvg} width="70%" height="70%" />
+            ) : (
+              <SvgXml xml={calendarInactiveSvg} width="70%" height="70%" />
+            ),
         }}
       />
       <Tab.Screen
@@ -72,9 +84,12 @@ const MainTabs = () => {
         component={CommunityScreen}
         options={{
           tabBarLabel: 'Community',
-          tabBarIcon: ({focused}) => (
-            focused ? <SvgXml xml={communityActiveSvg} width="70%" height="70%" /> : <SvgXml xml={communityInactiveSvg} width="70%" height="70%" />
-          ),
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <SvgXml xml={communityActiveSvg} width="70%" height="70%" />
+            ) : (
+              <SvgXml xml={communityInactiveSvg} width="70%" height="70%" />
+            ),
         }}
       />
       <Tab.Screen
@@ -82,9 +97,12 @@ const MainTabs = () => {
         component={PersonScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({focused}) => (
-            focused ? <SvgXml xml={profileActiveSvg} width="60%" height="60%" /> : <SvgXml xml={profileInactiveSvg} width="60%" height="60%" />
-          ),
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <SvgXml xml={profileActiveSvg} width="60%" height="60%" />
+            ) : (
+              <SvgXml xml={profileInactiveSvg} width="60%" height="60%" />
+            ),
         }}
       />
     </Tab.Navigator>
@@ -92,16 +110,6 @@ const MainTabs = () => {
 };
 
 export default function MyTabs() {
-  React.useEffect(() => {
-    // 初始化 MMKV 实例
-    const MMKV = new MMKVStorage.Loader().initialize();
-
-    // 假设 userId 是你要存储的用户ID
-    const userId = 0;
-
-    // 使用 setIntAsync 将用户ID存储到 MMKV 中
-    MMKV.setIntAsync('userId', userId);
-  }, []);
   return (
     <NativeBaseProvider>
       <NavigationContainer>

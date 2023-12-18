@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Avatar} from '@rneui/themed';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WaterfallList} from './community';
 import {useNavigation} from '@react-navigation/native';
-import { MMKV } from '../../App';
+import UsersService from '../services/users.service';
+import MomentsService from '../services/moments.service';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -23,39 +24,66 @@ const screenHeight = Dimensions.get('window').height;
 function PersonScreen() {
   const navigation = useNavigation();
   const [userName, setUserName] = useState('');
-  // get user name
+  const [photo, setPhoto] = useState('');
+  const [followList, setFollowList] = useState([]);
+  const [followedList, setFollowedList] = useState([]);
+  const [momentList, setMomentList] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      const url = 'http://bodybuddy.fater.top/api/users/getName';
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+    const fetchData = () => {
+      UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
+        response => {
+          setUserName(response.data.userName);
+          setPhoto(response.data.photo);
         },
-        body: JSON.stringify({uid: MMKV.getIntAsync('userId')}),
-      };
-      try {
-        const response = await fetch(url, requestOptions);
-        const json = await response.json();
-        setUserName(json.userName);
-      } catch (error) {
-        console.log(error);
-      }
+      );
+      UsersService.getFollowList({uid: global.storage.getNumber('uid')}).then(
+        response => {
+          setFollowList(response.data);
+        },
+      );
+      UsersService.getFollowedList({uid: global.storage.getNumber('uid')}).then(
+        response => {
+          setFollowedList(response.data);
+        },
+      );
+      MomentsService.getMomentByAuthor({
+        author: global.storage.getNumber('uid'),
+      }).then(response => {
+        setMomentList(response.data);
+      });
     };
     fetchData();
-  }
-  ,[]);
-  console.log("id:",MMKV.getIntAsync('userId'));
+  }, []);
   return (
     <FlatList
       style={styles.container}
       ListHeaderComponent={() => (
         <View>
-            <TouchableOpacity style={{postion:'absolute', left:screenWidth-34, top:15, zIndex:1000}} onPress={()=>navigation.navigate("PersonDetails")}>
-              <MaterialCommunityIcons name="lead-pencil" size={26}  color={'#ffffff'}/>
-            </TouchableOpacity>
-          <ImageBackground style={styles.userBackground} source={require("../assets/backgrounds/rain_glass.jpg")}>
-            <LinearGradient colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']} style={{height: screenHeight * 0.26 ,width: '100%', flexDirection: 'column', justifyContent: 'flex-end'}}>
+          <TouchableOpacity
+            style={{
+              postion: 'absolute',
+              left: screenWidth - 34,
+              top: 15,
+              zIndex: 1000,
+            }}
+            onPress={() => navigation.navigate('PersonDetails')}>
+            <MaterialCommunityIcons
+              name="lead-pencil"
+              size={26}
+              color={'#ffffff'}
+            />
+          </TouchableOpacity>
+          <ImageBackground
+            style={styles.userBackground}
+            source={require('../assets/backgrounds/rain_glass.jpg')}>
+            <LinearGradient
+              colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']}
+              style={{
+                height: screenHeight * 0.26,
+                width: '100%',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+              }}>
               <View style={styles.userInfo}>
                 <TouchableOpacity
                   onPress={() => {
@@ -63,7 +91,10 @@ function PersonScreen() {
                   }}>
                   <Avatar
                     source={{
-                      uri: 'https://cdn.pixabay.com/photo/2016/11/21/12/42/beard-1845166_1280.jpg',
+                      uri:
+                        global.storage.getString('serverDomain') +
+                        'files/download?name=' +
+                        photo,
                     }}
                     size={76}
                     containerStyle={styles.avatar}
@@ -79,7 +110,7 @@ function PersonScreen() {
                       marginTop: 6,
                       marginLeft: 8,
                     }}>
-                    {userName?userName:'Username'}
+                    {userName ? userName : 'Username'}
                   </Text>
                   <View
                     style={{
@@ -105,7 +136,9 @@ function PersonScreen() {
                 navigation.navigate('FollowingScreen');
               }}>
               <View style={styles.fansButton}>
-                <Text style={{color: '#333333', fontSize: 20}}>4</Text>
+                <Text style={{color: '#333333', fontSize: 20}}>
+                  {followList.length}
+                </Text>
                 <Text style={{fontSize: 15}}>Following</Text>
               </View>
             </TouchableOpacity>
@@ -114,12 +147,16 @@ function PersonScreen() {
                 navigation.navigate('FollowersScreen');
               }}>
               <View style={styles.fansButton}>
-                <Text style={{color: '#333333', fontSize: 20}}>2</Text>
+                <Text style={{color: '#333333', fontSize: 20}}>
+                  {followedList.length}
+                </Text>
                 <Text style={{fontSize: 15}}>Followers</Text>
               </View>
             </TouchableOpacity>
             <View style={styles.fansButton}>
-              <Text style={{color: '#333333', fontSize: 20}}>6</Text>
+              <Text style={{color: '#333333', fontSize: 20}}>
+                {momentList.length}
+              </Text>
               <Text style={{fontSize: 15}}>Moments</Text>
             </View>
           </View>
@@ -132,7 +169,7 @@ function PersonScreen() {
                   alignContent: 'center',
                   justifyContent: 'space-between',
                   marginTop: 10,
-                  overflow:'hidden'
+                  overflow: 'hidden',
                 }}>
                 <Text
                   style={{
@@ -140,8 +177,7 @@ function PersonScreen() {
                     color: '#4969ff',
                     fontSize: 20,
                     lineHeight: 30,
-                    paddingLeft:8,
-
+                    paddingLeft: 8,
                   }}>
                   Moments Data
                 </Text>
@@ -173,7 +209,7 @@ function PersonScreen() {
                     color: '#4969ff',
                     fontSize: 20,
                     lineHeight: 30,
-                    paddingLeft:8,
+                    paddingLeft: 8,
                   }}>
                   Health Data
                 </Text>
@@ -193,7 +229,6 @@ function PersonScreen() {
         </View>
       )}
       ListFooterComponent={() => (
-
         <View style={styles.waterfall}>
           <Text
             style={{
@@ -203,7 +238,7 @@ function PersonScreen() {
               marginLeft: 20,
               marginBottom: 10,
               marginTop: -20,
-              alignSelf:"flex-start"
+              alignSelf: 'flex-start',
             }}>
             MyMoments
           </Text>
@@ -225,7 +260,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop:-26,
+    marginTop: -26,
     height: screenHeight * 0.26,
     width: '100%',
   },
@@ -270,7 +305,7 @@ const styles = StyleSheet.create({
     height: screenHeight * 0.28,
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     flexDirection: 'row',
   },
   dataCard: {
@@ -279,7 +314,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     height: '80%',
     elevation: 5,
-
   },
   waterfall: {
     alignItems: 'center',

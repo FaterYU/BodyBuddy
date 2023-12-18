@@ -1,7 +1,7 @@
 import http from '../http.js';
 
 class MomentsService {
-  findALL() {
+  findAll() {
     return http.get('/moments/findAll');
   }
   createMoment(data) {
@@ -9,6 +9,9 @@ class MomentsService {
   }
   getFollowMoment(data) {
     return http.post('/moments/getFollowMoment', data);
+  }
+  getMomentByAuthor(data) {
+    return http.post('/moments/getMomentByAuthor', data);
   }
 }
 export default new MomentsService();

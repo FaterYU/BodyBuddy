@@ -29,7 +29,6 @@ import SearchablePicker from '../components/SearchablePicker';
 import MomentsService from '../services/moments.service';
 import CoursesService from '../services/courses.service';
 import UploadFilesService from '../services/upload.service';
-import {MMKV} from '../../App';
 
 const PublishScreen = ({navigation}) => {
   const {isOpen, onToggle} = useDisclose();
@@ -38,7 +37,7 @@ const PublishScreen = ({navigation}) => {
   const [content, setContent] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
   const [CourseList, setCourseList] = useState([]);
-  const uid = MMKV.getString('uid');
+  const uid = 1;
   useEffect(() => {
     const loadCourseData = () => {
       CoursesService.findAllCourse().then(res => {
