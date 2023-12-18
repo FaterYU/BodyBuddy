@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, View, TouchableWithoutFeedback} from 'react-native';
+import {Text, View, TouchableWithoutFeedback, LogBox} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -40,6 +40,9 @@ export const storage = new MMKV();
 global.storage = storage;
 const serverDomain = 'http://bodybuddy.fater.top/api/';
 global.storage.set('serverDomain', serverDomain);
+
+// Ignore all log notifications:
+LogBox.ignoreAllLogs();
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
