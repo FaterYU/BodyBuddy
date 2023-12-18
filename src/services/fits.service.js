@@ -10,5 +10,8 @@ class FitsService {
   create(data) {
     return http.post('/fits/create', data);
   }
+  getLongTimeData(data) {
+    return http.post('/fits/getLongTimeData', data);
+  }
 }
 export default new FitsService();

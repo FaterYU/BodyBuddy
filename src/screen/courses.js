@@ -16,10 +16,22 @@ import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
 import {Image} from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
+import FitsService from '../services/fits.service';
+import CoursesService from '../services/courses.service';
+import {useNavigation} from '@react-navigation/native';
 const screenWidth = Dimensions.get('window').width;
 
 function CoursesScreen({navigation}) {
   const [search, setSearch] = useState('');
+  const [totalData, setTotalData] = useState([
+    {
+      totalCalorie: null,
+      totalDay: null,
+      totalDuration: null,
+    },
+  ]);
+  const [lastCourse, setLastCourse] = useState([]);
+  const [recommendCourse, setRecommendCourse] = useState([]);
 
   const handleSearch = () => {
     setSearch('');
@@ -28,6 +40,32 @@ function CoursesScreen({navigation}) {
   const updateSearch = text => {
     setSearch(text);
   };
+
+  useEffect(() => {
+    FitsService.getLongTimeData({id: 1})
+      .then(res => {
+        setTotalData(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    CoursesService.getLastCourseList({uid: 1})
+      .then(res => {
+        console.log(res.data);
+        setLastCourse(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    CoursesService.getRecommendCourseList({uid: 1})
+      .then(res => {
+        console.log(res.data);
+        setRecommendCourse(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
 
   var currentDate = new Date();
   const todayWeek = currentDate.getDay();
@@ -98,19 +136,19 @@ function CoursesScreen({navigation}) {
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{fontSize: 14}}>累计运动</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
-              68分钟
+              {totalData.totalDuration} min
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{fontSize: 14}}>完成天数</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
-              2/28天
+              {totalData.totalDay} day
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{fontSize: 14}}>累计消耗</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
-              82分钟
+              {totalData.totalCalorie} kcal
             </Text>
           </View>
         </View>
@@ -148,24 +186,34 @@ function CoursesScreen({navigation}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
-          <CourseCard
-            courseId={1}
-            courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
-            courseName={'HIIT燃脂-臀推初级'}
-            courseTime={30}
-            courseCalorie={300}
-            courseLevel={'零基础'}
-            finishTTime={2}
-          />
-          <CourseCard
+          {lastCourse &&
+            lastCourse.map((item, index) => {
+              return (
+                <CourseCard
+                  courseId={item.id}
+                  courseImg={{
+                    uri:
+                      'http://bodybuddy.fater.top/api/files/download?name=' +
+                      item.photo,
+                  }}
+                  courseName={item.name}
+                  courseTime={item.duration}
+                  courseCalorie={item.calorie}
+                  courseLevel={''}
+                  finishTime={2}
+                />
+              );
+            })}
+
+          {/* <CourseCard
             courseId={2}
             courseImg={require('../assets/courses/pexels-pixabay-235922.jpg')}
             courseName={'HIIT燃脂-臀推初级'}
             courseTime={22}
             courseCalorie={200}
             courseLevel={'零基础'}
-            finishTTime={2}
-          />
+            finishTime={2}
+          /> */}
         </View>
       </View>
       <View style={{width: '100%'}}>
@@ -186,74 +234,83 @@ function CoursesScreen({navigation}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
-          <RecommendCourse
-            courseName={'腹肌训练入门'}
-            takeTime={'20'}
-            kalorie={'81'}
-            level={'零基础'}
-            BGimg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
-          />
-          <RecommendCourse
-            courseName={'腰腹核心训练'}
-            takeTime={'20'}
-            kalorie={'131'}
-            level={'零基础'}
-            BGimg={require('../assets/courses/pexels-li-sun-2294363.jpg')}
-          />
-          <RecommendCourse
-            courseName={'每日有氧'}
-            takeTime={'30'}
-            kalorie={'221'}
-            level={'零基础'}
-            BGimg={require('../assets/courses/pexels-pixabay-40751.jpg')}
-          />
+          {recommendCourse &&
+            recommendCourse.map((item, index) => {
+              return (
+                <RecommendCourse
+                  courseId={item.id}
+                  courseName={item.name}
+                  takeTime={item.duration}
+                  kalorie={item.calorie}
+                  level={''}
+                  BGimg={{
+                    uri:
+                      'http://bodybuddy.fater.top/api/files/download?name=' +
+                      item.photo,
+                  }}
+                />
+              );
+            })}
         </View>
       </View>
     </ScrollView>
   );
 }
 
-const RecommendCourse = ({courseName, takeTime, kalorie, level, BGimg}) => {
+const RecommendCourse = ({
+  courseId,
+  courseName,
+  takeTime,
+  kalorie,
+  level,
+  BGimg,
+}) => {
+  const navigation = useNavigation();
   return (
-    <ImageBackground
-      source={BGimg}
-      style={{
-        marginBottom: 10,
-        height: 100,
-        width: screenWidth - 20,
-        borderRadius: 8,
-        overflow: 'hidden',
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('DetailsScreen', {id: courseId});
       }}>
-      <LinearGradient
-        colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']}
+      <ImageBackground
+        source={BGimg}
         style={{
+          marginBottom: 10,
           height: 100,
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
+          width: screenWidth - 20,
+          borderRadius: 8,
           overflow: 'hidden',
-          paddingLeft: 10,
         }}>
-        <Text style={{color: 'white', fontSize: 17, marginLeft: 10}}>
-          {courseName}
-        </Text>
-        <View
+        <LinearGradient
+          colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.7)']}
           style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            marginBottom: 6,
+            height: 100,
+            flexDirection: 'column',
+            justifyContent: 'flex-end',
+            overflow: 'hidden',
+            paddingLeft: 10,
           }}>
-          <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-            {takeTime}分钟
+          <Text style={{color: 'white', fontSize: 17, marginLeft: 10}}>
+            {courseName}
           </Text>
-          <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-            {kalorie}千卡
-          </Text>
-          <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-            {level}
-          </Text>
-        </View>
-      </LinearGradient>
-    </ImageBackground>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              marginBottom: 6,
+            }}>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+              {takeTime}分钟
+            </Text>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+              {kalorie}千卡
+            </Text>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+              {level}
+            </Text>
+          </View>
+        </LinearGradient>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 };
 
