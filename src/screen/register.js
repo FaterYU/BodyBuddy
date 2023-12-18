@@ -51,6 +51,8 @@ const RegisterScreen = ({navigation}) => {
         })
         .then(data => {
           console.log(data.uid);
+          global.storage.set('isLogin', true);
+          global.storage.set('uid', data.uid);
           showToast('Sign Up Successfully!');
           navigation.navigate('Person');
         });

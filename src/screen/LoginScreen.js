@@ -19,6 +19,8 @@ const screenHeight = Dimensions.get('window').height;
 function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const uid = global.storage.getNumber('uid');
+
   // 消息提示
   function showToast(Text) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);

@@ -8,6 +8,7 @@ import {
   ReactFragment,
   ImageBackground,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Avatar} from '@rneui/themed';
@@ -30,6 +31,7 @@ function PersonScreen() {
   const [momentList, setMomentList] = useState([]);
   useEffect(() => {
     const fetchData = () => {
+      console.log('uid', global.storage.getNumber('uid'));
       UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
         response => {
           setUserName(response.data.userName);
@@ -87,7 +89,28 @@ function PersonScreen() {
               <View style={styles.userInfo}>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('LoginScreen');
+                    global.storage.getBoolean('isLogin')
+                      ? Alert.alert(
+                          'Log Out',
+                          'Are you sure to log out?',
+                          [
+                            {
+                              text: 'Cancel',
+                              onPress: () => console.log('Cancel Pressed'),
+                              style: 'cancel',
+                            },
+                            {
+                              text: 'OK',
+                              onPress: () => {
+                                global.storage.set('isLogin', false);
+                                global.storage.set('uid', -1);
+                                // navigation.navigate('LoginScreen');
+                              },
+                            },
+                          ],
+                          {cancelable: false},
+                        )
+                      : navigation.navigate('LoginScreen');
                   }}>
                   <Avatar
                     source={{

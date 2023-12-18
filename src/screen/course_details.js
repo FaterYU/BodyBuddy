@@ -117,7 +117,7 @@ function DetailsScreen({navigation, route}) {
           <View style={styles.top_list}>
             <View>
               <Text style={styles.tlhead}>时长</Text>
-              <Text style={styles.tldetails}>2次</Text>
+              <Text style={styles.tldetails}>{courseData.duration}s</Text>
             </View>
             <Divider
               style={styles.tl_divider}
@@ -127,7 +127,9 @@ function DetailsScreen({navigation, route}) {
             />
             <View>
               <Text style={styles.tlhead}>燃脂</Text>
-              <Text style={styles.tldetails}>68千卡</Text>
+              <Text style={styles.tldetails}>
+                {courseData.infomation.calorie}千卡
+              </Text>
             </View>
             <Divider
               style={styles.tl_divider}
@@ -137,7 +139,9 @@ function DetailsScreen({navigation, route}) {
             />
             <View>
               <Text style={styles.tlhead}>难度</Text>
-              <Text style={styles.tldetails}>零基础</Text>
+              <Text style={styles.tldetails}>
+                L{courseData.infomation.level}
+              </Text>
             </View>
           </View>
         </View>
@@ -189,7 +193,10 @@ function DetailsScreen({navigation, route}) {
               训练次数
             </Text>
             <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-              2次
+              {courseData.infomation.practiced > 99
+                ? '99+'
+                : courseData.infomation.practiced}
+              次
             </Text>
           </View>
           <View
@@ -199,7 +206,7 @@ function DetailsScreen({navigation, route}) {
               最高评分
             </Text>
             <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-              95分
+              {courseData.infomation.score}分
             </Text>
           </View>
           <View
@@ -290,7 +297,7 @@ function DetailsScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   top: {
-    height: screenHeight * 0.33,
+    height: screenHeight * 0.34,
     width: '100%',
     justifyContent: 'center',
   },
