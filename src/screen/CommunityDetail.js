@@ -21,6 +21,8 @@ import CourseCard from './courseCard';
 import {ScreenHeight} from '@rneui/base';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+import CoursesService from '../services/courses.service';
+import UsersService from '../services/users.service';
 
 function CommunityDetail({navigation, route}) {
   const [data, setData] = useState([]);
@@ -29,9 +31,23 @@ function CommunityDetail({navigation, route}) {
   const [comment, setComment] = useState('');
   const [like, setLike] = useState(false);
   const [atComment, setAtComment] = useState(false);
+  const [mention, setMention] = useState(null);
 
   const id = route.params.momentId;
-  const userId = 1;
+  const userId = global.storage.getNumber('userId');
+  useEffect(() => {
+    const fetchData = async () => {
+      if (data.content?.mention) {
+        await CoursesService.getCourseById({
+          id: data.content?.mention ? data.content.mention[0] : 0,
+        }).then(response => {
+          console.log(response.data);
+          setMention(response.data);
+        });
+      }
+    };
+    fetchData();
+  }, [data]);
   const clickLike = () => {
     const url = like
       ? global.storage.getString('serverDomain') + 'moments/likeMoment'
@@ -46,23 +62,6 @@ function CommunityDetail({navigation, route}) {
     } catch (error) {
       console.log(error);
     }
-    // const fetchData = async () => {
-    //   const url = global.storage.getString('serverDomain') +'moments/findOne';
-    //   const requestOptions = {
-    //     method: 'POST',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify({id: id}),
-    //   };
-    //   try {
-    //     const response = await fetch(url, requestOptions);
-    //     const json = await response.json();
-    //     setData(json);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-    // fetchData();
-    console.log('like:', data.like);
     setLike(like ? false : true);
   };
   useEffect(() => {
@@ -82,7 +81,7 @@ function CommunityDetail({navigation, route}) {
       }
     };
     const fetchAuthor = async (authorId, data) => {
-      console.log('call fetchAuthor');
+      // console.log('call fetchAuthor');
       const url = global.storage.getString('serverDomain') + 'users/findOne';
       const requestOptions = {
         method: 'POST',
@@ -185,12 +184,17 @@ function CommunityDetail({navigation, route}) {
             {data.content.text}
           </Text>
           <CourseCard
-            courseImg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
-            courseName={'HIIT燃脂-臀推初级'}
-            courseTime={30}
-            courseCalorie={300}
-            courseLevel={'零基础'}
-            finishTTime={2}
+            courseImg={{
+              uri:
+                global.storage.getString('serverDomain') +
+                'files/download?name=' +
+                mention?.photo,
+            }}
+            courseName={mention?.name}
+            courseTime={mention?.duration / 60}
+            courseCalorie={mention?.infomation.calorie}
+            courseLevel={''}
+            finishTime={2}
           />
           <Text
             style={{
@@ -208,11 +212,10 @@ function CommunityDetail({navigation, route}) {
               backgroundColor: 'rgba(220,220,220,0.8)',
               marginTop: 10,
             }}></View>
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
+          {data?.comment &&
+            data.comment.commentList.map((commentDetail, index) => (
+              <CommentCard comment={commentDetail} key={index} />
+            ))}
         </View>
       </ScrollView>
       <View
@@ -319,7 +322,15 @@ const ImageSlider = ({images}) => {
   );
 };
 
-const CommentCard = () => {
+const CommentCard = commentItem => {
+  const [commentUser, setCommentUser] = useState('');
+  useEffect(() => {
+    console.log(commentItem);
+    UsersService.findOne({uid: commentItem.comment.author}).then(response => {
+      setCommentUser(response.data);
+      console.log(response.data);
+    });
+  }, [commentItem]);
   return (
     <View style={{flexDirection: 'row', width: screenWidth, height: 80}}>
       <View
@@ -329,11 +340,25 @@ const CommentCard = () => {
           borderRadius: 20,
           backgroundColor: 'gray',
           margin: 10,
-        }}></View>
+        }}>
+        <Image
+          source={{
+            uri:
+              global.storage.getString('serverDomain') +
+              'files/download?name=' +
+              commentUser.photo,
+          }}
+          style={{
+            height: 40,
+            width: 40,
+            borderRadius: 20,
+          }}
+        />
+      </View>
       <View style={{flexDirection: 'column', width: '76%'}}>
-        <Text style={{marginTop: 10}}>UserName</Text>
-        <Text style={{color: 'black'}}>点赞评论加关注，坚持打工不迷路</Text>
-        <Text style={{fontSize: 10}}>11月29日 22:31</Text>
+        <Text style={{marginTop: 10}}>{commentUser.userName}</Text>
+        <Text style={{color: 'black'}}>{commentItem.comment.content}</Text>
+        {/* <Text style={{fontSize: 10}}>11月29日 22:31</Text> */}
       </View>
       <MaterialCommunityIcons
         name="heart-outline"

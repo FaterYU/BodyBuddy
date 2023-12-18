@@ -76,7 +76,7 @@ const AgendaScreen = () => {
 
   const addCalendarActivity = () => {
     var postData = {
-      uid: 1,
+      uid: global.storage?.getNumber('uid'),
       activityDate: {
         year: startDate.getFullYear(),
         month: startDate.getMonth() + 1,
@@ -94,16 +94,24 @@ const AgendaScreen = () => {
       activityCourseId: selectedCourse,
     };
     console.log(postData);
-    UsersService.addCalendarActivity(postData).then(
-      response => {
-        setStartDate(new Date());
-        setEndDate(new Date());
-        setEventContent('');
-      },
-      error => {
-        console.log(error);
-      },
-    );
+    if (global.storage.getBoolean('isLogin') === true) {
+      UsersService.addCalendarActivity(postData).then(
+        response => {
+          setStartDate(new Date());
+          setEndDate(new Date());
+          setEventContent('');
+        },
+        error => {
+          console.log(error);
+        },
+      );
+    } else {
+      Alert.alert('添加失败', '请先登录', [
+        {
+          text: '确定',
+        },
+      ]);
+    }
   };
 
   const todayDate = new Date();
@@ -112,11 +120,18 @@ const AgendaScreen = () => {
   }-${todayDate.getDate()}`;
 
   const loadItems = originDay => {
+    console.log(global.storage.getBoolean('isLogin'));
+    console.log(global.storage.getNumber('uid'));
     var currentItems = items || {};
     var postData;
-    UsersService.getCalendarActivity({uid: 1})
+    UsersService.getCalendarActivity({
+      uid:
+        global.storage.getBoolean('isLogin') === true
+          ? global.storage.getNumber('uid')
+          : 1,
+    })
       .then(response => {
-        postData = response.data;
+        postData = global.storage.getBoolean('isLogin') ? response.data : [];
         for (let i = -10; i < 15; i++) {
           const time = originDay.timestamp + i * 24 * 60 * 60 * 1000;
           const strTime = timeToString(time);
@@ -186,6 +201,7 @@ const AgendaScreen = () => {
         <Text style={{fontSize, color}}>{reservation.content}</Text>
         {reservation.course && (
           <CourseCard
+            courseId={reservation.course.id}
             courseImg={{
               uri:
                 global.storage.getString('serverDomain') +

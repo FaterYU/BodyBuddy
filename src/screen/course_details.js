@@ -58,8 +58,12 @@ function DetailsScreen({navigation, route}) {
   }, []);
 
   const goToVideo = () => {
+    if (global.storage.getNumber('uid') === -1) {
+      navigation.navigate('LoginScreen');
+      return;
+    }
     FitsService.create({
-      userId: 1,
+      userId: global.storage.getNumber('uid'),
       courseId: courseId,
     })
       .then(res => {
