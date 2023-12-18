@@ -35,7 +35,6 @@ const WaterfallList = ({renderData}) => {
     setData(renderData);
   }, [renderData]);
   const navigation = useNavigation();
-
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
   const CardList = ({item}) => {
@@ -266,6 +265,15 @@ const UserList = ({renderData}) => {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
   const FollowUser = (userId, followed) => {
+    const myId = global.storage.getNumber('uid');
+    if (myId===-1){
+      showToast('Please login first!');
+      return;
+    }
+    if (userId === myId) {
+      showToast('You cannot follow yourself!');
+      return;
+    }
     const url = followed
       ? global.storage.getString('serverDomain') + 'users/follow'
       : global.storage.getString('serverDomain') + 'users/unfollow';
@@ -276,7 +284,7 @@ const UserList = ({renderData}) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        uid: 1,
+        uid: myId,
         followId: userId,
       }),
     };
@@ -294,6 +302,9 @@ const UserList = ({renderData}) => {
       {renderData.map((item, index) => {
         const [follow, setFollow] = useState(item.isFollowed);
         const myid = 1;
+        if (item.photo === undefined || item.photo === null) {
+          return;
+        }
         const img =
           global.storage.getString('serverDomain') +
           'files/download?name=' +
@@ -383,11 +394,10 @@ const SearchScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [data, setData] = useState([]);
   const route = useRoute();
-  const uid = 1;
+  const uid = global.storage.getNumber('uid');
   const {searchContent} = route.params;
 
   useEffect(() => {
-    console.log(uid);
     const fetchData = async () => {
       const url =
         global.storage.getString('serverDomain') + 'users/globalSearch';

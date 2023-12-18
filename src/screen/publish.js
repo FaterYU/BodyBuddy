@@ -110,7 +110,7 @@ const PublishScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{backgroundColor: 'rgba(247,247,247,1)'}}>
+    <View style={{backgroundColor: 'rgba(249,249,249,1)',height:'100%'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -202,7 +202,7 @@ const PublishScreen = ({navigation}) => {
         <View
           style={{
             marginTop: 2,
-            marginLeft: 10,
+            marginLeft: 2,
             flexDirection: 'column-reverse',
           }}>
           <Box
