@@ -38,7 +38,7 @@ import {MMKV} from 'react-native-mmkv';
 // global config
 export const storage = new MMKV();
 global.storage = storage;
-const serverDomain = global.storage.getString('serverDomain') + '';
+const serverDomain = 'http://bodybuddy.fater.top/api/';
 global.storage.set('serverDomain', serverDomain);
 
 const Tab = createBottomTabNavigator();
