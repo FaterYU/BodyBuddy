@@ -106,9 +106,9 @@ const AgendaScreen = () => {
         },
       );
     } else {
-      Alert.alert('添加失败', '请先登录', [
+      Alert.alert('Failed to create', 'please log in first', [
         {
-          text: '确定',
+          text: 'Confirm',
         },
       ]);
     }
@@ -231,7 +231,7 @@ const AgendaScreen = () => {
           setSelectedCourse(null);
           setShowModal(true);
         }}>
-        <Text>暂未添加日程</Text>
+        <Text>No Schedule Yet</Text>
       </TouchableOpacity>
     );
   };
@@ -314,7 +314,7 @@ const AgendaScreen = () => {
 
   const handleDelete = () => {
     if (forceItem === null) {
-      Alert.alert('删除失败', '请重试', [{text: '确定'}]);
+      Alert.alert('Failed to delete', 'please try again', [{text: 'Confirm'}]);
       return;
     }
     UsersService.deleteCalendarActivity({uid: 1, activityId: forceItem}).then(
@@ -343,7 +343,7 @@ const AgendaScreen = () => {
           backgroundColor: 'white',
         }}>
         <Text style={{fontSize: 20, marginLeft: 22, alignSelf: 'center'}}>
-          日程
+          Schedule
         </Text>
         <TouchableOpacity
           onPress={() => {
@@ -386,7 +386,7 @@ const AgendaScreen = () => {
             onClose={() => setShowModal(false)}>
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
-              <Modal.Header>填写日程</Modal.Header>
+              <Modal.Header>Create Schedule</Modal.Header>
               <Modal.Body>
                 <FormControl>
                   <FormControl.Label>
@@ -576,9 +576,9 @@ const AgendaScreen = () => {
             onClose={() => setShowDeleteModal(false)}>
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
-              <Modal.Header>删除日程</Modal.Header>
+              <Modal.Header>Delete Schedule</Modal.Header>
               <Modal.Body>
-                <Text>确定删除该日程吗？</Text>
+                <Text>Sure to delete？</Text>
               </Modal.Body>
               <Modal.Footer>
                 <Button.Group space={2}>

@@ -253,13 +253,13 @@ const CommunityScreen = ({navigation}) => {
             variant="default"
             style={styles.tabContent}>
             <Tab.Item
-              title="广场"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              title="Square"
+              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="关注"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              title="Follow"
+              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
           </Tab>

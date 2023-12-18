@@ -146,11 +146,11 @@ const VideoScreen = ({navigation, route}) => {
             <Frame />
           </View>
           <View style={styles.score}>
-            <Text style={{color: 'white', marginTop: 30}}>当前评分</Text>
+            <Text style={{color: 'white', marginTop: 30}}>Current Score</Text>
             <Text style={{color: 'white', fontSize: 44, fontWeight: 700}}>
               {Math.round(scoreList[Math.round(currentTime * 2)])}
             </Text>
-            <Text style={{color: 'white', marginBottom: 30}}>继续保持</Text>
+            <Text style={{color: 'white', marginBottom: 30}}>Keep Doing!</Text>
           </View>
         </View>
       </View>

@@ -70,7 +70,7 @@ const CourseFinish = ({navigation, route}) => {
                   fontWeight: 'bold',
                   marginTop: -80,
                 }}>
-                训练完成
+                Training Finshed!
               </Text>
               <Image
                 source={require('../assets/icons/礼花哥.png')}
@@ -81,7 +81,7 @@ const CourseFinish = ({navigation, route}) => {
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text
                   style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-                  平均得分
+                  Score
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
@@ -97,7 +97,7 @@ const CourseFinish = ({navigation, route}) => {
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text
                   style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-                  训练时长
+                  Duration
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
@@ -119,11 +119,11 @@ const CourseFinish = ({navigation, route}) => {
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text
                   style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-                  连续天数
+                  Days
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-                  2天
+                  2 Days
                 </Text>
               </View>
             </View>
@@ -140,7 +140,7 @@ const CourseFinish = ({navigation, route}) => {
                 fontWeight: '900',
                 fontSize: 16,
               }}>
-              社区精彩内容
+              Community Reconmended
             </Text>
             <WaterfallList tabIndex={0} />
           </View>

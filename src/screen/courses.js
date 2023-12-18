@@ -67,7 +67,15 @@ function CoursesScreen({navigation, route}) {
 
   var currentDate = new Date();
   const todayWeek = currentDate.getDay();
-  const weekName = ['日', '一', '二', '三', '四', '五', '六'];
+  const weekName = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   const currentMonth = currentDate.getMonth() + 1;
   const currentDay = currentDate.getDate();
   currentDate = currentMonth + '/' + currentDay;
@@ -97,7 +105,7 @@ function CoursesScreen({navigation, route}) {
             marginLeft: 10,
             marginBottom: 4,
           }}>
-          星期{weekName[todayWeek]}
+          {weekName[todayWeek]}
         </Text>
       </View>
       <SearchBar
@@ -132,19 +140,19 @@ function CoursesScreen({navigation, route}) {
             paddingTop: 8,
           }}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14}}>累计运动</Text>
+            <Text style={{fontSize: 14}}>Total Time</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalDuration} min
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14}}>完成天数</Text>
+            <Text style={{fontSize: 14}}>Continuous Day</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalDay} day
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14}}>累计消耗</Text>
+            <Text style={{fontSize: 14}}>Total Consume</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalCalorie} kcal
             </Text>
@@ -162,7 +170,7 @@ function CoursesScreen({navigation, route}) {
               fontWeight: 'bold',
               marginBottom: 2,
             }}>
-            查看今日训练计划
+            View Today Schedule
           </Text>
         </TouchableOpacity>
       </View>
@@ -175,7 +183,7 @@ function CoursesScreen({navigation, route}) {
             marginLeft: 20,
             marginVertical: 10,
           }}>
-          最近课程
+          Recent Course
         </Text>
         <View
           style={{
@@ -214,7 +222,7 @@ function CoursesScreen({navigation, route}) {
             marginLeft: 20,
             marginVertical: 10,
           }}>
-          推荐课程
+          Recommend Course
         </Text>
         <View
           style={{
@@ -289,10 +297,10 @@ const RecommendCourse = ({
               marginBottom: 6,
             }}>
             <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-              {takeTime}分钟
+              {takeTime}min
             </Text>
             <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
-              {kalorie}千卡
+              {kalorie}kcal
             </Text>
             <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
               {level}

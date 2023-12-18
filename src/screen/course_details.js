@@ -98,8 +98,7 @@ function DetailsScreen({navigation, route}) {
       <ImageBackground
         style={styles.top}
         source={courseData ? {uri: photoUrl} : null}>
-        <View
-          style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)'}}>
+        <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)'}}>
           <View
             style={{
               width: '95%',
@@ -120,7 +119,7 @@ function DetailsScreen({navigation, route}) {
           </Text>
           <View style={styles.top_list}>
             <View>
-              <Text style={styles.tlhead}>时长</Text>
+              <Text style={styles.tlhead}>Duration</Text>
               <Text style={styles.tldetails}>{courseData.duration}s</Text>
             </View>
             <Divider
@@ -130,9 +129,9 @@ function DetailsScreen({navigation, route}) {
               width={2}
             />
             <View>
-              <Text style={styles.tlhead}>燃脂</Text>
+              <Text style={styles.tlhead}>Calories</Text>
               <Text style={styles.tldetails}>
-                {courseData.infomation.calorie}千卡
+                {courseData.infomation.calorie}kcal
               </Text>
             </View>
             <Divider
@@ -142,7 +141,7 @@ function DetailsScreen({navigation, route}) {
               width={2}
             />
             <View>
-              <Text style={styles.tlhead}>难度</Text>
+              <Text style={styles.tlhead}>Difficulty</Text>
               <Text style={styles.tldetails}>
                 L{courseData.infomation.level}
               </Text>
@@ -159,7 +158,7 @@ function DetailsScreen({navigation, route}) {
             margin: 10,
             marginTop: 14,
           }}>
-          课前准备
+          Before Course
         </Text>
         <Text
           style={{
@@ -179,7 +178,7 @@ function DetailsScreen({navigation, route}) {
             margin: 10,
             marginTop: 2,
           }}>
-          课程介绍
+          Course Intro
         </Text>
         <Text
           style={{
@@ -194,33 +193,33 @@ function DetailsScreen({navigation, route}) {
         <View style={styles.trainData}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              训练次数
+              Times
             </Text>
             <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
               {courseData.infomation.practiced > 99
                 ? '99+'
                 : courseData.infomation.practiced}
-              次
+              times
             </Text>
           </View>
           <View
             style={{height: 50, width: 2, backgroundColor: '#E4E4E4'}}></View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              最高评分
+              Best Score
             </Text>
             <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-              {courseData.infomation.score}分
+              {courseData.infomation.score}
             </Text>
           </View>
           <View
             style={{height: 50, width: 2, backgroundColor: '#E4E4E4'}}></View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              连续天数
+              Day
             </Text>
             <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
-              2天
+              2 Days
             </Text>
           </View>
         </View>
@@ -233,7 +232,7 @@ function DetailsScreen({navigation, route}) {
               marginTop: 20,
               margin: 10,
             }}>
-            动作列表
+            Posture List
           </Text>
         </View>
       </View>
@@ -292,7 +291,7 @@ function DetailsScreen({navigation, route}) {
           marginVertical: 10,
         }}>
         <TouchableOpacity style={styles.button} onPress={goToVideo}>
-          <Text style={{color: 'white', fontSize: 18}}>开始第3次训练</Text>
+          <Text style={{color: 'white', fontSize: 18}}>Start 3rd Training</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -307,7 +306,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: '900',
-    paddingHorizontal:10,
+    paddingHorizontal: 10,
     color: 'white',
     fontSize: 32,
     alignSelf: 'center',

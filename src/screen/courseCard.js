@@ -60,8 +60,8 @@ function CourseCard({
             width: '100%',
             marginTop: 8,
           }}>
-          <Text style={{fontSize: 12}}>{courseTime}分钟</Text>
-          <Text style={{fontSize: 12, marginLeft: 8}}>{courseCalorie}千卡</Text>
+          <Text style={{fontSize: 12}}>{courseTime}min</Text>
+          <Text style={{fontSize: 12, marginLeft: 8}}>{courseCalorie}kcal</Text>
           <Text style={{fontSize: 12, marginLeft: 8}}>{courseLevel}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
@@ -72,7 +72,7 @@ function CourseCard({
             style={{marginTop: 18}}
           />
           <Text style={{marginTop: 16, fontSize: 13}}>
-            已完成{finishTime}次
+            Finshed {finishTime} times
           </Text>
         </View>
       </View>

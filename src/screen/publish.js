@@ -110,7 +110,7 @@ const PublishScreen = ({navigation}) => {
   };
 
   return (
-    <View style={{backgroundColor: 'rgba(249,249,249,1)',height:'100%'}}>
+    <View style={{backgroundColor: 'rgba(249,249,249,1)', height: '100%'}}>
       <View
         style={{
           flexDirection: 'row',
@@ -126,7 +126,7 @@ const PublishScreen = ({navigation}) => {
             style={{margin: 10, width: 60}}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'black'}}>编辑动态</Text>
+        <Text style={{fontSize: 18, color: 'black'}}>Edict Movement</Text>
         <TouchableOpacity onPress={publishMoment}>
           <View
             style={{
@@ -140,7 +140,7 @@ const PublishScreen = ({navigation}) => {
               margin: 10,
               marginRight: 14,
             }}>
-            <Text style={{color: 'white'}}>发布</Text>
+            <Text style={{color: 'white'}}>Release</Text>
           </View>
         </TouchableOpacity>
       </View>

@@ -266,7 +266,7 @@ const UserList = ({renderData}) => {
   }
   const FollowUser = (userId, followed) => {
     const myId = global.storage.getNumber('uid');
-    if (myId===-1){
+    if (myId === -1) {
       showToast('Please login first!');
       return;
     }
@@ -476,22 +476,22 @@ const SearchScreen = ({navigation}) => {
             variant="default"
             style={styles.tabContent}>
             <Tab.Item
-              title="广场"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              title="Square"
+              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="课程"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              title="Course"
+              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="动作"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              title="Pose"
+              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="用户"
+              title="Users"
               titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
               buttonStyle={styles.selectButton}
             />

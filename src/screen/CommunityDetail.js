@@ -357,7 +357,7 @@ const CommentCard = commentItem => {
       </View>
       <View style={{flexDirection: 'column', width: '76%'}}>
         <Text style={{marginTop: 10}}>{commentUser.userName}</Text>
-        <Text style={{color: 'black'}}>{commentItem.comment.content}</Text>
+        <Text style={{color: 'black'}}>{commentItem?.comment.content}</Text>
         {/* <Text style={{fontSize: 10}}>11月29日 22:31</Text> */}
       </View>
       <MaterialCommunityIcons
