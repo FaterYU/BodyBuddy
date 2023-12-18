@@ -32,7 +32,7 @@ function PersonScreen() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({uid: MMKV.getInt('userId')}),
+        body: JSON.stringify({uid: MMKV.getIntAsync('userId')}),
       };
       try {
         const response = await fetch(url, requestOptions);
@@ -45,6 +45,7 @@ function PersonScreen() {
     fetchData();
   }
   ,[]);
+  console.log("id:",MMKV.getIntAsync('userId'));
   return (
     <FlatList
       style={styles.container}
@@ -140,7 +141,7 @@ function PersonScreen() {
                     fontSize: 20,
                     lineHeight: 30,
                     paddingLeft:8,
-                    
+
                   }}>
                   Moments Data
                 </Text>
@@ -192,7 +193,7 @@ function PersonScreen() {
         </View>
       )}
       ListFooterComponent={() => (
-        
+
         <View style={styles.waterfall}>
           <Text
             style={{
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     height: '80%',
     elevation: 5,
-    
+
   },
   waterfall: {
     alignItems: 'center',

@@ -366,6 +366,8 @@ const AgendaScreen = () => {
                       <Text
                         style={{
                           fontSize: 16,
+                          color:"rgba(80,150,240,0.9)",
+                          fontWeight:"600"
                         }}>
                         {startDate.toDateString().slice(4, 10)}
                       </Text>
@@ -375,6 +377,8 @@ const AgendaScreen = () => {
                         fontSize: 40,
                         alignSelf: 'center',
                         lineHeight: 42,
+                        color:"rgba(80,150,240,0.2)",
+                        fontWeight:"600"
                       }}>
                       {' '}
                       -{' '}
@@ -392,6 +396,8 @@ const AgendaScreen = () => {
                       <Text
                         style={{
                           fontSize: 16,
+                          color:"rgba(80,150,240,0.9)",
+                          fontWeight:"600"
                         }}>
                         {startDate.toTimeString().slice(0, 5)}
                       </Text>
@@ -420,6 +426,8 @@ const AgendaScreen = () => {
                       <Text
                         style={{
                           fontSize: 16,
+                          color:"rgba(80,150,240,0.9)",
+                          fontWeight:"600"
                         }}>
                         {endDate.toDateString().slice(4, 10)}
                       </Text>
@@ -429,6 +437,8 @@ const AgendaScreen = () => {
                         fontSize: 40,
                         alignSelf: 'center',
                         lineHeight: 42,
+                        color:"rgba(80,150,240,0.2)",
+                        fontWeight:"600"
                       }}>
                       {' '}
                       -{' '}
@@ -446,6 +456,8 @@ const AgendaScreen = () => {
                       <Text
                         style={{
                           fontSize: 16,
+                          color:"rgba(80,150,240,0.9)",
+                          fontWeight:"600"
                         }}>
                         {endDate.toTimeString().slice(0, 5)}
                       </Text>
