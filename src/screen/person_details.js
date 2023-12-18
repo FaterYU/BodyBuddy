@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   Box,
@@ -13,7 +13,9 @@ import {
   Text,
   View,
   StyleSheet,
+  ActivityIndicator,
   Dimensions,
+  StatusBar,
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
@@ -27,17 +29,52 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 function PersonDetails({navigation}) {
+  const [name, setName] = useState('');
+  const [tel, setTel] = useState('');
   const [avatar, setAvatar] = useState(null);
-  const uid = 1;
+  const [gender, setGender] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+
+  const userId = global.storage.getNumber('uid');
+
+  useEffect(() => {
+    const url = "http://bodybuddy.fater.top/api/users/findOne";
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({uid: userId}),
+    };
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        setName(data.userName);
+        setTel(data.phone);
+        setAvatar(data.photo);
+        setGender(data.infomation.gender);
+        setHeight(data.infomation.height);
+        setWeight(data.infomation.weight);
+      });
+  }
+  , []);
+
+  if (avatar===null) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#4869ff" />
+      </View>
+    )
+  }
   return (
     <ScrollView>
+      <StatusBar translucent backgroundColor="transparent" />
       <View style={{backgroundColor: '#ffffff'}}>
         <ImageBackground
           source={require('../assets/backgrounds/rain_glass.jpg')}
-          style={{height: screenHeight * 0.35}}>
+          style={{height: screenHeight * 0.38}}>
           <LinearGradient
             colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0)']}
-            style={{height: screenHeight * 0.35}}>
+            style={{height: screenHeight * 0.35,paddingTop:20}}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={{marginLeft: 12, marginTop: 12, zIndex: 1000}}>
@@ -92,12 +129,12 @@ function PersonDetails({navigation}) {
                 <Input
                   size="lg"
                   placeholder="Name"
-                  style={styles.input}></Input>
+                  value={name}
+                  style={styles.input} />
                 <Text style={styles.info_head}>Telephone Number</Text>
-                <Input size="lg" placeholder="Tel" style={styles.input}></Input>
+                <Input size="lg" placeholder="Tel" value={tel} style={styles.input}></Input>
               </View>
-
-              <View style={{flexDirection: 'column'}}>
+              {/* <View style={{flexDirection: 'column'}}>
                 <Text style={styles.info_head}>Birthday</Text>
                 <View
                   style={{
@@ -107,10 +144,10 @@ function PersonDetails({navigation}) {
                   }}>
                   <BirthYearSelect />
                 </View>
-              </View>
+              </View> */}
 
               <View>
-                <Text style={styles.info_head}>Gender</Text>
+                <Text style={styles.info_head} value={gender}>Gender</Text>
                 <FormControl
                   w="3/4"
                   maxW="300"
@@ -139,6 +176,7 @@ function PersonDetails({navigation}) {
                     <Input
                       size="lg"
                       placeholder="Height"
+                      value={height}
                       w={(screenWidth - 175) / 2}></Input>
                     <InputRightAddon children="cm" />
                   </InputGroup>
@@ -149,6 +187,7 @@ function PersonDetails({navigation}) {
                     <Input
                       size="lg"
                       placeholder="Weight"
+                      value={weight}
                       w={(screenWidth - 175) / 2}></Input>
                     <InputRightAddon children="kg" />
                   </InputGroup>
@@ -225,7 +264,7 @@ const BirthYearSelect = () => {
           />
         </TouchableOpacity>
       </Box>
-      {/* <Button onPress={showDatepicker}>DD/MM/YY</Button> */}
+
       {show && (
         <DateTimePicker
           testID="dateTimePicker"

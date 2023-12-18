@@ -114,8 +114,8 @@ const RegisterScreen = ({navigation}) => {
           <Image
             source={require('../assets/icons/小跑哥.png')}
             style={{
-              width: screenWidth * 0.5,
-              height: screenWidth * 0.5,
+              width: screenWidth * 0.45,
+              height: screenWidth * 0.45,
               marginBottom: -15,
             }}
           />

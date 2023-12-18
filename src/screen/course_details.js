@@ -93,13 +93,13 @@ function DetailsScreen({navigation, route}) {
     );
   }
   return (
-    <ScrollView>
+    <ScrollView style={{}}>
       <StatusBar translucent backgroundColor="transparent" />
       <ImageBackground
         style={styles.top}
         source={courseData ? {uri: photoUrl} : null}>
         <View
-          style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)', paddingTop: 32}}>
+          style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)'}}>
           <View
             style={{
               width: '95%',
