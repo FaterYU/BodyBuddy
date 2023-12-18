@@ -263,7 +263,7 @@ function PersonScreen() {
               marginTop: -20,
               alignSelf: 'flex-start',
             }}>
-            MyMoments
+            Moments
           </Text>
           <WaterfallList tabIndex={0} />
         </View>

@@ -18,44 +18,42 @@ import {
   ReactFragment,
   ImageBackground,
   TouchableOpacity,
+  Image,
   TouchableHighlight,
   TouchableWithoutFeedback,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import UsersService from '../services/users.service';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 function FollowingScreen({navigation}) {
+  const [followList, setFollowList] = useState([]);
   useEffect(() => {
     const fetchData = () => {
       console.log('uid', global.storage.getNumber('uid'));
-      UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
-        response => {
-          setUserName(response.data.userName);
-          setPhoto(response.data.photo);
-        },
-      );
       UsersService.getFollowList({uid: global.storage.getNumber('uid')}).then(
         response => {
           setFollowList(response.data);
         },
       );
-      UsersService.getFollowedList({uid: global.storage.getNumber('uid')}).then(
-        response => {
-          setFollowedList(response.data);
-        },
-      );
-      MomentsService.getMomentByAuthor({
-        author: global.storage.getNumber('uid'),
-      }).then(response => {
-        setMomentList(response.data);
-      });
     };
     fetchData();
   }, []);
-
-  
+  if(followList.length===0){
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>No Following User</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
+        />
+      </View>
+    );
+  }
   return (
     <View style={{backgroundColor:'white'}}>
       <View style={styles.top}>
@@ -83,32 +81,25 @@ function FollowingScreen({navigation}) {
         contentContainerStyle={{
           flexDirection: 'column',
           justifyContent: 'flex-start',
-        }}>
-        <View style={{flexDirection: 'column', flex: 1}}>
-          <UserList  />
-        </View>
+        }}
+        style={{
+          backgroundColor:'white',
+          height:"100%"
+        }}
+        >
+
+        <UserList renderData={followList} />
       </ScrollView>
     </View>
   );
 }
 
 const UserList = (renderData) => {
+  const data = renderData.renderData;
   if (renderData === undefined) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Text>Network Error!</Text>
-        <Image
-          source={require('../assets/backgrounds/empty.png')}
-          alt="empty"
-          style={{width: screenWidth - 80, height: screenWidth - 80}}
-        />
-      </View>
-    );
-  }
-  if (renderData.length === 0) {
-    return (
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text>No User Was Found!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -133,7 +124,7 @@ const UserList = (renderData) => {
     const url = followed
       ? global.storage.getString('serverDomain') + 'users/follow'
       : global.storage.getString('serverDomain') + 'users/unfollow';
-    console.log(followed, url, userId);
+    // console.log(followed, url, userId);
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -150,13 +141,13 @@ const UserList = (renderData) => {
         console.log(data);
       });
   };
-
+  console.log("renderData:",data);
   return (
     <ScrollView
       contentContainerStyle={{marginTop: 10}}
       style={{flex: 1, width: '100%'}}>
-      {renderData.map((item, index) => {
-        const [follow, setFollow] = useState(item.isFollowed);
+      {data.map((item, index) => {
+        const [follow, setFollow] = useState(true);
         const myid = 1;
         if (item.photo === undefined || item.photo === null) {
           return;
@@ -232,6 +223,20 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'rgba(73, 105, 255, 0)',
     justifyContent: 'flex-start',
+  },
+
+  list_pic: {
+    width: 125,
+    height: 100,
+    backgroundColor: 'gray',
+    marginLeft: 0,
+    borderRadius: 10,
+  },
+  list_head: {
+    marginLeft: 16,
+    marginVertical: 4,
+    color: '#333333',
+    fontSize: 18,
   },
 });
 

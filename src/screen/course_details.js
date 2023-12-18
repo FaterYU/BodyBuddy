@@ -303,6 +303,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: '900',
+    paddingHorizontal:10,
     color: 'white',
     fontSize: 32,
     alignSelf: 'center',
