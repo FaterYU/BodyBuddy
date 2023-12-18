@@ -20,7 +20,7 @@ const CourseFinish = ({navigation, route}) => {
   const score = Math.round(route.params.score * 100) / 100;
   const duration = route.params.duration;
   const goToHome = () => {
-    navigation.navigate('Courses');
+    navigation.navigate('Courses', {reload: true});
   };
   return (
     <>
