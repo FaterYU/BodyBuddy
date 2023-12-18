@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Dimensions,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import {
   Input,
@@ -229,11 +230,43 @@ const UserList = ({renderData}) => {
       </View>
     );
   }
+  function showToast(Text) {
+    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  }
+  const FollowUser = (userId,followed) => {
+    if(userId===MMKV.getIntAsync('uid')){
+      showToast("You can't follow yourself!");
+      return;
+    }
+    if(MMKV.getIntAsync('uid')===null){
+      showToast("Please Login First!");
+      return;
+    }
+    const url = followed?'http://bodybuddy.fater.top/api/users/follow':'http://bodybuddy.fater.top/api/users/unfollow';
+    console.log(followed,url,userId);
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // uid: 1,
+        uid: MMKV.getIntAsync('uid'),
+        followId: userId,
+      }),
+    };
+    fetch(url, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      });
+  }
+
   return (
     <ScrollView contentContainerStyle={{marginTop:10}} style={{flex:1,width:'100%'}} >
       {renderData.map((item, index) => {
-        const [follow, setFollow] = useState(false);
-
+        const [follow, setFollow] = useState(item.isFollowed);
+        const myid = MMKV.getIntAsync('uid');
         const img = 'http://bodybuddy.fater.top/api/files/download?name='+item.photo;
         return (
           <View style={{
@@ -256,16 +289,19 @@ const UserList = ({renderData}) => {
             }} alt="pose"></Image>
               <Text style={styles.list_head}>{item.userName}</Text>
             </View>
-            <TouchableOpacity onPress={()=>setFollow(!follow)}>
+            <TouchableOpacity onPress={()=>{
+              FollowUser(item.uid,!follow);
+              setFollow(!follow);
+            }}>
               <View style={{
                 borderRadius: 20,
                 borderWidth:2,
                 borderColor:"rgba(80,150,240,0.8)",
                 paddingHorizontal:16,
                 paddingVertical:4,
-                backgroundColor:follow?"rgba(80,150,240,0.8)":"white",
+                backgroundColor:(follow && myid)?"rgba(80,150,240,0.8)":"white",
               }}>
-                <Text style={{color:follow?"white":'rgba(80,150,240,0.8)'}}>{follow?"followed":"follow"}</Text>
+                <Text style={{color:(follow && myid)?"white":'rgba(80,150,240,0.8)'}}>{(follow && myid)?"followed":"follow"}</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -300,10 +336,11 @@ const SearchScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [data, setData] = useState([]);
   const route = useRoute();
-  const uid = MMKV.getString('uid');
+  const uid = MMKV.getIntAsync('uid');
   const {searchContent} = route.params;
 
   useEffect(() => {
+    console.log(uid);
     const fetchData = async () => {
       const url = 'http://bodybuddy.fater.top/api/users/globalSearch';
       const requestOptions = {
@@ -312,7 +349,8 @@ const SearchScreen = ({navigation}) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          uid: 1,
+          // uid: 1,
+          uid: uid,
           keyword: searchContent,
         }),
       };

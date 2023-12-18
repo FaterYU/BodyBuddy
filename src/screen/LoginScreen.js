@@ -74,8 +74,8 @@ function LoginScreen({navigation}) {
       <Image
         source={require('../assets/icons/小跑哥.png')}
         style={{
-          width: 400,
-          height: 400,
+          width: screenWidth*0.8,
+          height: screenWidth*0.8,
           marginBottom: -20
         }}
       />

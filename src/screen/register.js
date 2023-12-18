@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { MMKV } from '../../App';
-import React, {useRef, useState} from 'react';
+import MMKVStorage from 'react-native-mmkv-storage';
+import React, {useRef, useState, useEffect} from 'react';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -51,7 +51,9 @@ const RegisterScreen = ({navigation}) => {
           }
         })
         .then(data => {
-          MMKV.setIntAsync('userId', data.uid);
+          console.log(data.uid);
+          // const MMKV = new MMKVStorage.initialize();
+          // await MMKV.setIntAsync('userId', newUserId);
           showToast('Sign Up Successfully!');
           navigation.navigate('Person');
         });
@@ -77,7 +79,7 @@ const RegisterScreen = ({navigation}) => {
           <Text
             style={{
               alignSelf: 'flex-end',
-              fontSize: 32,
+              fontSize: 30,
               fontWeight: '800',
               color: '#575dfb',
               marginLeft:40,
@@ -89,8 +91,8 @@ const RegisterScreen = ({navigation}) => {
         <Image
           source={require('../assets/icons/小跑哥.png')}
           style={{
-            width: 200,
-            height: 200,
+            width: screenWidth*0.5,
+            height: screenWidth*0.5,
             marginBottom:-15
           }}
         />
@@ -98,7 +100,7 @@ const RegisterScreen = ({navigation}) => {
       <Text
         style={{
           alignSelf: 'flex-start',
-          fontSize: 19,
+          fontSize: 17,
           color: '#000000',
           paddingHorizontal: 40,
         }}>

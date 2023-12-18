@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import { MMKV } from 'react-native-mmkv'
+import MMKVStorage from 'react-native-mmkv-storage'; // 请确保导入正确的 MMKV 库
 import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
 import { SvgXml } from 'react-native-svg';
 
@@ -36,7 +36,6 @@ const Stack = createStackNavigator();
 //   encryptionKey: 'hunter2'
 // })
 // export const storage = new MMKV()
-export const MMKV = new MMKVLoader().initialize();
 
 const MainTabs = () => {
   return (
@@ -94,14 +93,15 @@ const MainTabs = () => {
 
 export default function MyTabs() {
   React.useEffect(() => {
-    const initializeMMKV = async () => {
-      await MMKV.setIntAsync('userId', 0);
-      const result = await MMKV.getIntAsync('userId');
-      console.log(result);
-    }
-    initializeMMKV();
-  }
-  , []);
+    // 初始化 MMKV 实例
+    const MMKV = new MMKVStorage.Loader().initialize();
+
+    // 假设 userId 是你要存储的用户ID
+    const userId = 0;
+
+    // 使用 setIntAsync 将用户ID存储到 MMKV 中
+    MMKV.setIntAsync('userId', userId);
+  }, []);
   return (
     <NativeBaseProvider>
       <NavigationContainer>
