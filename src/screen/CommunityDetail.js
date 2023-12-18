@@ -32,7 +32,7 @@ function CommunityDetail({navigation, route}) {
   const [atComment, setAtComment] = useState(false);
 
   const id = route.params.momentId;
-  const userId = MMKV.getString('userId');
+  const userId = 1;
   const clickLike = async () => {
     const url = like
       ? 'http://bodybuddy.fater.top/api/moments/likeMoment'

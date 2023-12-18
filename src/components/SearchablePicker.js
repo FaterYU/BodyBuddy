@@ -34,7 +34,7 @@ const SearchablePicker = ({data, onValueChange}) => {
         onChangeText={text => {
           setSearchQuery(text);
           if(text === '' || text === null){}else{
-            onPickerPress();
+            // onPickerPress();
             inputRef.current.focus();
           }
         }}

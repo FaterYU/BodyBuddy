@@ -22,7 +22,6 @@ import UsersService from '../services/users.service';
 import CoursesService from '../services/courses.service';
 import SearchablePicker from '../components/SearchablePicker';
 import CourseCard from './courseCard';
-import { MMKV } from '../../App';
 
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
@@ -37,7 +36,6 @@ const AgendaScreen = () => {
   const [CourseList, setCourseList] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [forceItem, setForceItem] = useState(null);
-  const uid=MMKV.getString('uid');
 
   useEffect(() => {
     if (startDate > endDate) {
@@ -154,7 +152,7 @@ const AgendaScreen = () => {
   const renderItem = (reservation, isFirst) => {
     const fontSize =16;
     const color = 'black' ;
-
+    console.log(reservation)
     return (
       <TouchableOpacity
         style={[styles.item]}
@@ -186,8 +184,8 @@ const AgendaScreen = () => {
             courseName={reservation.course.name}
             courseTime={30}
             courseCalorie={300}
-            courseLevel={'零基础'}
-            finishTTime={2}
+            courseLevel={'beginner'}
+            finishTime={2}
             adaptWidthRate={0.8}
           />
         )}
@@ -212,6 +210,8 @@ const AgendaScreen = () => {
   };
 
   const rowHasChanged = (r1, r2) => {
+    // console.log("r1",r1);
+    // console.log("r2",r2);
     return r1.activityId !== r2.activityId;
   };
 
@@ -220,48 +220,50 @@ const AgendaScreen = () => {
     return pdate.toISOString().split('T')[0];
   };
 
-  // TODO: time confilct check and alert
-  const onStartDateChange = (event, selectedDate) => {
-    var currentDate = startDate;
-    currentDate.setDate(selectedDate.getDate());
-    setStartDate(currentDate);
-  };
-  const onStartTimeChange = (event, selectedDate) => {
-    var currentDate = startDate;
-    currentDate.setHours(selectedDate.getHours());
-    currentDate.setMinutes(selectedDate.getMinutes());
-    setStartDate(currentDate);
+  const showStartTimeMode = async (currentMode) => {
+    try {
+      const result = await DateTimePickerAndroid.open({
+        value: startDate,
+        onChange: (event, selectedDate) => onStartDateTimeChange(currentMode, event, selectedDate),
+        mode: currentMode,
+        is24Hour: true,
+      });
+
+      if (result && result.type === 'dismissed') {
+        // 用户取消选择
+      }
+    } catch (error) {
+      console.warn('Error occurred while opening date/time picker', error);
+    }
   };
 
-  const onEndDateChange = (event, selectedDate) => {
-    var currentDate = endDate;
-    currentDate.setDate(selectedDate.getDate());
-    setEndDate(currentDate);
-  };
-  const onEndTimeChange = (event, selectedDate) => {
-    var currentDate = endDate;
-    currentDate.setHours(selectedDate.getHours());
-    currentDate.setMinutes(selectedDate.getMinutes());
-    setEndDate(currentDate);
+  const onStartDateTimeChange = (currentMode, event, selectedDate) => {
+      const updatedStartDate = selectedDate || startDate;
+      setStartDate(updatedStartDate);
   };
 
-  const showStartTimeMode = currentMode => {
-    DateTimePickerAndroid.open({
-      value: startDate,
-      onChange: currentMode === 'date' ? onStartDateChange : onStartTimeChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
+  const showEndTimeMode = async (currentMode) => {
+    try {
+      const result = await DateTimePickerAndroid.open({
+        value: endDate,
+        onChange: (event, selectedDate) => onEndDateTimeChange(currentMode, event, selectedDate),
+        mode: currentMode,
+        is24Hour: true,
+      });
+
+      if (result && result.type === 'dismissed') {
+        // 用户取消选择
+      }
+    } catch (error) {
+      console.warn('Error occurred while opening date/time picker', error);
+    }
   };
 
-  const showEndTimeMode = currentMode => {
-    DateTimePickerAndroid.open({
-      value: endDate,
-      onChange: currentMode === 'date' ? onEndDateChange : onEndTimeChange,
-      mode: currentMode,
-      is24Hour: true,
-    });
+  const onEndDateTimeChange = (currentMode, event, selectedDate) => {
+      const updatedEndDate = selectedDate || endDate;
+      setEndDate(updatedEndDate);
   };
+
 
   const showStartTimeTimepicker = () => {
     showStartTimeMode('time');
@@ -339,13 +341,13 @@ const AgendaScreen = () => {
       />
       {showModal && (
         <Center>
-          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+          <Modal isOpen={showModal} style={{marginTop:-20}} onClose={() => setShowModal(false)}>
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
               <Modal.Header>填写日程</Modal.Header>
               <Modal.Body>
                 <FormControl>
-                  <FormControl.Label><Text style={{fontSize:18,fontWeight:'bold'}}>From</Text></FormControl.Label>
+                  <FormControl.Label><Text style={{fontSize:18,fontWeight:'bold',marginTop:-4}}>From</Text></FormControl.Label>
                   <View
                     style={{
                       flexDirection: 'row',
