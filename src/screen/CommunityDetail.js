@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   PanResponder,
   ActivityIndicator,
+  ToastAndroid,
   TextInput,
 } from 'react-native';
 // import {Input,Icon} from 'native-base';
@@ -34,14 +35,13 @@ function CommunityDetail({navigation, route}) {
   const [mention, setMention] = useState(null);
 
   const id = route.params.momentId;
-  const userId = global.storage.getNumber('userId');
+  const userId = global.storage.getNumber('uid');
   useEffect(() => {
     const fetchData = async () => {
       if (data.content?.mention) {
         await CoursesService.getCourseById({
           id: data.content?.mention ? data.content.mention[0] : 0,
         }).then(response => {
-          console.log(response.data);
           setMention(response.data);
         });
       }
@@ -63,6 +63,29 @@ function CommunityDetail({navigation, route}) {
       console.log(error);
     }
     setLike(like ? false : true);
+  };
+  const submitComment = () => {
+    console.log('submit comment');
+    const url = "http://bodybuddy.fater.top/api/moments/addComment";
+    if(!global.storage.getBoolean('isLogin')){
+      ToastAndroid.show("Please login first", ToastAndroid.SHORT);
+      return;
+    }
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({id: id, comment:{
+        content: comment,
+        author: userId,
+      }}),
+    };
+    try {
+      const response = fetch(url, requestOptions);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    setComment('');
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -117,7 +140,7 @@ function CommunityDetail({navigation, route}) {
     setLike(like ? false : true);
   };
   return (
-    <View>
+    <View style={{flex:1,backgroundColor:'white'}}>
       <View
         style={{
           position: 'absolute',
@@ -183,7 +206,7 @@ function CommunityDetail({navigation, route}) {
             }}>
             {data.content.text}
           </Text>
-          <CourseCard
+          {/* <CourseCard
             courseImg={{
               uri:
                 global.storage.getString('serverDomain') +
@@ -195,7 +218,7 @@ function CommunityDetail({navigation, route}) {
             courseCalorie={mention?.infomation.calorie}
             courseLevel={''}
             finishTime={2}
-          />
+          /> */}
           <Text
             style={{
               alignSelf: 'flex-start',
@@ -216,6 +239,7 @@ function CommunityDetail({navigation, route}) {
             data.comment.commentList.map((commentDetail, index) => (
               <CommentCard comment={commentDetail} key={index} />
             ))}
+            <Text style={{fontSize:14,marginTop:10}}>-- no comment below --</Text>
         </View>
       </ScrollView>
       <View
@@ -248,6 +272,7 @@ function CommunityDetail({navigation, route}) {
             placeholder="Say Something..."
             fontSize={15}
             onChangeText={text => setComment(text)}
+            onSubmitEditing={() => {submitComment()}}
             value={comment}
             style={{width: '88%', marginBottom: -2}}
             onFocus={() => {
@@ -324,13 +349,19 @@ const ImageSlider = ({images}) => {
 
 const CommentCard = commentItem => {
   const [commentUser, setCommentUser] = useState('');
+  console.log(commentItem);
   useEffect(() => {
-    console.log(commentItem);
+    if(commentItem.comment === null){
+      return;
+    }
     UsersService.findOne({uid: commentItem.comment.author}).then(response => {
       setCommentUser(response.data);
-      console.log(response.data);
     });
   }, [commentItem]);
+  if(commentItem.comment === null){
+    return null;
+  }
+
   return (
     <View style={{flexDirection: 'row', width: screenWidth, height: 80}}>
       <View
