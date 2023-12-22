@@ -210,6 +210,7 @@ function CommunityDetail({navigation, route}) {
             {data.content.text}
           </Text>
           <CourseCard
+            courseId={mention?.id}
             courseImg={{
               uri:
                 global.storage.getString('serverDomain') +
