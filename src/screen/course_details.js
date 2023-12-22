@@ -113,7 +113,12 @@ function DetailsScreen({navigation, route}) {
                 color="white"
               />
             </TouchableOpacity>
-            <MaterialCommunityIcons name="share" size={35} color="white" />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('PublishScreen', {linkCourse: courseId})
+              }>
+              <MaterialCommunityIcons name="share" size={35} color="white" />
+            </TouchableOpacity>
           </View>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>
             {courseData.name}
@@ -291,7 +296,7 @@ function DetailsScreen({navigation, route}) {
           marginVertical: 10,
         }}>
         <TouchableOpacity style={styles.button} onPress={goToVideo}>
-          <Text style={{color: 'white', fontSize: 18}}>Start 3rd Training</Text>
+          <Text style={{color: 'white', fontSize: 18}}>Start Training</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
