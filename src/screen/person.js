@@ -22,16 +22,24 @@ import MomentsService from '../services/moments.service';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-function PersonScreen() {
+function PersonScreen({route}) {
   const navigation = useNavigation();
+  const [refresh, setRefresh] = useState(1);
   const [userName, setUserName] = useState('');
   const [photo, setPhoto] = useState('');
   const [followList, setFollowList] = useState([]);
   const [followedList, setFollowedList] = useState([]);
   const [momentList, setMomentList] = useState([]);
   useEffect(() => {
+    const Refresh = () => setRefresh(route.params?.refresh ?? 0);
+    Refresh();
+  }, [route.params?.refresh]);
+
+  useEffect(() => {
     const fetchData = () => {
-      console.log('uid', global.storage.getNumber('uid'));
+      if (!global.storage.getBoolean('isLogin')) {
+        return;
+      }
       UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
         response => {
           setUserName(response.data.userName);
@@ -55,7 +63,7 @@ function PersonScreen() {
       });
     };
     fetchData();
-  }, []);
+  }, [refresh]);
   return (
     <FlatList
       style={styles.container}
@@ -68,7 +76,9 @@ function PersonScreen() {
               top: 15,
               zIndex: 1000,
             }}
-            onPress={() => navigation.navigate('PersonDetails')}>
+            onPress={() =>
+              navigation.navigate('PersonDetails', {refresh: refresh})
+            }>
             <MaterialCommunityIcons
               name="lead-pencil"
               size={26}
@@ -104,13 +114,17 @@ function PersonScreen() {
                               onPress: () => {
                                 global.storage.set('isLogin', false);
                                 global.storage.set('uid', -1);
-                                // navigation.navigate('LoginScreen');
+                                navigation.navigate('Person', {
+                                  refresh: refresh + 1,
+                                });
                               },
                             },
                           ],
                           {cancelable: false},
                         )
-                      : navigation.navigate('LoginScreen');
+                      : navigation.navigate('LoginScreen', {
+                          refresh: refresh,
+                        });
                   }}>
                   <Avatar
                     source={{

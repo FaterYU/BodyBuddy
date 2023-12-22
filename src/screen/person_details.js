@@ -30,16 +30,21 @@ import UploadFilesService from '../services/upload.service';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-function PersonDetails({navigation}) {
+function PersonDetails({navigation, route}) {
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
   const [avatar, setAvatar] = useState(null);
   const [gender, setGender] = useState('Male');
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
-  const [photoName, setPhotoName] = useState(null);
+  const [originPhotoName, setOriginPhotoName] = useState(null);
 
   const userId = global.storage.getNumber('uid');
+  const refresh = route.params.refresh;
+
+  useEffect(() => {
+    console.log(avatar);
+  }, [avatar]);
 
   useEffect(() => {
     const url = 'http://bodybuddy.fater.top/api/users/findOne';
@@ -53,7 +58,14 @@ function PersonDetails({navigation}) {
       .then(data => {
         setName(data.userName);
         setTel(data.phone);
-        setAvatar(data.photo);
+        setAvatar({
+          uri:
+            global.storage.getString('serverDomain') +
+            'files/download?name=' +
+            data.photo,
+          fileName: data.photo,
+        });
+        setOriginPhotoName(data.photo);
         setGender(data.infomation.gender);
         setHeight(data.infomation.height);
         setWeight(data.infomation.weight);
@@ -61,45 +73,55 @@ function PersonDetails({navigation}) {
   }, [userId]);
 
   const updateInfo = async () => {
-    const postImage = async Image => {
-      const res = await UploadFilesService.upload(Image, event => {});
-      setPhotoName(res.data.message);
-    };
     var Image = {
       uri: avatar.uri,
       type: 'image/jpeg',
       name: avatar.fileName,
     };
-    await postImage(Image);
-    console.log({
-      uid: userId,
-      userName: name,
-      phone: tel,
-      photo: photoName,
-      infomation: {
-        gender: gender,
-        height: height,
-        weight: weight,
-      },
-    });
-    UsersService.update({
-      uid: userId,
-      userName: name,
-      phone: tel,
-      photo: photoName,
-      infomation: {
-        gender: gender,
-        height: height,
-        weight: weight,
-      },
-    })
-      .then(res => {
-        console.log(res);
-        navigation.goBack();
+    if (avatar.fileName === originPhotoName) {
+      UsersService.update({
+        uid: userId,
+        userName: name,
+        phone: tel,
+        photo: originPhotoName,
+        infomation: {
+          gender: gender,
+          height: height,
+          weight: weight,
+        },
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .then(res => {
+          navigation.navigate('Person', {
+            refresh: refresh + 1,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      UploadFilesService.upload(Image, event => {})
+        .then(res => {
+          return UsersService.update({
+            uid: userId,
+            userName: name,
+            phone: tel,
+            photo: res.data.message,
+            infomation: {
+              gender: gender,
+              height: height,
+              weight: weight,
+            },
+          });
+        })
+        .then(res => {
+          navigation.navigate('Person', {
+            refresh: refresh + 1,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
 
   if (avatar === null) {
@@ -133,7 +155,6 @@ function PersonDetails({navigation}) {
               style={styles.avatar}
               onPress={async () => {
                 var imageSrc = await selectImage();
-                console.log(imageSrc);
                 setAvatar(imageSrc[0]);
               }}>
               <Avatar
@@ -175,6 +196,7 @@ function PersonDetails({navigation}) {
                   size="lg"
                   placeholder="Name"
                   value={name}
+                  onChangeText={text => setName(text)}
                   style={styles.input}
                 />
                 <Text style={styles.info_head}>Telephone Number</Text>
@@ -182,6 +204,7 @@ function PersonDetails({navigation}) {
                   size="lg"
                   placeholder="Tel"
                   value={tel}
+                  onChangeText={text => setTel(text)}
                   style={styles.input}></Input>
               </View>
               {/* <View style={{flexDirection: 'column'}}>
@@ -210,6 +233,7 @@ function PersonDetails({navigation}) {
                   accessibilityLabel="Gender"
                   placeholder="Gender"
                   _selectedItem={{bg: 'teal.600'}}
+                  defaultValue={gender}
                   mt="1">
                   <Select.Item label="Male" value="Male" />
                   <Select.Item label="Female" value="Female" />
@@ -229,6 +253,7 @@ function PersonDetails({navigation}) {
                       size="lg"
                       placeholder="Height"
                       value={height}
+                      onChangeText={text => setHeight(text)}
                       w={(screenWidth - 175) / 2}></Input>
                     <InputRightAddon children="cm" />
                   </InputGroup>
@@ -240,6 +265,7 @@ function PersonDetails({navigation}) {
                       size="lg"
                       placeholder="Weight"
                       value={weight}
+                      onChangeText={text => setWeight(text)}
                       w={(screenWidth - 175) / 2}></Input>
                     <InputRightAddon children="kg" />
                   </InputGroup>

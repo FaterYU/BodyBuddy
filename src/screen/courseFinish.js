@@ -38,6 +38,7 @@ const CourseFinish = ({navigation, route}) => {
               borderBottomLeftRadius: 24,
               justifyContent: 'flex-end',
               alignItems: 'center',
+              paddingTop: 34,
             }}>
             <MaterialCommunityIcons
               name="chevron-left-circle"
@@ -65,16 +66,17 @@ const CourseFinish = ({navigation, route}) => {
             <View style={{flexDirection: 'row'}}>
               <Text
                 style={{
-                  fontSize: 40,
+                  fontSize: 34,
                   color: 'black',
                   fontWeight: 'bold',
                   marginTop: -80,
+                  marginLeft: 10,
                 }}>
                 Training Finshed!
               </Text>
               <Image
                 source={require('../assets/icons/礼花哥.png')}
-                style={{width: 36, height: 36, marginTop: -68, marginLeft: 10}}
+                style={{width: 32, height: 32, marginTop: -74, marginLeft: 10}}
               />
             </View>
             <View style={styles.trainData}>
@@ -84,7 +86,7 @@ const CourseFinish = ({navigation, route}) => {
                   Score
                 </Text>
                 <Text
-                  style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
+                  style={{color: 'black', fontSize: 22, fontWeight: 'bold'}}>
                   {score}
                 </Text>
               </View>
@@ -100,7 +102,7 @@ const CourseFinish = ({navigation, route}) => {
                   Duration
                 </Text>
                 <Text
-                  style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
+                  style={{color: 'black', fontSize: 22, fontWeight: 'bold'}}>
                   {Math.floor(duration / 60)
                     .toString()
                     .padStart(2, '0') +
@@ -122,7 +124,7 @@ const CourseFinish = ({navigation, route}) => {
                   Days
                 </Text>
                 <Text
-                  style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
+                  style={{color: 'black', fontSize: 22, fontWeight: 'bold'}}>
                   2 Days
                 </Text>
               </View>
@@ -134,7 +136,7 @@ const CourseFinish = ({navigation, route}) => {
             <Text
               style={{
                 marginTop: -20,
-                marginBottom: 36,
+                marginBottom: 10,
                 marginLeft: 10,
                 color: 'black',
                 fontWeight: '900',
@@ -161,6 +163,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 20,
+  },
+  waterfall: {
+    flex: 1,
+    width: screenWidth,
   },
 });
 

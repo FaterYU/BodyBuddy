@@ -217,7 +217,7 @@ const CourseList = ({renderData}) => {
       {renderData.map((item, index) => {
         return (
           <CourseCard
-            courseId={index}
+            courseId={item.id}
             courseName={item.name}
             courseImg={{
               uri:
@@ -268,11 +268,11 @@ const UserList = ({renderData}) => {
     const myId = global.storage.getNumber('uid');
     if (myId === -1) {
       showToast('Please login first!');
-      return;
+      return !followed;
     }
     if (userId === myId) {
       showToast('You cannot follow yourself!');
-      return;
+      return !followed;
     }
     const url = followed
       ? global.storage.getString('serverDomain') + 'users/follow'
@@ -292,6 +292,7 @@ const UserList = ({renderData}) => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        return followed;
       });
   };
 
@@ -342,8 +343,8 @@ const UserList = ({renderData}) => {
             </View>
             <TouchableOpacity
               onPress={() => {
-                FollowUser(item.uid, !follow);
-                setFollow(!follow);
+                var followState = FollowUser(item.uid, !follow);
+                setFollow(followState);
               }}>
               <View
                 style={{
@@ -394,7 +395,9 @@ const SearchScreen = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
   const [data, setData] = useState([]);
   const route = useRoute();
-  const uid = global.storage.getNumber('uid');
+  const uid = global.storage.getBoolean('isLogin')
+    ? global.storage.getNumber('uid')
+    : null;
   const {searchContent} = route.params;
 
   useEffect(() => {
@@ -415,6 +418,7 @@ const SearchScreen = ({navigation}) => {
       try {
         const response = await fetch(url, requestOptions);
         const allData = await response.json();
+        // console.log(allData);
         setData(allData);
       } catch (error) {
         console.error('Error:', error);

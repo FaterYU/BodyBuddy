@@ -15,6 +15,7 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Alert,
+  Modal,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,19 +24,21 @@ import {
   useCameraDevice,
   NoCameraDeviceError,
   Camera,
-  useCameraDevices,
 } from 'react-native-vision-camera';
 import Video from 'react-native-video';
 import FitsService from '../services/fits.service';
 import CoursesService from '../services/courses.service';
+import {ScreenHeight} from '@rneui/base';
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const VideoScreen = ({navigation, route}) => {
   const courseId = route.params.id;
   const courseData = route.params.courseData;
   const fitId = route.params.fitId;
+  Orientation.lockToLandscape();
   useEffect(() => {
     // 设置为横屏
-    Orientation.lockToLandscape();
 
     // 在组件卸载时重置为竖屏
     return () => {
@@ -93,7 +96,7 @@ const VideoScreen = ({navigation, route}) => {
         <View style={styles.video}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{position: 'absolute', top: 14, left: 6, zIndex: 1000}}>
+            style={{position: 'absolute', top: 24, left: 6, zIndex: 1000}}>
             <MaterialCommunityIcons
               name="chevron-left-circle"
               size={26}
@@ -108,7 +111,7 @@ const VideoScreen = ({navigation, route}) => {
                 'files/download?name=' +
                 courseData.content.poseList[0].video,
             }}
-            style={{flex: 1, width: '100%'}}
+            style={{flex: 1, width: '100%', marginLeft: -44}}
             controls={true}
             resizeMode="cover"
             poster={
@@ -128,8 +131,8 @@ const VideoScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={{
               position: 'absolute',
-              top: 10,
-              right: 10,
+              top: 24,
+              right: 12,
               zIndex: 1000,
               opacity: isVisible ? 1 : 0,
             }}
@@ -141,10 +144,10 @@ const VideoScreen = ({navigation, route}) => {
               style={{}}
             />
           </TouchableOpacity>
-          <View style={styles.camera}>
-            <Frame />
-            <Frame />
-          </View>
+          <Frame />
+          {/* <View style={styles.cameraBox}> */}
+
+          {/* </View> */}
           <View style={styles.score}>
             <Text style={{color: 'white', marginTop: 30}}>Current Score</Text>
             <Text style={{color: 'white', fontSize: 44, fontWeight: 700}}>
@@ -167,9 +170,12 @@ const Frame = () => {
   if (device == null) return <NoCameraDeviceError />;
   return (
     <Camera
+      // style={[StyleSheet.absoluteFill, styles.camera]}
       style={StyleSheet.absoluteFill}
       device={device}
       isActive={true}
+      resizeMode="contain"
+      orientation={'portrait'}
       frameProcessor={FrameProcessor}
     />
   );
@@ -178,28 +184,41 @@ const Frame = () => {
 const styles = StyleSheet.create({
   video: {
     height: '100%',
-    backgroundColor: 'gray',
+    backgroundColor: 'rgba(255,255,255,1)',
     flexDirection: 'column',
-    width: '65%',
+    width: '62%',
+  },
+  cameraBox: {
+    height: 0,
+    // height: 160 * (screenWidth / screenHeight),
+    width: 320,
+    backgroundColor: 'rgba(7,0,190,1)',
   },
   camera: {
-    flex: 1,
-    aspectRatio: 9 / 16,
+    // flex: 1,
+    // aspectRatio: 16 / 9,
+    // aspectRatio: 9 / 16,
     transform: [{rotate: '90deg'}],
-    backgroundColor: 'rgba(200,200,200,0.8)',
-    height: '65%',
+    // marginTop: (((9 * ScreenHeight) / 16 / screenWidth - 1) / 2) * 320,
+    marginTop: -160 * (screenHeight / screenWidth) + 10,
+    // marginTop: -screenHeight / 2 + (320 * 9) / 16 / 2,
+    height: 320,
+    // width: screenHeight,
+    // height: '100%',
+    // width: '120%',
   },
   sideCard: {
     height: '100%',
-    width: '35%',
+    width: 320,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   score: {
     backgroundColor: 'rgba(70,210,90,1)',
-    width: '100%',
-    height: '40%',
+    width: 320,
+    marginTop: 320 * (9 / 16) + 30,
+    height: screenHeight - 320 * (9 / 16),
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',

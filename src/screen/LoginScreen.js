@@ -16,10 +16,12 @@ import React, {useRef, useState} from 'react';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-function LoginScreen({navigation}) {
+function LoginScreen({navigation, route}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const uid = global.storage.getNumber('uid');
+
+  const refresh = route.params.refresh;
 
   // 消息提示
   function showToast(Text) {
@@ -54,14 +56,12 @@ function LoginScreen({navigation}) {
           showToast('Login Successfully!');
           global.storage.set('isLogin', true);
           global.storage.set('uid', data.uid);
-          navigation.navigate('Person');
+          navigation.navigate('Person', {refresh: refresh + 1});
         });
     } else {
       showToast('Please enter your email and password!');
     }
   };
-
-  
 
   return (
     <View style={styles.container}>
