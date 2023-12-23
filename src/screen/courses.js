@@ -250,14 +250,14 @@ function CoursesScreen({navigation, route}) {
               );
             })} */}
           <RecommendCourse
-            courseName={'腹肌训练入门'}
+            courseName={'Push-up training • Upper body strength burst more easily!'}
             takeTime={'20'}
             kalorie={'81'}
             level={'零基础'}
             BGimg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
           />
           <RecommendCourse
-            courseName={'腰腹核心训练'}
+            courseName={"MIZI'10-minute standing warm-up"}
             takeTime={'20'}
             kalorie={'131'}
             level={'零基础'}

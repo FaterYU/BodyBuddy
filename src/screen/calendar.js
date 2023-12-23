@@ -327,13 +327,13 @@ const AgendaScreen = () => {
     );
   };
 
-  // if (uid === null) {
-  //   return (
-  //     <View>
-  //       <Text>请先登录</Text>
-  //     </View>
-  //   );
-  // }
+  if (uid === -1) {
+    return (
+      <View>
+        <Text>请先登录</Text>
+      </View>
+    );
+  }
   return (
     <>
       <View
