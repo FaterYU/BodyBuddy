@@ -24,22 +24,30 @@ import {Avatar} from '@rneui/themed';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {selectImage, takePhoto} from '../components/imagePicker';
+import UsersService from '../services/users.service';
+import UploadFilesService from '../services/upload.service';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-function PersonDetails({navigation}) {
+function PersonDetails({navigation, route}) {
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
   const [avatar, setAvatar] = useState(null);
-  const [gender, setGender] = useState('');
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
+  const [gender, setGender] = useState('Male');
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [originPhotoName, setOriginPhotoName] = useState(null);
 
   const userId = global.storage.getNumber('uid');
+  const refresh = route.params.refresh;
 
   useEffect(() => {
-    const url = "http://bodybuddy.fater.top/api/users/findOne";
+    console.log(avatar);
+  }, [avatar]);
+
+  useEffect(() => {
+    const url = 'http://bodybuddy.fater.top/api/users/findOne';
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -50,20 +58,78 @@ function PersonDetails({navigation}) {
       .then(data => {
         setName(data.userName);
         setTel(data.phone);
-        setAvatar(data.photo);
+        setAvatar({
+          uri:
+            global.storage.getString('serverDomain') +
+            'files/download?name=' +
+            data.photo,
+          fileName: data.photo,
+        });
+        setOriginPhotoName(data.photo);
         setGender(data.infomation.gender);
         setHeight(data.infomation.height);
         setWeight(data.infomation.weight);
       });
-  }
-  , []);
+  }, [userId]);
 
-  if (avatar===null) {
+  const updateInfo = async () => {
+    var Image = {
+      uri: avatar.uri,
+      type: 'image/jpeg',
+      name: avatar.fileName,
+    };
+    if (avatar.fileName === originPhotoName) {
+      UsersService.update({
+        uid: userId,
+        userName: name,
+        phone: tel,
+        photo: originPhotoName,
+        infomation: {
+          gender: gender,
+          height: height,
+          weight: weight,
+        },
+      })
+        .then(res => {
+          navigation.navigate('Person', {
+            refresh: refresh + 1,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      UploadFilesService.upload(Image, event => {})
+        .then(res => {
+          return UsersService.update({
+            uid: userId,
+            userName: name,
+            phone: tel,
+            photo: res.data.message,
+            infomation: {
+              gender: gender,
+              height: height,
+              weight: weight,
+            },
+          });
+        })
+        .then(res => {
+          navigation.navigate('Person', {
+            refresh: refresh + 1,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
+
+  if (avatar === null) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="#4869ff" />
       </View>
-    )
+    );
   }
   return (
     <ScrollView>
@@ -74,7 +140,7 @@ function PersonDetails({navigation}) {
           style={{height: screenHeight * 0.38}}>
           <LinearGradient
             colors={['rgba(0,0,0,0.5)', 'rgba(0,0,0,0)']}
-            style={{height: screenHeight * 0.35,paddingTop:20}}>
+            style={{height: screenHeight * 0.35, paddingTop: 20}}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
               style={{marginLeft: 12, marginTop: 12, zIndex: 1000}}>
@@ -130,9 +196,16 @@ function PersonDetails({navigation}) {
                   size="lg"
                   placeholder="Name"
                   value={name}
-                  style={styles.input} />
+                  onChangeText={text => setName(text)}
+                  style={styles.input}
+                />
                 <Text style={styles.info_head}>Telephone Number</Text>
-                <Input size="lg" placeholder="Tel" value={tel} style={styles.input}></Input>
+                <Input
+                  size="lg"
+                  placeholder="Tel"
+                  value={tel}
+                  onChangeText={text => setTel(text)}
+                  style={styles.input}></Input>
               </View>
               {/* <View style={{flexDirection: 'column'}}>
                 <Text style={styles.info_head}>Birthday</Text>
@@ -147,7 +220,9 @@ function PersonDetails({navigation}) {
               </View> */}
 
               <View>
-                <Text style={styles.info_head} value={gender}>Gender</Text>
+                <Text style={styles.info_head} value={gender}>
+                  Gender
+                </Text>
                 <FormControl
                   w="3/4"
                   maxW="300"
@@ -158,6 +233,7 @@ function PersonDetails({navigation}) {
                   accessibilityLabel="Gender"
                   placeholder="Gender"
                   _selectedItem={{bg: 'teal.600'}}
+                  defaultValue={gender}
                   mt="1">
                   <Select.Item label="Male" value="Male" />
                   <Select.Item label="Female" value="Female" />
@@ -177,6 +253,7 @@ function PersonDetails({navigation}) {
                       size="lg"
                       placeholder="Height"
                       value={height}
+                      onChangeText={text => setHeight(text)}
                       w={(screenWidth - 175) / 2}></Input>
                     <InputRightAddon children="cm" />
                   </InputGroup>
@@ -188,6 +265,7 @@ function PersonDetails({navigation}) {
                       size="lg"
                       placeholder="Weight"
                       value={weight}
+                      onChangeText={text => setWeight(text)}
                       w={(screenWidth - 175) / 2}></Input>
                     <InputRightAddon children="kg" />
                   </InputGroup>
@@ -208,7 +286,9 @@ function PersonDetails({navigation}) {
                     Exit
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.save_button}>
+                <TouchableOpacity
+                  style={styles.save_button}
+                  onPress={updateInfo}>
                   <Text
                     style={{fontWeight: '600', color: 'white', fontSize: 19}}>
                     Save

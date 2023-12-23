@@ -250,24 +250,27 @@ function CoursesScreen({navigation, route}) {
               );
             })} */}
           <RecommendCourse
-            courseName={'Push-up training • Upper body strength burst more easily!'}
+            courseName={'Push-up Training'}
             takeTime={'20'}
-            kalorie={'81'}
-            level={'零基础'}
+            kalorie={'120'}
+            level={'beginner'}
+            courseId={1}
             BGimg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
           />
           <RecommendCourse
-            courseName={"MIZI'10-minute standing warm-up"}
+            courseName={'Waist and Abdomen Core Training'}
             takeTime={'20'}
-            kalorie={'131'}
-            level={'零基础'}
+            kalorie={'188'}
+            level={'beginner'}
+            courseId={2}
             BGimg={require('../assets/courses/pexels-li-sun-2294363.jpg')}
           />
           <RecommendCourse
-            courseName={'每日有氧'}
-            takeTime={'30'}
-            kalorie={'221'}
-            level={'零基础'}
+            courseName={'800 meters running training speed'}
+            takeTime={'35'}
+            kalorie={'100'}
+            level={'beginner'}
+            courseId={3}
             BGimg={require('../assets/courses/pexels-pixabay-40751.jpg')}
           />
         </View>

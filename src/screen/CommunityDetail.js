@@ -66,18 +66,21 @@ function CommunityDetail({navigation, route}) {
   };
   const submitComment = () => {
     console.log('submit comment');
-    const url = "http://bodybuddy.fater.top/api/moments/addComment";
-    if(!global.storage.getBoolean('isLogin')){
-      ToastAndroid.show("Please login first", ToastAndroid.SHORT);
+    const url = 'http://bodybuddy.fater.top/api/moments/addComment';
+    if (!global.storage.getBoolean('isLogin')) {
+      ToastAndroid.show('Please login first', ToastAndroid.SHORT);
       return;
     }
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({id: id, comment:{
-        content: comment,
-        author: userId,
-      }}),
+      body: JSON.stringify({
+        id: id,
+        comment: {
+          content: comment,
+          author: userId,
+        },
+      }),
     };
     try {
       const response = fetch(url, requestOptions);
@@ -140,7 +143,7 @@ function CommunityDetail({navigation, route}) {
     setLike(like ? false : true);
   };
   return (
-    <View style={{flex:1,backgroundColor:'white'}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <View
         style={{
           position: 'absolute',
@@ -206,7 +209,8 @@ function CommunityDetail({navigation, route}) {
             }}>
             {data.content.text}
           </Text>
-          {/* <CourseCard
+          <CourseCard
+            courseId={mention?.id}
             courseImg={{
               uri:
                 global.storage.getString('serverDomain') +
@@ -218,7 +222,7 @@ function CommunityDetail({navigation, route}) {
             courseCalorie={mention?.infomation.calorie}
             courseLevel={''}
             finishTime={2}
-          /> */}
+          />
           <Text
             style={{
               alignSelf: 'flex-start',
@@ -239,7 +243,9 @@ function CommunityDetail({navigation, route}) {
             data.comment.commentList.map((commentDetail, index) => (
               <CommentCard comment={commentDetail} key={index} />
             ))}
-            <Text style={{fontSize:14,marginTop:10}}>-- no comment below --</Text>
+          <Text style={{fontSize: 14, marginTop: 10}}>
+            -- no comment below --
+          </Text>
         </View>
       </ScrollView>
       <View
@@ -272,7 +278,9 @@ function CommunityDetail({navigation, route}) {
             placeholder="Say Something..."
             fontSize={15}
             onChangeText={text => setComment(text)}
-            onSubmitEditing={() => {submitComment()}}
+            onSubmitEditing={() => {
+              submitComment();
+            }}
             value={comment}
             style={{width: '88%', marginBottom: -2}}
             onFocus={() => {
@@ -351,14 +359,14 @@ const CommentCard = commentItem => {
   const [commentUser, setCommentUser] = useState('');
   console.log(commentItem);
   useEffect(() => {
-    if(commentItem.comment === null){
+    if (commentItem.comment === null) {
       return;
     }
     UsersService.findOne({uid: commentItem.comment.author}).then(response => {
       setCommentUser(response.data);
     });
   }, [commentItem]);
-  if(commentItem.comment === null){
+  if (commentItem.comment === null) {
     return null;
   }
 

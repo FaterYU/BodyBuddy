@@ -98,7 +98,8 @@ function DetailsScreen({navigation, route}) {
       <ImageBackground
         style={styles.top}
         source={courseData ? {uri: photoUrl} : null}>
-        <View style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)'}}>
+        <View
+          style={{flex: 1, backgroundColor: 'rgba(0,0,0,0.2)', paddingTop: 36}}>
           <View
             style={{
               width: '95%',
@@ -112,7 +113,12 @@ function DetailsScreen({navigation, route}) {
                 color="white"
               />
             </TouchableOpacity>
-            <MaterialCommunityIcons name="share" size={35} color="white" />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('PublishScreen', {linkCourse: courseId})
+              }>
+              <MaterialCommunityIcons name="share" size={35} color="white" />
+            </TouchableOpacity>
           </View>
           <Text numberOfLines={1} ellipsizeMode="tail" style={styles.header}>
             {courseData.name}
@@ -195,11 +201,10 @@ function DetailsScreen({navigation, route}) {
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
               Times
             </Text>
-            <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
+            <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
               {courseData.infomation.practiced > 99
                 ? '99+'
                 : courseData.infomation.practiced}
-              times
             </Text>
           </View>
           <View
@@ -208,7 +213,7 @@ function DetailsScreen({navigation, route}) {
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
               Best Score
             </Text>
-            <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
+            <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
               {courseData.infomation.score}
             </Text>
           </View>
@@ -218,7 +223,7 @@ function DetailsScreen({navigation, route}) {
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
               Day
             </Text>
-            <Text style={{color: 'black', fontSize: 24, fontWeight: 'bold'}}>
+            <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
               2 Days
             </Text>
           </View>
@@ -291,7 +296,7 @@ function DetailsScreen({navigation, route}) {
           marginVertical: 10,
         }}>
         <TouchableOpacity style={styles.button} onPress={goToVideo}>
-          <Text style={{color: 'white', fontSize: 18}}>Start 3rd Training</Text>
+          <Text style={{color: 'white', fontSize: 18}}>Start Training</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

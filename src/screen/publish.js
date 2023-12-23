@@ -29,15 +29,24 @@ import SearchablePicker from '../components/SearchablePicker';
 import MomentsService from '../services/moments.service';
 import CoursesService from '../services/courses.service';
 import UploadFilesService from '../services/upload.service';
+import CourseCard from './courseCard';
 
-const PublishScreen = ({navigation}) => {
+const PublishScreen = ({navigation, route}) => {
   const {isOpen, onToggle} = useDisclose();
   const [imageSourceList, setImageSourceList] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedValue, setSelectedValue] = useState(null);
   const [CourseList, setCourseList] = useState([]);
+  const [linkCourse, setLinkCourse] = useState(null);
   const uid = 1;
+  useEffect(() => {
+    const Link = () => {
+      setSelectedValue(route.params?.linkCourse);
+      setLinkCourse(route.params?.linkCourse);
+    };
+    Link();
+  }, [route.params]);
   useEffect(() => {
     const loadCourseData = () => {
       CoursesService.findAllCourse().then(res => {
@@ -171,9 +180,18 @@ const PublishScreen = ({navigation}) => {
           alignItems: 'center',
           marginTop: 12,
         }}>
-        <SearchablePicker data={CourseList} onValueChange={handleValueChange} />
+        {linkCourse ? (
+          <Text style={{fontSize: 16, color: 'black', marginRight: 6}}>
+            Linked Course:{' '}
+            {CourseList.find(item => item.value === linkCourse)?.label}
+          </Text>
+        ) : (
+          <SearchablePicker
+            data={CourseList}
+            onValueChange={handleValueChange}
+          />
+        )}
       </View>
-      {/* {selectedValue && <Text>Selected Value: {selectedValue} </Text>} */}
       <ScrollView
         horizontal={true}
         style={{flexDirection: 'row', marginTop: 10, padding: 10}}
