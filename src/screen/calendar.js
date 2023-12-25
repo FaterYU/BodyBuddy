@@ -6,6 +6,8 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Image,
+  Dimensions,
 } from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {
@@ -29,6 +31,8 @@ import UsersService from '../services/users.service';
 import CoursesService from '../services/courses.service';
 import SearchablePicker from '../components/SearchablePicker';
 import CourseCard from './courseCard';
+
+const screenWidth = Dimensions.get('window').width;
 
 const AgendaScreen = () => {
   const [items, setItems] = useState(undefined);
@@ -329,8 +333,20 @@ const AgendaScreen = () => {
 
   if (global.storage.getBoolean('isLogin') === false) {
     return (
-      <View>
-        <Text>请先登录</Text>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'white',
+        }}>
+        <Text>You Haven't Login Yet!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
+        />
       </View>
     );
   }
