@@ -266,7 +266,7 @@ const UserList = ({renderData}) => {
   }
   const FollowUser = (userId, followed) => {
     const myId = global.storage.getNumber('uid');
-    if (myId === -1) {
+    if (!global.storage.getBoolean('isLogin')) {
       showToast('Please login first!');
       return !followed;
     }
@@ -277,7 +277,7 @@ const UserList = ({renderData}) => {
     const url = followed
       ? global.storage.getString('serverDomain') + 'users/follow'
       : global.storage.getString('serverDomain') + 'users/unfollow';
-    console.log(followed, url, userId);
+    console.log('followed,url,userId',followed, url, userId);
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -292,8 +292,8 @@ const UserList = ({renderData}) => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        return followed;
       });
+    return followed;
   };
 
   return (
@@ -302,7 +302,7 @@ const UserList = ({renderData}) => {
       style={{flex: 1, width: '100%'}}>
       {renderData.map((item, index) => {
         const [follow, setFollow] = useState(item.isFollowed);
-        const myid = 1;
+        const myid = global.storage.getBoolean('isLogin')? global.storage.getNumber('uid'):null;
         if (item.photo === undefined || item.photo === null) {
           return;
         }
@@ -345,6 +345,7 @@ const UserList = ({renderData}) => {
               onPress={() => {
                 var followState = FollowUser(item.uid, !follow);
                 setFollow(followState);
+                console.log("followState",followState);
               }}>
               <View
                 style={{

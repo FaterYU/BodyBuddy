@@ -41,7 +41,7 @@ export const WaterfallList = ({tabIndex}) => {
             'moments/getFollowMoment';
       var requestOptions;
       if (tabIndex === 1) {
-        const id = 1;
+        const id = global.storage.getNumber('uid');
         if (id === null) {
           return;
         }
@@ -137,25 +137,25 @@ export const WaterfallList = ({tabIndex}) => {
       </View>
     );
   };
-  // console.log(data);
-  // if (MMKV.getString('uid') === null && tabIndex === 1) {
-  //   return (
-  //     <View
-  //       style={{
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         width: '100%',
-  //         height: '100%',
-  //       }}>
-  //       <Text>You Haven't Login Yet!</Text>
-  //       <Image
-  //         source={require('../assets/backgrounds/empty.png')}
-  //         alt="empty"
-  //         style={{width: screenWidth - 80, height: screenWidth - 80}}
-  //       />
-  //     </View>
-  //   );
-  // }
+  console.log(data);
+  if (!global.storage.getBoolean('isLogin') && tabIndex === 1) {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <Text>You Haven't Login Yet!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
+        />
+      </View>
+    );
+  }
   if (tabIndex === 0 && data.length === 0) {
     return (
       <View

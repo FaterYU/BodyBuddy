@@ -10,6 +10,7 @@ import {
   Image,
   Picker,
   TextInput,
+  StatusBar,
 } from 'react-native';
 import React, {useEffect, useState, Component} from 'react';
 import {
@@ -120,12 +121,14 @@ const PublishScreen = ({navigation, route}) => {
 
   return (
     <View style={{backgroundColor: 'rgba(249,249,249,1)', height: '100%'}}>
+      <StatusBar translucent backgroundColor="transparent" />
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: 'white',
+          paddingTop:28,
         }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons
@@ -135,18 +138,19 @@ const PublishScreen = ({navigation, route}) => {
             style={{margin: 10, width: 60}}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'black'}}>Edict Movement</Text>
+        <Text style={{fontSize: 18, color: 'black',marginLeft:12}}>Edict Movement</Text>
         <TouchableOpacity onPress={publishMoment}>
           <View
             style={{
               paddingHorizontal: 4,
               backgroundColor: '#575dfb',
-              width: 60,
+              width: 80,
               height: 28,
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 16,
-              margin: 10,
+              marginVertical: 10,
+              paddingHorizontal:8,
               marginRight: 14,
             }}>
             <Text style={{color: 'white'}}>Release</Text>

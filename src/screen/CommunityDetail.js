@@ -31,9 +31,13 @@ function CommunityDetail({navigation, route}) {
   const [authorName, setAuthorName] = useState('');
   const [comment, setComment] = useState('');
   const [like, setLike] = useState(false);
+  const [follow, setFollow] = useState(false);
+  const [likeNum, setLikeNum] = useState(0);
   const [atComment, setAtComment] = useState(false);
   const [mention, setMention] = useState(null);
-
+  function showToast(Text) {
+    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  }
   const id = route.params.momentId;
   const userId = global.storage.getNumber('uid');
   useEffect(() => {
@@ -48,24 +52,36 @@ function CommunityDetail({navigation, route}) {
     };
     fetchData();
   }, [data]);
+
   const clickLike = () => {
+    if(!global.storage.getBoolean('isLogin')){
+      showToast("Please Login First!")
+      return;
+    }
     const url = like
-      ? global.storage.getString('serverDomain') + 'moments/likeMoment'
-      : global.storage.getString('serverDomain') + 'moments/unlikeMoment';
+      ? global.storage.getString('serverDomain') + 'users/unlikeMoment'
+      : global.storage.getString('serverDomain') + 'users/likeMoment';
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({uid: userId, momentId: id}),
+      body: JSON.stringify({uid: global.storage.getNumber("uid") , momentId: id}),
     };
     try {
-      const response = fetch(url, requestOptions);
+      fetch(url, requestOptions)
+      .then(response => response.json())
+     .then(data => {
+        console.log(data);
+      })
+     .catch(error => console.log(error));
+
     } catch (error) {
       console.log(error);
     }
     setLike(like ? false : true);
+    setLikeNum(like ? likeNum - 1 : likeNum + 1);
   };
+
   const submitComment = () => {
-    console.log('submit comment');
     const url = 'http://bodybuddy.fater.top/api/moments/addComment';
     if (!global.storage.getBoolean('isLogin')) {
       ToastAndroid.show('Please login first', ToastAndroid.SHORT);
@@ -93,14 +109,30 @@ function CommunityDetail({navigation, route}) {
   useEffect(() => {
     const fetchData = async () => {
       const url = global.storage.getString('serverDomain') + 'moments/findOne';
-      const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({id: id}),
-      };
+      var requestOptions;
+      if(global.storage.getBoolean('isLogin')){
+        requestOptions = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: id,
+            uid: global.storage.getNumber('uid'),
+          }),
+        };
+        }else{
+          requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              id: id,
+            }),
+          }
+        }
+
       try {
         const response = await fetch(url, requestOptions);
         const json = await response.json();
+
         fetchAuthor(json.author, json);
       } catch (error) {
         console.log(error);
@@ -120,6 +152,12 @@ function CommunityDetail({navigation, route}) {
         setAvatar(json.photo);
         setAuthorName(json.userName);
         setData(data);
+        setLikeNum(data.like);
+        console.log('like:',data.like);
+        if(global.storage.getBoolean('isLogin')){
+          setLike(data.isLike);
+          setFollow(data.isFollow);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -139,9 +177,34 @@ function CommunityDetail({navigation, route}) {
       </View>
     );
   }
-  const likeHandler = () => {
-    setLike(like ? false : true);
-  };
+  const changeFollow = () => {
+    console.log('in');
+    if(!global.storage.getBoolean('isLogin')){
+      showToast("Please Login First!")
+      return;
+    }
+    const url = follow
+      ? global.storage.getString('serverDomain') + 'users/unfollow'
+      : global.storage.getString('serverDomain') + 'users/follow';
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({uid: global.storage.getNumber('uid') , followId: data.author}),
+    };
+    try {
+      fetch(url, requestOptions)
+      .then(response => response.json())
+     .then(data => {
+        console.log(data);
+      })
+     .catch(error => console.log(error));
+
+    } catch (error) {
+      console.log(error);
+    }
+    setFollow(follow ? false : true);
+  }
+
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View
@@ -178,18 +241,30 @@ function CommunityDetail({navigation, route}) {
         <Text style={{marginLeft: 8, color: 'black', fontSize: 16}}>
           {authorName}
         </Text>
-        <View
-          style={{
-            position: 'absolute',
-            right: 20,
-            borderWidth: 1.3,
-            borderColor: '#575dfb',
-            borderRadius: 30,
-            paddingHorizontal: 18,
-            paddingVertical: 6,
+
+        <TouchableOpacity
+          style={{position: 'absolute', right: 20}}
+          onPress={() => {
+            changeFollow()
           }}>
-          <Text style={{color: '#575dfb'}}>follow</Text>
-        </View>
+          <View
+            style={{
+              borderRadius: 20,
+              borderWidth: 1.3,
+              borderColor: '#575dfb',
+              paddingHorizontal: 18,
+              paddingVertical: 6,
+              backgroundColor:
+                follow ? '#575dfb' : 'white',
+            }}>
+            <Text
+              style={{
+                color: follow ? 'white' : '#575dfb',
+              }}>
+              {follow ? 'followed' : 'follow'}
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
         <ImageSlider images={data.content.photo} />
@@ -244,7 +319,7 @@ function CommunityDetail({navigation, route}) {
               <CommentCard comment={commentDetail} key={index} />
             ))}
           <Text style={{fontSize: 14, marginTop: 10}}>
-            -- no comment below --
+            -- THE END --
           </Text>
         </View>
       </ScrollView>
@@ -305,7 +380,7 @@ function CommunityDetail({navigation, route}) {
                 marginRight: 4,
                 height: 24,
               }}>
-              {data.like}
+              {likeNum}
             </Text>
             <TouchableOpacity onPress={() => clickLike()}>
               {like ? (
