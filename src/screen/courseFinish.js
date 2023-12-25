@@ -57,7 +57,7 @@ const CourseFinish = ({navigation, route}) => {
               style={{
                 width: 280,
                 height: 270,
-                marginTop: -80,
+                marginTop: -70,
                 borderRadius: 40,
                 marginBottom: 16,
                 marginLeft: 8,

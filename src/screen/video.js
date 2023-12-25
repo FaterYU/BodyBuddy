@@ -50,7 +50,23 @@ const VideoScreen = ({navigation, route}) => {
   const [scoreList, setScoreList] = useState([]);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-
+  const [scoreLevel, setScoreLevel] = useState(0);
+  const level = ['Try Harder!', 'Keep Doing!', 'Good Job!', 'Excellent!'];
+  const levelColor = ['rgba(220,30,30,0.8)', 'rgba(220,220,30,0.8)', 'rgba(30,220,30,0.8)', 'rgba(30,220,220,0.8)'];
+  useEffect(() => {
+    if(Math.round(scoreList[Math.round(currentTime * 2)]) > 85){
+      setScoreLevel(3);
+    }
+    else if(Math.round(scoreList[Math.round(currentTime * 2)]) > 70){
+      setScoreLevel(2);
+    }
+    else if(Math.round(scoreList[Math.round(currentTime * 2)]) > 60){
+      setScoreLevel(1);
+    }
+    else{
+      setScoreLevel(0);
+    }
+  }, [currentTime]);
   useEffect(() => {
     const getData = () => {
       FitsService.getScore({
@@ -81,6 +97,7 @@ const VideoScreen = ({navigation, route}) => {
         fitId: fitId,
         score: res.data.totalScore,
         duration: duration,
+
       });
     });
   };
@@ -131,7 +148,7 @@ const VideoScreen = ({navigation, route}) => {
           <TouchableOpacity
             style={{
               position: 'absolute',
-              top: 24,
+              top: 26,
               right: 12,
               zIndex: 1000,
               opacity: isVisible ? 1 : 0,
@@ -140,19 +157,19 @@ const VideoScreen = ({navigation, route}) => {
             <MaterialCommunityIcons
               name="location-exit"
               size={28}
-              color="rgba(200,0,0,1)"
+              color="rgba(200,200,200,0.8)"
               style={{}}
             />
           </TouchableOpacity>
           <View style={styles.cameraBox}>
             <Frame />
           </View>
-          <View style={styles.score}>
+          <View style={[styles.score, {backgroundColor: levelColor[scoreLevel]}]}>
             <Text style={{color: 'white', marginTop: 30}}>Current Score</Text>
             <Text style={{color: 'white', fontSize: 44, fontWeight: 700}}>
               {Math.round(scoreList[Math.round(currentTime * 2)])}
             </Text>
-            <Text style={{color: 'white', marginBottom: 30}}>Keep Doing!</Text>
+            <Text style={{color: 'white', marginBottom: 30}}>{level[scoreLevel]}</Text>
           </View>
         </View>
       </View>
@@ -183,7 +200,7 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'rgba(255,255,255,1)',
     flexDirection: 'column',
-    width: '62%',
+    width: screenWidth - 320,
   },
   cameraBox: {
     width: 320,

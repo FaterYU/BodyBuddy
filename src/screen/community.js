@@ -303,6 +303,7 @@ const styles = StyleSheet.create({
   tabContent: {
     width: '50%',
     height: 46,
+    overflow: 'visible',
   },
   nav: {
     justifyContent: 'center',

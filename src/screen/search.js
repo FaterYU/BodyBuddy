@@ -36,7 +36,6 @@ const WaterfallList = ({renderData}) => {
   }, [renderData]);
   const navigation = useNavigation();
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
-
   const CardList = ({item}) => {
     const photo =
       global.storage.getString('serverDomain') +
@@ -104,7 +103,19 @@ const WaterfallList = ({renderData}) => {
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
-  }
+  };
+  if(renderData.length === 0) {
+    return (
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text>No Moment Was Found!</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
+        />
+      </View>
+    );
+  };
   return (
     <MasonryList
       data={renderData}
@@ -215,6 +226,7 @@ const CourseList = ({renderData}) => {
   return (
     <ScrollView contentContainerStyle={{marginTop: 10}}>
       {renderData.map((item, index) => {
+        console.log(item);
         return (
           <CourseCard
             courseId={item.id}
@@ -227,8 +239,8 @@ const CourseList = ({renderData}) => {
             }}
             courseTime={item.duration}
             courseCalorie={item.calorie}
-            courseLevel={'初级'}
-            finishTime={item.practiced}
+            courseLevel={item.level}
+            finishTime={global.storage.getBoolean("isLogin")?item.userPracticed:item.practiced}
           />
         );
       })}

@@ -50,6 +50,7 @@ function CourseCard({
             fontWeight: '500',
             color: 'black',
             width: containerWidth - 135,
+            paddingRight:4,
           }}>
           {courseName}
         </Text>
@@ -62,17 +63,17 @@ function CourseCard({
           }}>
           <Text style={{fontSize: 12}}>{courseTime}min</Text>
           <Text style={{fontSize: 12, marginLeft: 8}}>{courseCalorie}kcal</Text>
-          <Text style={{fontSize: 12, marginLeft: 8}}>{courseLevel}</Text>
+          <Text style={{fontSize: 12, marginLeft: 8}}>L{courseLevel}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row',paddingTop:6}}>
           <MaterialCommunityIcons
             name="poll"
             size={16}
             color="gray"
-            style={{marginTop: 18}}
+            style={{marginTop: 18, marginRight:4}}
           />
-          <Text style={{marginTop: 16, fontSize: 13}}>
-            Finshed {finishTime} times
+          <Text style={{marginTop: 18, fontSize: 13}}>
+            Finished {finishTime} times
           </Text>
         </View>
       </View>
@@ -83,6 +84,7 @@ function CourseCard({
         style={{
           alignSelf: 'flex-start',
           marginTop: 10,
+          marginLeft: -4,
         }}
       />
     </TouchableOpacity>

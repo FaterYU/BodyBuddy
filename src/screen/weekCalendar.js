@@ -20,7 +20,7 @@ const SevenDaysCalendar = () => {
 
   const renderItem = ({item}) => (
     <View>
-      <Text style={{textAlign: 'center', marginBottom: 10, marginTop: 10}}>
+      <Text style={{textAlign: 'center', marginBottom: 10, marginTop: 10, color:"gray"}}>
         {weekName[item.getDay()]}
       </Text>
       <View

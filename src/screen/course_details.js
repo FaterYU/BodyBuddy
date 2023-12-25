@@ -58,7 +58,7 @@ function DetailsScreen({navigation, route}) {
   }, []);
 
   const goToVideo = () => {
-    if (global.storage.getNumber('uid') === -1) {
+    if (global.storage.getBoolean('isLogin') === false) {
       navigation.navigate('LoginScreen');
       return;
     }
@@ -79,6 +79,9 @@ function DetailsScreen({navigation, route}) {
         });
       });
   };
+  // const toLowerCase = str => {
+  //   return str.toLowerCase();
+  // };
 
   const photoUrl = courseData
     ? global.storage.getString('serverDomain') +
@@ -221,10 +224,10 @@ function DetailsScreen({navigation, route}) {
             style={{height: 50, width: 2, backgroundColor: '#E4E4E4'}}></View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              Day
+              Tag
             </Text>
             <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
-              2 Days
+              {courseData.infomation.tags[0].toLowerCase()}
             </Text>
           </View>
         </View>
@@ -296,7 +299,7 @@ function DetailsScreen({navigation, route}) {
           marginVertical: 10,
         }}>
         <TouchableOpacity style={styles.button} onPress={goToVideo}>
-          <Text style={{color: 'white', fontSize: 18}}>Start Training</Text>
+          <Text style={{color: 'white', fontSize: 18, fontWeight:'500'}}>Start Training</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

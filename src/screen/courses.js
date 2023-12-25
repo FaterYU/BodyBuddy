@@ -100,7 +100,7 @@ function CoursesScreen({navigation, route}) {
         <Text
           style={{
             color: 'black',
-            fontSize: 16,
+            fontSize: 17,
             fontWeight: 'bold',
             marginLeft: 10,
             marginBottom: 4,
@@ -140,19 +140,19 @@ function CoursesScreen({navigation, route}) {
             paddingTop: 8,
           }}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14}}>Total Time</Text>
+            <Text style={{fontSize: 14, color:"gray"}}>Total Time</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalDuration} min
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14}}>Continuous Day</Text>
+            <Text style={{fontSize: 14, color:"gray"}}>Continuous Day</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalDay} day
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14}}>Total Consume</Text>
+            <Text style={{fontSize: 14, color:"gray"}}>Total Consume</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalCalorie} kcal
             </Text>
@@ -194,6 +194,7 @@ function CoursesScreen({navigation, route}) {
           }}>
           {lastCourse &&
             lastCourse.map((item, index) => {
+              console.log(item);
               return (
                 <CourseCard
                   courseId={item.id}
@@ -206,7 +207,7 @@ function CoursesScreen({navigation, route}) {
                   courseName={item.name}
                   courseTime={item.duration}
                   courseCalorie={item.calorie}
-                  courseLevel={''}
+                  courseLevel={item.level}
                   finishTime={2}
                 />
               );
@@ -253,7 +254,7 @@ function CoursesScreen({navigation, route}) {
             courseName={'Push-up Training'}
             takeTime={'20'}
             kalorie={'120'}
-            level={'beginner'}
+            level={'L1'}
             courseId={1}
             BGimg={require('../assets/courses/pexels-li-sun-2294361.jpg')}
           />
@@ -261,7 +262,7 @@ function CoursesScreen({navigation, route}) {
             courseName={'Waist and Abdomen Core Training'}
             takeTime={'20'}
             kalorie={'188'}
-            level={'beginner'}
+            level={'L1'}
             courseId={2}
             BGimg={require('../assets/courses/pexels-li-sun-2294363.jpg')}
           />
@@ -269,7 +270,7 @@ function CoursesScreen({navigation, route}) {
             courseName={'800 meters running training speed'}
             takeTime={'35'}
             kalorie={'100'}
-            level={'beginner'}
+            level={'L2'}
             courseId={3}
             BGimg={require('../assets/courses/pexels-pixabay-40751.jpg')}
           />
