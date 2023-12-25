@@ -327,7 +327,7 @@ const AgendaScreen = () => {
     );
   };
 
-  if (uid === -1) {
+  if (global.storage.getBoolean('isLogin') === false) {
     return (
       <View>
         <Text>请先登录</Text>

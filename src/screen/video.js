@@ -36,9 +36,9 @@ const VideoScreen = ({navigation, route}) => {
   const courseId = route.params.id;
   const courseData = route.params.courseData;
   const fitId = route.params.fitId;
-  Orientation.lockToLandscape();
   useEffect(() => {
     // 设置为横屏
+    Orientation.lockToLandscape();
 
     // 在组件卸载时重置为竖屏
     return () => {
@@ -144,10 +144,9 @@ const VideoScreen = ({navigation, route}) => {
               style={{}}
             />
           </TouchableOpacity>
-          <Frame />
-          {/* <View style={styles.cameraBox}> */}
-
-          {/* </View> */}
+          <View style={styles.cameraBox}>
+            <Frame />
+          </View>
           <View style={styles.score}>
             <Text style={{color: 'white', marginTop: 30}}>Current Score</Text>
             <Text style={{color: 'white', fontSize: 44, fontWeight: 700}}>
@@ -170,12 +169,10 @@ const Frame = () => {
   if (device == null) return <NoCameraDeviceError />;
   return (
     <Camera
-      // style={[StyleSheet.absoluteFill, styles.camera]}
-      style={StyleSheet.absoluteFill}
+      style={[StyleSheet.absoluteFill, styles.camera]}
       device={device}
       isActive={true}
       resizeMode="contain"
-      orientation={'portrait'}
       frameProcessor={FrameProcessor}
     />
   );
@@ -189,23 +186,12 @@ const styles = StyleSheet.create({
     width: '62%',
   },
   cameraBox: {
-    height: 0,
-    // height: 160 * (screenWidth / screenHeight),
     width: 320,
-    backgroundColor: 'rgba(7,0,190,1)',
+    height: 320 * (9 / 16),
   },
   camera: {
-    // flex: 1,
-    // aspectRatio: 16 / 9,
-    // aspectRatio: 9 / 16,
-    transform: [{rotate: '90deg'}],
-    // marginTop: (((9 * ScreenHeight) / 16 / screenWidth - 1) / 2) * 320,
-    marginTop: -160 * (screenHeight / screenWidth) + 10,
-    // marginTop: -screenHeight / 2 + (320 * 9) / 16 / 2,
+    transform: [{rotate: '90deg'}, {translateX: -70}],
     height: 320,
-    // width: screenHeight,
-    // height: '100%',
-    // width: '120%',
   },
   sideCard: {
     height: '100%',
@@ -217,7 +203,6 @@ const styles = StyleSheet.create({
   score: {
     backgroundColor: 'rgba(70,210,90,1)',
     width: 320,
-    marginTop: 320 * (9 / 16) + 30,
     height: screenHeight - 320 * (9 / 16),
     flexDirection: 'column',
     justifyContent: 'space-around',
