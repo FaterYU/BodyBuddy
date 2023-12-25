@@ -42,21 +42,26 @@ function CoursesScreen({navigation, route}) {
   };
 
   useEffect(() => {
-    FitsService.getLongTimeData({id: 1})
+    if (global.storage.getBoolean('isLogin') === false) {
+      return;
+    }
+    FitsService.getLongTimeData({id: global.storage.getNumber('uid')})
       .then(res => {
         setTotalData(res.data);
       })
       .catch(err => {
         console.log(err);
       });
-    CoursesService.getLastCourseList({uid: 1})
+    CoursesService.getLastCourseList({uid: global.storage.getNumber('uid')})
       .then(res => {
         setLastCourse(res.data);
       })
       .catch(err => {
         console.log(err);
       });
-    CoursesService.getRecommendCourseList({uid: 1})
+    CoursesService.getRecommendCourseList({
+      uid: global.storage.getNumber('uid'),
+    })
       .then(res => {
         setRecommendCourse(res.data);
       })
@@ -140,19 +145,19 @@ function CoursesScreen({navigation, route}) {
             paddingTop: 8,
           }}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color:"gray"}}>Total Time</Text>
+            <Text style={{fontSize: 14, color: 'gray'}}>Total Time</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalDuration} min
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color:"gray"}}>Continuous Day</Text>
+            <Text style={{fontSize: 14, color: 'gray'}}>Continuous Day</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalDay} day
             </Text>
           </View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color:"gray"}}>Total Consume</Text>
+            <Text style={{fontSize: 14, color: 'gray'}}>Total Consume</Text>
             <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
               {totalData.totalCalorie} kcal
             </Text>
@@ -194,7 +199,6 @@ function CoursesScreen({navigation, route}) {
           }}>
           {lastCourse &&
             lastCourse.map((item, index) => {
-              console.log(item);
               return (
                 <CourseCard
                   courseId={item.id}
