@@ -28,12 +28,16 @@ import {useNavigation} from '@react-navigation/native';
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
 
-export const WaterfallList = ({tabIndex}) => {
+export const WaterfallList = ({tabIndex = 0, inputData = null}) => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (inputData !== null) {
+        setData(inputData);
+        return;
+      }
       const url =
         tabIndex === 0
           ? global.storage.getString('serverDomain') + 'moments/findAll'
@@ -70,7 +74,7 @@ export const WaterfallList = ({tabIndex}) => {
     };
 
     fetchData();
-  }, [tabIndex]);
+  }, [tabIndex, inputData]);
 
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
@@ -137,7 +141,6 @@ export const WaterfallList = ({tabIndex}) => {
       </View>
     );
   };
-  console.log(data);
   if (!global.storage.getBoolean('isLogin') && tabIndex === 1) {
     return (
       <View
@@ -254,19 +257,33 @@ const CommunityScreen = ({navigation}) => {
             style={styles.tabContent}>
             <Tab.Item
               title="Square"
-              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
+              titleStyle={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'black',
+                width: '118%',
+              }}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
               title="Follow"
-              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
+              titleStyle={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'black',
+                width: '118%',
+              }}
               buttonStyle={styles.selectButton}
             />
           </Tab>
         </View>
       </View>
 
-      <TabView value={index} onChange={setIndex} animationType="spring">
+      <TabView
+        value={index}
+        onChange={setIndex}
+        animationType="spring"
+        style={{flex: 1, width: '100%'}}>
         <TabView.Item
           style={{
             backgroundColor: '#fff',

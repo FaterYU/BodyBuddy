@@ -25,114 +25,11 @@ import {useNavigation} from '@react-navigation/native';
 import {useRoute} from '@react-navigation/native';
 import CourseCard from './courseCard';
 import MasonryList from '@react-native-seoul/masonry-list';
+import {WaterfallList} from './community';
 
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
 
-const WaterfallList = ({renderData}) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    setData(renderData);
-  }, [renderData]);
-  const navigation = useNavigation();
-  // const HeaderComponent = () => <View style={styles.headerComp}></View>;
-  const CardList = ({item}) => {
-    const photo =
-      global.storage.getString('serverDomain') +
-      'files/download?name=' +
-      item.photo;
-    return (
-      <View style={styles.cardList}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('CommunityDetailScreen', {
-              momentId: item.id,
-            });
-          }}>
-          <View style={styles.cardItem}>
-            <Box style={{backgroundColor: 'rgba(120,180,240,0.8)'}}>
-              <AspectRatio w="100%" ratio={3 / 3.2}>
-                <Image
-                  source={{
-                    uri: photo,
-                  }}
-                  alt="image"
-                />
-              </AspectRatio>
-            </Box>
-            {/* 卡片文本 */}
-            <View style={{paddingTop: 4, paddingHorizontal: 4}}>
-              <Text
-                numberOfLines={2}
-                ellipsizeMode="tail"
-                style={{
-                  color: 'black',
-                  alignSelf: 'flex-start',
-                  fontSize: 17,
-                  fontWeight: 'bold',
-                  overflow: 'hidden',
-                }}>
-                {item.content.title}
-              </Text>
-              <Text
-                numberOfLines={3}
-                ellipsizeMode="tail"
-                style={{
-                  marginTop: 4,
-                  fontSize: 12,
-                  lineHeight: 14,
-                  overflow: 'hidden',
-                  marginBottom: 28,
-                }}>
-                {item.content.text}
-              </Text>
-            </View>
-            <View style={{position: 'absolute', bottom: 6, left: 8}}>
-              <Text style={{fontSize: 12}}>
-                Published : {item.updatedAt.slice(0, 16)}
-              </Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-  if (!renderData || renderData === undefined) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  };
-  if(renderData.length === 0) {
-    return (
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text>No Moment Was Found!</Text>
-        <Image
-          source={require('../assets/backgrounds/empty.png')}
-          alt="empty"
-          style={{width: screenWidth - 80, height: screenWidth - 80}}
-        />
-      </View>
-    );
-  };
-  return (
-    <MasonryList
-      data={renderData}
-      keyExtractor={item => item.id.toString()}
-      numColumns={2}
-      showsVerticalScrollIndicator={false}
-      style={{
-        width: '100%',
-        paddingHorizontal: 6,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 6,
-      }}
-      renderItem={({item}) => <CardList item={item} />}
-    />
-  );
-};
 const PoseList = ({renderData}) => {
   if (renderData.length === 0) {
     return (
@@ -226,7 +123,6 @@ const CourseList = ({renderData}) => {
   return (
     <ScrollView contentContainerStyle={{marginTop: 10}}>
       {renderData.map((item, index) => {
-        console.log(item);
         return (
           <CourseCard
             courseId={item.id}
@@ -240,7 +136,11 @@ const CourseList = ({renderData}) => {
             courseTime={item.duration}
             courseCalorie={item.calorie}
             courseLevel={item.level}
-            finishTime={global.storage.getBoolean("isLogin")?item.userPracticed:item.practiced}
+            finishTime={
+              global.storage.getBoolean('isLogin')
+                ? item.userPracticed
+                : item.practiced
+            }
           />
         );
       })}
@@ -289,7 +189,6 @@ const UserList = ({renderData}) => {
     const url = followed
       ? global.storage.getString('serverDomain') + 'users/follow'
       : global.storage.getString('serverDomain') + 'users/unfollow';
-    console.log('followed,url,userId',followed, url, userId);
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -300,11 +199,7 @@ const UserList = ({renderData}) => {
         followId: userId,
       }),
     };
-    fetch(url, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-      });
+    fetch(url, requestOptions);
     return followed;
   };
 
@@ -314,7 +209,9 @@ const UserList = ({renderData}) => {
       style={{flex: 1, width: '100%'}}>
       {renderData.map((item, index) => {
         const [follow, setFollow] = useState(item.isFollowed);
-        const myid = global.storage.getBoolean('isLogin')? global.storage.getNumber('uid'):null;
+        const myid = global.storage.getBoolean('isLogin')
+          ? global.storage.getNumber('uid')
+          : null;
         if (item.photo === undefined || item.photo === null) {
           return;
         }
@@ -357,7 +254,7 @@ const UserList = ({renderData}) => {
               onPress={() => {
                 var followState = FollowUser(item.uid, !follow);
                 setFollow(followState);
-                console.log("followState",followState);
+                console.log('followState', followState);
               }}>
               <View
                 style={{
@@ -391,7 +288,7 @@ function ResolveSearch({tabIndex, renderData}) {
   }
   if (tabIndex === 0) {
     data = renderData.moments;
-    return <WaterfallList renderData={data} />;
+    return <WaterfallList inputData={data} />;
   } else if (tabIndex === 1) {
     data = renderData.courses;
     return <CourseList renderData={data} />;
@@ -412,6 +309,32 @@ const SearchScreen = ({navigation}) => {
     ? global.storage.getNumber('uid')
     : null;
   const {searchContent} = route.params;
+  const [search, setSearch] = useState(searchContent);
+  const handleSearch = async () => {
+    const url = global.storage.getString('serverDomain') + 'users/globalSearch';
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // uid: 1,
+        uid: uid,
+        keyword: search,
+      }),
+    };
+    try {
+      const response = await fetch(url, requestOptions);
+      const allData = await response.json();
+      // console.log(allData);
+      setData(allData);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  const updateSearch = text => {
+    setSearch(text);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -438,7 +361,7 @@ const SearchScreen = ({navigation}) => {
       }
     };
     fetchData();
-  }, []);
+  }, [searchContent, uid]);
 
   return (
     <>
@@ -476,8 +399,9 @@ const SearchScreen = ({navigation}) => {
               borderRadius: 20,
               height: 40,
             }}
-            // onChangeText={updateSearch}
-            // value={search}
+            onSubmitEditing={handleSearch}
+            onChangeText={updateSearch}
+            value={search}
           />
         </View>
         <View style={styles.nav}>
@@ -494,22 +418,42 @@ const SearchScreen = ({navigation}) => {
             style={styles.tabContent}>
             <Tab.Item
               title="Square"
-              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
+              titleStyle={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'black',
+                width: '118%',
+              }}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
               title="Course"
-              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
+              titleStyle={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'black',
+                width: '118%',
+              }}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
               title="Pose"
-              titleStyle={{fontSize: 14, fontWeight: 'bold', color: 'black'}}
+              titleStyle={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'black',
+                width: '118%',
+              }}
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="Users"
-              titleStyle={{fontSize: 16, fontWeight: 'bold', color: 'black'}}
+              title="User"
+              titleStyle={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'black',
+                width: '118%',
+              }}
               buttonStyle={styles.selectButton}
             />
           </Tab>
@@ -579,13 +523,11 @@ const styles = StyleSheet.create({
     paddingTop: 34,
   },
   cardItem: {
-    borderRadius: 10,
-    backgroundColor: 'rgba(248,248,248,0.9)',
+    borderRadius: 6,
+    backgroundColor: '#f7f7f7',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: screenWidth / numColumns - 16,
-    borderColor: 'rgba(200,200,200,1)',
-    borderWidth: 0.6,
     overflow: 'hidden',
   },
   cardList: {
