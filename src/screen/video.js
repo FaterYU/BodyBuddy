@@ -28,9 +28,15 @@ import {
 import Video from 'react-native-video';
 import FitsService from '../services/fits.service';
 import CoursesService from '../services/courses.service';
-import {ScreenHeight} from '@rneui/base';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+
+const screenWidth =
+  Dimensions.get('window').width > Dimensions.get('window').height
+    ? Dimensions.get('window').width
+    : Dimensions.get('window').height;
+const screenHeight =
+  Dimensions.get('window').height < Dimensions.get('window').width
+    ? Dimensions.get('window').height
+    : Dimensions.get('window').width;
 
 const VideoScreen = ({navigation, route}) => {
   const courseId = route.params.id;
@@ -52,18 +58,20 @@ const VideoScreen = ({navigation, route}) => {
   const [duration, setDuration] = useState(0);
   const [scoreLevel, setScoreLevel] = useState(0);
   const level = ['Try Harder!', 'Keep Doing!', 'Good Job!', 'Excellent!'];
-  const levelColor = ['rgba(220,30,30,0.8)', 'rgba(220,220,30,0.8)', 'rgba(30,220,30,0.8)', 'rgba(30,220,220,0.8)'];
+  const levelColor = [
+    'rgba(220,30,30,0.8)',
+    'rgba(220,220,30,0.8)',
+    'rgba(30,220,30,0.8)',
+    'rgba(30,220,220,0.8)',
+  ];
   useEffect(() => {
-    if(Math.round(scoreList[Math.round(currentTime * 2)]) > 85){
+    if (Math.round(scoreList[Math.round(currentTime * 2)]) > 85) {
       setScoreLevel(3);
-    }
-    else if(Math.round(scoreList[Math.round(currentTime * 2)]) > 70){
+    } else if (Math.round(scoreList[Math.round(currentTime * 2)]) > 70) {
       setScoreLevel(2);
-    }
-    else if(Math.round(scoreList[Math.round(currentTime * 2)]) > 60){
+    } else if (Math.round(scoreList[Math.round(currentTime * 2)]) > 60) {
       setScoreLevel(1);
-    }
-    else{
+    } else {
       setScoreLevel(0);
     }
   }, [currentTime]);
@@ -97,7 +105,6 @@ const VideoScreen = ({navigation, route}) => {
         fitId: fitId,
         score: res.data.totalScore,
         duration: duration,
-
       });
     });
   };
@@ -164,12 +171,13 @@ const VideoScreen = ({navigation, route}) => {
           <View style={styles.cameraBox}>
             <Frame />
           </View>
-          <View style={[styles.score, {backgroundColor: levelColor[scoreLevel]}]}>
-            <Text style={{color: 'white', marginTop: 30}}>Current Score</Text>
+          <View
+            style={[styles.score, {backgroundColor: levelColor[scoreLevel]}]}>
+            <Text style={{color: 'white'}}>Current Score</Text>
             <Text style={{color: 'white', fontSize: 44, fontWeight: 700}}>
               {Math.round(scoreList[Math.round(currentTime * 2)])}
             </Text>
-            <Text style={{color: 'white', marginBottom: 30}}>{level[scoreLevel]}</Text>
+            <Text style={{color: 'white'}}>{level[scoreLevel]}</Text>
           </View>
         </View>
       </View>
@@ -224,6 +232,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
+    overflow: 'visible',
+    paddingVertical: 30,
   },
 });
 
