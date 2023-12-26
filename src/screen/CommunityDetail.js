@@ -54,8 +54,8 @@ function CommunityDetail({navigation, route}) {
   }, [data]);
 
   const clickLike = () => {
-    if(!global.storage.getBoolean('isLogin')){
-      showToast("Please Login First!")
+    if (!global.storage.getBoolean('isLogin')) {
+      showToast('Please Login First!');
       return;
     }
     const url = like
@@ -64,16 +64,18 @@ function CommunityDetail({navigation, route}) {
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({uid: global.storage.getNumber("uid") , momentId: id}),
+      body: JSON.stringify({
+        uid: global.storage.getNumber('uid'),
+        momentId: id,
+      }),
     };
     try {
       fetch(url, requestOptions)
-      .then(response => response.json())
-     .then(data => {
-        console.log(data);
-      })
-     .catch(error => console.log(error));
-
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => console.log(error));
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +112,7 @@ function CommunityDetail({navigation, route}) {
     const fetchData = async () => {
       const url = global.storage.getString('serverDomain') + 'moments/findOne';
       var requestOptions;
-      if(global.storage.getBoolean('isLogin')){
+      if (global.storage.getBoolean('isLogin')) {
         requestOptions = {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
@@ -119,15 +121,15 @@ function CommunityDetail({navigation, route}) {
             uid: global.storage.getNumber('uid'),
           }),
         };
-        }else{
-          requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              id: id,
-            }),
-          }
-        }
+      } else {
+        requestOptions = {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: id,
+          }),
+        };
+      }
 
       try {
         const response = await fetch(url, requestOptions);
@@ -153,8 +155,8 @@ function CommunityDetail({navigation, route}) {
         setAuthorName(json.userName);
         setData(data);
         setLikeNum(data.like);
-        console.log('like:',data.like);
-        if(global.storage.getBoolean('isLogin')){
+        console.log('like:', data.like);
+        if (global.storage.getBoolean('isLogin')) {
           setLike(data.isLike);
           setFollow(data.isFollow);
         }
@@ -179,8 +181,8 @@ function CommunityDetail({navigation, route}) {
   }
   const changeFollow = () => {
     console.log('in');
-    if(!global.storage.getBoolean('isLogin')){
-      showToast("Please Login First!")
+    if (!global.storage.getBoolean('isLogin')) {
+      showToast('Please Login First!');
       return;
     }
     const url = follow
@@ -189,21 +191,23 @@ function CommunityDetail({navigation, route}) {
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({uid: global.storage.getNumber('uid') , followId: data.author}),
+      body: JSON.stringify({
+        uid: global.storage.getNumber('uid'),
+        followId: data.author,
+      }),
     };
     try {
       fetch(url, requestOptions)
-      .then(response => response.json())
-     .then(data => {
-        console.log(data);
-      })
-     .catch(error => console.log(error));
-
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => console.log(error));
     } catch (error) {
       console.log(error);
     }
     setFollow(follow ? false : true);
-  }
+  };
 
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -245,7 +249,7 @@ function CommunityDetail({navigation, route}) {
         <TouchableOpacity
           style={{position: 'absolute', right: 20}}
           onPress={() => {
-            changeFollow()
+            changeFollow();
           }}>
           <View
             style={{
@@ -254,8 +258,7 @@ function CommunityDetail({navigation, route}) {
               borderColor: '#575dfb',
               paddingHorizontal: 18,
               paddingVertical: 6,
-              backgroundColor:
-                follow ? '#575dfb' : 'white',
+              backgroundColor: follow ? '#575dfb' : 'white',
             }}>
             <Text
               style={{
@@ -318,9 +321,7 @@ function CommunityDetail({navigation, route}) {
             data.comment.commentList.map((commentDetail, index) => (
               <CommentCard comment={commentDetail} key={index} />
             ))}
-          <Text style={{fontSize: 14, marginTop: 10}}>
-            -- THE END --
-          </Text>
+          <Text style={{fontSize: 14, marginTop: 10}}>-- THE END --</Text>
         </View>
       </ScrollView>
       <View

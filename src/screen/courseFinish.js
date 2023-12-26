@@ -9,6 +9,8 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Image,
+  StatusBar,
+  BackHandler,
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WaterfallList} from './community';
@@ -21,7 +23,15 @@ const CourseFinish = ({navigation, route}) => {
   const duration = route.params.duration;
   const goToHome = () => {
     navigation.navigate('Courses', {reload: true});
+    return true;
   };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      goToHome,
+    );
+    return () => backHandler.remove();
+  }, []);
   return (
     <>
       <FlatList
@@ -38,8 +48,9 @@ const CourseFinish = ({navigation, route}) => {
               borderBottomLeftRadius: 24,
               justifyContent: 'flex-end',
               alignItems: 'center',
-              paddingTop: 34,
             }}>
+            {/* 显示statusBar */}
+            <StatusBar translucent={false} hidden={false} />
             <MaterialCommunityIcons
               name="chevron-left-circle"
               size={34}
@@ -53,7 +64,7 @@ const CourseFinish = ({navigation, route}) => {
               onPress={goToHome}
             />
             <Image
-              source={require('../assets/icons/大拇哥.png')}
+              source={require('../assets/icons/thumb.png')}
               style={{
                 width: 280,
                 height: 270,
@@ -75,7 +86,7 @@ const CourseFinish = ({navigation, route}) => {
                 Training Finshed!
               </Text>
               <Image
-                source={require('../assets/icons/礼花哥.png')}
+                source={require('../assets/icons/congrate.png')}
                 style={{width: 32, height: 32, marginTop: -74, marginLeft: 10}}
               />
             </View>

@@ -32,6 +32,7 @@ function CoursesScreen({navigation, route}) {
   ]);
   const [lastCourse, setLastCourse] = useState([]);
   const [recommendCourse, setRecommendCourse] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const handleSearch = () => {
     setSearch('');
@@ -43,6 +44,22 @@ function CoursesScreen({navigation, route}) {
 
   useEffect(() => {
     if (global.storage.getBoolean('isLogin') === false) {
+      setRefresh(false);
+      setTotalData([
+        {
+          totalCalorie: null,
+          totalDay: null,
+          totalDuration: null,
+        },
+      ]);
+      setLastCourse([]);
+      CoursesService.getRecommendCourseList()
+        .then(res => {
+          setRecommendCourse(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
       return;
     }
     FitsService.getLongTimeData({id: global.storage.getNumber('uid')})
@@ -68,6 +85,11 @@ function CoursesScreen({navigation, route}) {
       .catch(err => {
         console.log(err);
       });
+    setRefresh(false);
+  }, [refresh]);
+
+  useEffect(() => {
+    setRefresh(route.params?.refresh);
   }, [route.params]);
 
   var currentDate = new Date();
@@ -201,6 +223,7 @@ function CoursesScreen({navigation, route}) {
             lastCourse.map((item, index) => {
               return (
                 <CourseCard
+                  key={index}
                   courseId={item.id}
                   courseImg={{
                     uri:

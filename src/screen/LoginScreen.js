@@ -56,7 +56,8 @@ function LoginScreen({navigation, route}) {
           showToast('Login Successfully!');
           global.storage.set('isLogin', true);
           global.storage.set('uid', data.uid);
-          navigation.navigate('Person', {refresh: refresh + 1});
+          navigation.navigate('Person', {refresh: true});
+          navigation.navigate('Courses', {refresh: true});
         });
     } else {
       showToast('Please enter your email and password!');

@@ -16,6 +16,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
   Modal,
+  StatusBar,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,6 +26,7 @@ import {
   NoCameraDeviceError,
   Camera,
 } from 'react-native-vision-camera';
+import {useSharedValue, Worklets} from 'react-native-worklets-core';
 import Video from 'react-native-video';
 import FitsService from '../services/fits.service';
 import CoursesService from '../services/courses.service';
@@ -117,6 +119,7 @@ const VideoScreen = ({navigation, route}) => {
           alignItems: 'flex-start',
           flexDirection: 'row',
         }}>
+        <StatusBar hidden={true} />
         <View style={styles.video}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -189,7 +192,7 @@ const Frame = () => {
   const device = useCameraDevice('front');
   const FrameProcessor = useFrameProcessor(frame => {
     'worklet';
-    // console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
+    console.log(`Frame: ${frame.width}x${frame.height} (${frame.pixelFormat})`);
   }, []);
   if (device == null) return <NoCameraDeviceError />;
   return (
@@ -212,10 +215,10 @@ const styles = StyleSheet.create({
   },
   cameraBox: {
     width: 320,
-    height: 320 * (9 / 16),
+    height: (320 * 9) / 16,
   },
   camera: {
-    transform: [{rotate: '90deg'}, {translateX: -70}],
+    transform: [{rotate: '90deg'}, {translateX: ((9 / 16 - 1) * 320) / 2}],
     height: 320,
   },
   sideCard: {
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
   score: {
     backgroundColor: 'rgba(70,210,90,1)',
     width: 320,
-    height: screenHeight - 320 * (9 / 16),
+    height: screenHeight - (320 * 9) / 16,
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',

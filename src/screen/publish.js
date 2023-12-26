@@ -11,6 +11,7 @@ import {
   Picker,
   TextInput,
   StatusBar,
+  ToastAndroid,
 } from 'react-native';
 import React, {useEffect, useState, Component} from 'react';
 import {
@@ -40,7 +41,7 @@ const PublishScreen = ({navigation, route}) => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [CourseList, setCourseList] = useState([]);
   const [linkCourse, setLinkCourse] = useState(null);
-  const uid = 1;
+  const uid = global.storage.getNumber('uid');
   useEffect(() => {
     const Link = () => {
       setSelectedValue(route.params?.linkCourse);
@@ -63,13 +64,15 @@ const PublishScreen = ({navigation, route}) => {
     };
     loadCourseData();
   }, []);
-
+  function showToast(textContent) {
+    ToastAndroid.show(textContent, ToastAndroid.SHORT);
+  }
   const publishMoment = async () => {
     if (uid == null) {
       showToast('Please login first');
       return;
     }
-    if (title == '' || content == '' || imageSourceList.length == 0) {
+    if (title === '' || content === '' || imageSourceList.length === 0) {
       showToast('Please make sure you have filled in all the information');
       return;
     }
@@ -86,7 +89,7 @@ const PublishScreen = ({navigation, route}) => {
       imageNameList.push(item.fileName);
     });
     const momentData = {
-      author: 1,
+      author: uid,
       photo: imageNameList[0],
       content: {
         title: title,
@@ -128,7 +131,7 @@ const PublishScreen = ({navigation, route}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
           backgroundColor: 'white',
-          paddingTop:28,
+          paddingTop: 28,
         }}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons
@@ -138,7 +141,9 @@ const PublishScreen = ({navigation, route}) => {
             style={{margin: 10, width: 60}}
           />
         </TouchableOpacity>
-        <Text style={{fontSize: 18, color: 'black',marginLeft:12}}>Edict Movement</Text>
+        <Text style={{fontSize: 18, color: 'black', marginLeft: 12}}>
+          Edict Movement
+        </Text>
         <TouchableOpacity onPress={publishMoment}>
           <View
             style={{
@@ -150,7 +155,7 @@ const PublishScreen = ({navigation, route}) => {
               alignItems: 'center',
               borderRadius: 16,
               marginVertical: 10,
-              paddingHorizontal:8,
+              paddingHorizontal: 8,
               marginRight: 14,
             }}>
             <Text style={{color: 'white'}}>Release</Text>

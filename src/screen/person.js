@@ -24,19 +24,20 @@ const screenHeight = Dimensions.get('window').height;
 
 function PersonScreen({route}) {
   const navigation = useNavigation();
-  const [refresh, setRefresh] = useState(1);
+  const [refresh, setRefresh] = useState(false);
   const [userName, setUserName] = useState('');
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState('avatar.png');
   const [followList, setFollowList] = useState([]);
   const [followedList, setFollowedList] = useState([]);
   const [momentList, setMomentList] = useState([]);
   useEffect(() => {
-    const Refresh = () => setRefresh(route.params?.refresh ?? 0);
+    const Refresh = () => setRefresh(route.params?.refresh);
     Refresh();
-  }, [route.params?.refresh]);
+  }, [route.params]);
 
   useEffect(() => {
     const fetchData = () => {
+      setRefresh(false);
       if (!global.storage.getBoolean('isLogin')) {
         return;
       }
@@ -69,22 +70,25 @@ function PersonScreen({route}) {
       style={styles.container}
       ListHeaderComponent={() => (
         <View>
-          <TouchableOpacity
-            style={{
-              postion: 'absolute',
-              left: screenWidth - 34,
-              top: 15,
-              zIndex: 1000,
-            }}
-            onPress={() =>
-              navigation.navigate('PersonDetails', {refresh: refresh})
-            }>
-            <MaterialCommunityIcons
-              name="lead-pencil"
-              size={26}
-              color={'#ffffff'}
-            />
-          </TouchableOpacity>
+          {global.storage.getBoolean('isLogin') && (
+            <TouchableOpacity
+              style={{
+                postion: 'absolute',
+                left: screenWidth - 34,
+                top: 15,
+                zIndex: 1000,
+              }}
+              onPress={() =>
+                navigation.navigate('PersonDetails', {refresh: refresh})
+              }>
+              <MaterialCommunityIcons
+                name="lead-pencil"
+                size={26}
+                color={'#ffffff'}
+              />
+            </TouchableOpacity>
+          )}
+
           <ImageBackground
             style={styles.userBackground}
             source={require('../assets/backgrounds/rain_glass.jpg')}>
@@ -114,8 +118,13 @@ function PersonScreen({route}) {
                               onPress: () => {
                                 global.storage.set('isLogin', false);
                                 global.storage.set('uid', -1);
+                                setPhoto('avatar.png');
+                                setUserName('Username');
                                 navigation.navigate('Person', {
                                   refresh: refresh + 1,
+                                });
+                                navigation.navigate('Courses', {
+                                  refresh: true,
                                 });
                               },
                             },

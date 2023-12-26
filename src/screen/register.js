@@ -36,6 +36,7 @@ const RegisterScreen = ({navigation}) => {
         email: email,
         password: password,
         phone: phoneNum,
+        photo: 'avatar.png',
       }),
     };
     if (email && password && username && phoneNum) {
@@ -54,7 +55,7 @@ const RegisterScreen = ({navigation}) => {
           global.storage.set('isLogin', true);
           global.storage.set('uid', data.uid);
           showToast('Sign Up Successfully!');
-          navigation.navigate('Person');
+          navigation.navigate('Person', {refresh: true});
         });
     } else {
       showToast('Please Complete Your Information!');

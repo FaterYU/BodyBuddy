@@ -7,6 +7,7 @@ import {
   FlatList,
   ActivityIndicator,
   Dimensions,
+  ToastAndroid,
   TouchableOpacity,
 } from 'react-native';
 import {
@@ -201,7 +202,9 @@ const CommunityScreen = ({navigation}) => {
   const updateSearch = text => {
     setSearch(text);
   };
-
+  function showToast(Text) {
+    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  }
   return (
     <>
       <View style={styles.container}>
@@ -234,7 +237,13 @@ const CommunityScreen = ({navigation}) => {
             value={search}
           />
           <TouchableOpacity
-            onPress={() => navigation.navigate('PublishScreen')}>
+            onPress={() => {
+              if (!global.storage.getBoolean('isLogin')) {
+                showToast('Please Login First!');
+                return;
+              }
+              navigation.navigate('PublishScreen');
+            }}>
             <MaterialCommunityIcons
               name="plus-circle"
               style={{marginLeft: 4}}

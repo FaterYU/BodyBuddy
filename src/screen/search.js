@@ -288,6 +288,31 @@ function ResolveSearch({tabIndex, renderData}) {
   }
   if (tabIndex === 0) {
     data = renderData.moments;
+    if (data === undefined) {
+      return (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%',
+          }}>
+          <ActivityIndicator size="large" color="blue" />
+        </View>
+      );
+    }
+    if (data.length === 0) {
+      return (
+        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+          <Text>No Moment Was Found!</Text>
+          <Image
+            source={require('../assets/backgrounds/empty.png')}
+            alt="empty"
+            style={{width: screenWidth - 80, height: screenWidth - 80}}
+          />
+        </View>
+      );
+    }
     return <WaterfallList inputData={data} />;
   } else if (tabIndex === 1) {
     data = renderData.courses;

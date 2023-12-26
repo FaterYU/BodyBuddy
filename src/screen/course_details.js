@@ -29,6 +29,7 @@ import {BorderlessButton} from 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FitsService from '../services/fits.service';
+import {requestCameraPermission} from '../components/imagePicker';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -55,7 +56,7 @@ function DetailsScreen({navigation, route}) {
         });
     };
     getCourseDate();
-  }, []);
+  }, [courseId]);
 
   const goToVideo = () => {
     if (global.storage.getBoolean('isLogin') === false) {
@@ -72,10 +73,16 @@ function DetailsScreen({navigation, route}) {
         return res.data.id;
       })
       .then(id => {
-        navigation.navigate('VideoScreen', {
-          id: courseId,
-          courseData: courseData,
-          fitId: id,
+        requestCameraPermission().then(result => {
+          if (result === 'granted') {
+            navigation.navigate('VideoScreen', {
+              id: courseId,
+              courseData: courseData,
+              fitId: id,
+            });
+          } else {
+            alert('Permission denied');
+          }
         });
       });
   };
@@ -299,7 +306,9 @@ function DetailsScreen({navigation, route}) {
           marginVertical: 10,
         }}>
         <TouchableOpacity style={styles.button} onPress={goToVideo}>
-          <Text style={{color: 'white', fontSize: 18, fontWeight:'500'}}>Start Training</Text>
+          <Text style={{color: 'white', fontSize: 18, fontWeight: '500'}}>
+            Start Training
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
