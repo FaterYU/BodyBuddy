@@ -122,11 +122,11 @@ yarn release
 ### 前端
 
 <a href="https://github.com/FaterYU/BodyBuddy/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=FaterYU/BodyBuddy" />
+  <img src="https://contrib.rocks/image?repo=fateryu/BodyBuddy" />
 </a>
 
 ### 后端
 
 <a href="https://github.com/FaterYU/BodyBuddy_BackEnd/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=FaterYU/BodyBuddy_BackEnd" />
+  <img src="https://contrib.rocks/image?repo=fateryu/BodyBuddy_BackEnd" />
 </a>
