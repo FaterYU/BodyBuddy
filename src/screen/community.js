@@ -167,7 +167,11 @@ export const WaterfallList = ({
       </View>
     );
   }
-  if (global.storage.getBoolean('isLogin') && data.length===0 && tabIndex === 1) {
+  if (
+    global.storage.getBoolean('isLogin') &&
+    data.length === 0 &&
+    tabIndex === 1
+  ) {
     return (
       <View
         style={{
