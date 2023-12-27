@@ -147,13 +147,21 @@ const AgendaScreen = () => {
             currentItems[date].push({
               activityId: Data[i].activityList[j].activityId,
               startTime:
-                Data[i].activityList[j].activityStartTime.hour +
+                Data[i].activityList[j].activityStartTime.hour
+                  .toFixed(0)
+                  .padStart(2, '0') +
                 ':' +
-                Data[i].activityList[j].activityStartTime.minute,
+                Data[i].activityList[j].activityStartTime.minute
+                  .toFixed(0)
+                  .padStart(2, '0'),
               endTime:
-                Data[i].activityList[j].activityEndTime.hour +
+                Data[i].activityList[j].activityEndTime.hour
+                  .toFixed(0)
+                  .padStart(2, '0') +
                 ':' +
-                Data[i].activityList[j].activityEndTime.minute,
+                Data[i].activityList[j].activityEndTime.minute
+                  .toFixed(0)
+                  .padStart(2, '0'),
               content: Data[i].activityList[j].activityContent,
               course: Data[i].activityList[j].activityCourse,
               day: date,
@@ -170,16 +178,26 @@ const AgendaScreen = () => {
   const renderItem = (reservation, isFirst) => {
     const fontSize = 16;
     const color = 'black';
+    console.log(reservation);
 
     return (
       <TouchableOpacity
         style={[styles.item]}
         onPress={() => {
-          console.log(reservation);
+          setStartDate(
+            new Date(
+              reservation.day + 'T' + reservation.startTime + ':00.000+08:00',
+            ),
+          );
+          setEndDate(
+            new Date(
+              reservation.day + 'T' + reservation.endTime + ':00.000+08:00',
+            ),
+          );
           setForceItem(reservation.activityId);
           setEventTime(reservation.startTime + ' - ' + reservation.endTime);
           setEventContent(reservation.content);
-          setSelectedCourse(reservation.course.id);
+          setSelectedCourse(reservation.course?.id);
           setShowModal(true);
           return true;
         }}
@@ -562,6 +580,7 @@ const AgendaScreen = () => {
                   <SearchablePicker
                     data={CourseList}
                     onValueChange={handleValueChange}
+                    link={selectedCourse}
                   />
                 </FormControl>
               </Modal.Body>
