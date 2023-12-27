@@ -220,13 +220,13 @@ const AgendaScreen = () => {
     );
   };
 
-  const renderEmptyDate = () => {
+  const renderEmptyDate = date => {
     return (
       <TouchableOpacity
         style={[styles.emptyDate]}
         onPress={() => {
-          setStartDate(new Date());
-          setEndDate(new Date());
+          setStartDate(new Date(date));
+          setEndDate(new Date(date));
           setEventContent('');
           setSelectedCourse(null);
           setShowModal(true);
