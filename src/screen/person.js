@@ -290,7 +290,7 @@ function PersonScreen({route}) {
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
-                  {comeDate}
+                  {comeDate? comeDate : '**'}
                 </Text>
                 <Text style={{marginTop: 16, color: 'black', marginLeft: 6}}>
                   {comeDate > 1 ? 'days' : 'day'}
@@ -324,8 +324,8 @@ function PersonScreen({route}) {
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
-                  {userInfo.infomation === undefined ||
-                  userInfo.infomation.weight === 0
+                  {userInfo.infomation === null || userInfo.infomation === undefined ||
+                  userInfo.infomation?.weight === 0
                     ? '**'
                     : userInfo.infomation.weight}
                 </Text>

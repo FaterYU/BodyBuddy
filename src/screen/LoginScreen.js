@@ -119,7 +119,7 @@ function LoginScreen({navigation, route}) {
             />
             <TextInput
               style={styles.input}
-              placeholder="Username/Email/Phone Number"
+              placeholder="Email"
               paddingRight={25}
               fontSize={16}
               onChangeText={text => setEmail(text)}

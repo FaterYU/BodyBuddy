@@ -568,6 +568,7 @@ const AgendaScreen = () => {
                       borderColor: 'rgba(80,150,240,0.8)',
                       borderRadius: 10,
                       overflow: 'hidden',
+                      paddingLeft:10,
                     }}
                   />
                 </FormControl>

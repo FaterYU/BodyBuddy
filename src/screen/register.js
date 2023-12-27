@@ -75,7 +75,7 @@ const RegisterScreen = ({navigation}) => {
       // 获取请求结果
       fetch(url, requestOptions)
         .then(response => {
-          if(response.status = 400){
+          if(response.status === 400){
             showToast('Email has been registered!');
             return Promise.reject('Email has been registered!');
           }

@@ -434,8 +434,11 @@ const ImageSlider = ({images}) => {
       images[i];
     imagesList.push(photo);
   }
+  
   return (
-    <Swiper style={styles.wrapper} showsButtons={false} showsPagination={false}>
+    <Swiper style={styles.wrapper} showsButtons={false} showsPagination={true}
+      loop={false}
+    >
       {imagesList.map((image, index) => (
         <View key={index} style={styles.slide}>
           <Image source={{uri: image}} style={styles.image} />
