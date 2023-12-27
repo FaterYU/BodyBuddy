@@ -4,6 +4,8 @@
 
 **后端传送门**：[BodyBuddy_BackEnd](https://github.com/FaterYU/BodyBuddy_BackEnd)
 
+**安装包**：[Releases (latest)](https://github.com/FaterYU/BodyBuddy/releases/latest)
+
 ## 项目进度
 
 - [x] 项目初始化
@@ -15,6 +17,7 @@
 - [x] 个人页面
 - [x] 训练评分页面
 - [x] 后端接口
+- [x] 签名
 - [ ] 测试
 - [ ] 登录Token
 - [ ] 训练评分服务
