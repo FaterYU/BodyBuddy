@@ -36,14 +36,19 @@ function CommunityDetail({navigation, route}) {
   const [atComment, setAtComment] = useState(false);
   const [mention, setMention] = useState(null);
   const [refresh, setRefresh] = useState(false);
-  function showToast(Text) {
-    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  const [id, setId] = useState(null);
+  function showToast(text) {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
   }
-  const id = route.params.momentId;
+  useEffect(() => {
+    if (route.params?.momentId) {
+      setId(route.params.momentId);
+    }
+  }, [route.params]);
   const userId = global.storage.getNumber('uid');
   useEffect(() => {
     const fetchData = async () => {
-      if (data.content?.mention) {
+      if (data.content?.mention.length) {
         await CoursesService.getCourseById({
           id: data.content?.mention ? data.content.mention[0] : 0,
         }).then(response => {
@@ -111,6 +116,9 @@ function CommunityDetail({navigation, route}) {
   };
   useEffect(() => {
     setRefresh(false);
+    if (!id) {
+      return;
+    }
     const fetchData = async () => {
       const url = global.storage.getString('serverDomain') + 'moments/findOne';
       var requestOptions;
@@ -157,7 +165,6 @@ function CommunityDetail({navigation, route}) {
         setAuthorName(json.userName);
         setData(data);
         setLikeNum(data.like);
-        // console.log('like:', data.like);
         if (global.storage.getBoolean('isLogin')) {
           setLike(data.isLike);
           setFollow(data.isFollow);
@@ -182,12 +189,11 @@ function CommunityDetail({navigation, route}) {
     );
   }
   const changeFollow = () => {
-
     if (!global.storage.getBoolean('isLogin')) {
       showToast('Please Login First!');
       return;
     }
-    if(global.storage.getNumber('uid')===data.author){
+    if (global.storage.getNumber('uid') === data.author) {
       showToast('You cannot follow yourself!');
       return;
     }
@@ -293,24 +299,22 @@ function CommunityDetail({navigation, route}) {
             }}>
             {data.content.text}
           </Text>
-          {
-            mention && (
+          {mention && (
             <CourseCard
-            courseId={mention?.id}
-            courseImg={{
-              uri:
-                global.storage.getString('serverDomain') +
-                'files/download?name=' +
-                mention?.photo,
-            }}
-            courseName={mention?.name}
-            courseTime={mention?.duration / 60}
-            courseCalorie={mention?.infomation.calorie}
-            courseLevel={mention?.infomation.level}
-            finishTime={2}
-          />
-            )
-          }
+              courseId={mention?.id}
+              courseImg={{
+                uri:
+                  global.storage.getString('serverDomain') +
+                  'files/download?name=' +
+                  mention?.photo,
+              }}
+              courseName={mention?.name}
+              courseTime={mention?.duration / 60}
+              courseCalorie={mention?.infomation.calorie}
+              courseLevel={mention?.infomation.level}
+              finishTime={2}
+            />
+          )}
           <Text
             style={{
               alignSelf: 'flex-start',
@@ -455,7 +459,7 @@ const CommentCard = commentItem => {
     return null;
   }
   return (
-    <View style={{flexDirection: 'row', width: screenWidth,marginVertical:4}}>
+    <View style={{flexDirection: 'row', width: screenWidth, marginVertical: 4}}>
       <View
         style={{
           height: 40,
@@ -482,7 +486,13 @@ const CommentCard = commentItem => {
         <Text style={{marginTop: 10}}>{commentUser.userName}</Text>
         <Text style={{color: 'black'}}>{commentItem?.comment.content}</Text>
         {/* <Text style={{fontSize: 10}}>11月29日 22:31</Text> */}
-        <View style={{width:'100%',height:0.4,backgroundColor:'rgba(180,180,180,0.4)',marginTop:10}}></View>
+        <View
+          style={{
+            width: '100%',
+            height: 0.4,
+            backgroundColor: 'rgba(180,180,180,0.4)',
+            marginTop: 10,
+          }}></View>
       </View>
       {/* <MaterialCommunityIcons
         name="heart-outline"
@@ -490,7 +500,6 @@ const CommentCard = commentItem => {
         style={{alignSelf: 'flex-start', marginTop: 16}}
       /> */}
     </View>
-
   );
 };
 const styles = StyleSheet.create({
