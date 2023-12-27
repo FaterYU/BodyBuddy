@@ -10,18 +10,19 @@ import {
   ImageBackground,
   StatusBar,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {SearchBar} from '@rneui/themed';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useState, useEffect } from 'react';
+import { SearchBar } from '@rneui/themed';
 import SevenDaysCalendar from './weekCalendar';
 import CourseCard from './courseCard';
-import {Image} from 'react-native-svg';
+import { Image } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
 import FitsService from '../services/fits.service';
 import CoursesService from '../services/courses.service';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 const screenWidth = Dimensions.get('window').width;
 
-function CoursesScreen({navigation, route}) {
+function CoursesScreen({ navigation, route }) {
   const [search, setSearch] = useState('');
   const [totalData, setTotalData] = useState([
     {
@@ -36,7 +37,7 @@ function CoursesScreen({navigation, route}) {
 
   const handleSearch = () => {
     setSearch('');
-    navigation.navigate('SearchScreen', {searchContent: search});
+    navigation.navigate('SearchScreen', { searchContent: search });
   };
   const updateSearch = text => {
     setSearch(text);
@@ -62,14 +63,14 @@ function CoursesScreen({navigation, route}) {
         });
       return;
     }
-    FitsService.getLongTimeData({id: global.storage.getNumber('uid')})
+    FitsService.getLongTimeData({ id: global.storage.getNumber('uid') })
       .then(res => {
         setTotalData(res.data);
       })
       .catch(err => {
         console.log(err);
       });
-    CoursesService.getLastCourseList({uid: global.storage.getNumber('uid')})
+    CoursesService.getLastCourseList({ uid: global.storage.getNumber('uid') })
       .then(res => {
         setLastCourse(res.data);
       })
@@ -113,8 +114,8 @@ function CoursesScreen({navigation, route}) {
   return (
     <ScrollView
       contentContainerStyle={styles.container}
-      style={{backgroundColor: '#ffffff'}}>
-      <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+      style={{ backgroundColor: '#ffffff' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
         <Text
           style={{
             color: '#4969ff',
@@ -166,21 +167,21 @@ function CoursesScreen({navigation, route}) {
             justifyContent: 'space-around',
             paddingTop: 8,
           }}>
-          <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color: 'gray'}}>Total Time</Text>
-            <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={{ fontSize: 14, color: 'gray' }}>Total Time</Text>
+            <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
               {totalData.totalDuration} min
             </Text>
           </View>
-          <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color: 'gray'}}>Continuous Day</Text>
-            <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={{ fontSize: 14, color: 'gray' }}>Continuous Day</Text>
+            <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
               {totalData.totalDay} day
             </Text>
           </View>
-          <View style={{flexDirection: 'column', alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color: 'gray'}}>Total Consume</Text>
-            <Text style={{fontSize: 18, color: 'black', marginTop: 10}}>
+          <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <Text style={{ fontSize: 14, color: 'gray' }}>Total Consume</Text>
+            <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
               {totalData.totalCalorie} kcal
             </Text>
           </View>
@@ -201,7 +202,7 @@ function CoursesScreen({navigation, route}) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <Text
           style={{
             color: 'black',
@@ -219,6 +220,14 @@ function CoursesScreen({navigation, route}) {
             alignItems: 'center',
             alignSelf: 'center',
           }}>
+          {
+            lastCourse.length === 0 && (
+              <View style={{width:'100%'}}>
+                <CourseSkeleton />
+                <CourseSkeleton />
+              </View>
+            )
+          }
           {lastCourse &&
             lastCourse.map((item, index) => {
               return (
@@ -235,13 +244,13 @@ function CoursesScreen({navigation, route}) {
                   courseTime={item.duration}
                   courseCalorie={item.calorie}
                   courseLevel={item.level}
-                  finishTime={2}
+                  finishTime={item.userPracticed}
                 />
               );
             })}
         </View>
       </View>
-      <View style={{width: '100%'}}>
+      <View style={{ width: '100%' }}>
         <Text
           style={{
             color: 'black',
@@ -306,6 +315,116 @@ function CoursesScreen({navigation, route}) {
     </ScrollView>
   );
 }
+const containerWidth = 1 * screenWidth - 20;
+
+const CourseSkeleton = () => {
+  return (
+    <View style={{
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      backgroundColor: '#f2f2f2',
+      marginBottom: 10,
+      borderRadius: 8,
+      paddingVertical:2,
+      width: containerWidth,
+    }}>
+      <View style={{
+        width: 90,
+        height: 90,
+        margin: 10,
+        borderRadius: 8,
+        marginVertical: 8,
+        backgroundColor: 'rgba(215,215,215,1)',
+        justifyContent:'space-around',
+        paddingVertical:22,
+        alignItems:'center',
+        flexDirection:'column',
+      }}>
+        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>No</Text>
+        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>Recent</Text>
+        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>Course</Text>
+      </View>
+      <View
+        style={{
+          paddingTop:2,
+          width:containerWidth-140,
+          flexDirection: 'column',
+          justifyContent: 'space-around',
+          height: 90,
+        }}>
+        <View style={{
+          height:16,
+          width: "64%",
+          paddingRight: 4,
+          backgroundColor:"rgb(214,214,214)",
+          borderRadius:30,
+        }}></View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            width: '100%',
+            marginTop: 8,
+          }}>
+        <View style={{
+          height:12,
+          width: "20%",
+          paddingRight: 4,
+          backgroundColor:"rgb(220,220,220)",
+          borderRadius:30,
+        }}></View>
+        <View style={{
+          height:12,
+          width: "20%",
+          paddingRight: 4,
+          backgroundColor:"rgb(220,220,220)",
+          borderRadius:30,
+          marginLeft:"2%",
+        }}></View>
+        <View style={{
+          height:12,
+          width: "20%",
+          paddingRight: 4,
+          backgroundColor:"rgb(220,220,220)",
+          borderRadius:30,
+          marginLeft:"2%",
+        }}></View>
+        </View>
+        <View style={{ flexDirection: 'column',width:"100%"}}>
+        <View style={{
+          height:8,
+          width:"90",
+          paddingRight: 4,
+          backgroundColor:"rgb(210,210,210)",
+          borderRadius:30,
+          marginBottom:6,
+          marginTop:10,
+        }}></View>
+        <View style={{
+          height:8,
+          width:"90",
+          paddingRight: 4,
+          backgroundColor:"rgb(210,210,210)",
+          borderRadius:30,
+          marginBottom:2,
+        }}></View>
+        </View>
+      </View>
+      <MaterialCommunityIcons
+        name="chevron-right-circle"
+        size={20}
+        color="#c3c3c3"
+        style={{
+          alignSelf: 'flex-start',
+          position: 'absolute',
+          right: 10,
+          top: 10,
+        }}
+      />
+    </View>
+  )
+}
 
 const RecommendCourse = ({
   courseId,
@@ -319,7 +438,7 @@ const RecommendCourse = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('DetailsScreen', {id: courseId});
+        navigation.navigate('DetailsScreen', { id: courseId });
       }}>
       <ImageBackground
         source={BGimg}
@@ -339,7 +458,7 @@ const RecommendCourse = ({
             overflow: 'hidden',
             paddingLeft: 10,
           }}>
-          <Text style={{color: 'white', fontSize: 17, marginLeft: 10}}>
+          <Text style={{ color: 'white', fontSize: 17, marginLeft: 10 }}>
             {courseName}
           </Text>
           <View
@@ -348,13 +467,13 @@ const RecommendCourse = ({
               justifyContent: 'flex-start',
               marginBottom: 6,
             }}>
-            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+            <Text style={{ fontSize: 12, marginLeft: 10, color: 'white' }}>
               {takeTime}min
             </Text>
-            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+            <Text style={{ fontSize: 12, marginLeft: 10, color: 'white' }}>
               {kalorie}kcal
             </Text>
-            <Text style={{fontSize: 12, marginLeft: 10, color: 'white'}}>
+            <Text style={{ fontSize: 12, marginLeft: 10, color: 'white' }}>
               {level}
             </Text>
           </View>
