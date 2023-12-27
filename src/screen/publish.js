@@ -351,7 +351,6 @@ const PublishScreen = ({navigation, route}) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   inputContent: {
     height: 160,

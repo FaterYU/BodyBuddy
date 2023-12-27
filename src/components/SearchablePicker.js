@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {View, TextInput, Text, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
-const SearchablePicker = ({data, onValueChange, link=null}) => {
+const SearchablePicker = ({data, onValueChange, link = null}) => {
   const pickerRef = useRef();
   const inputRef = useRef();
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,14 +12,17 @@ const SearchablePicker = ({data, onValueChange, link=null}) => {
     pickerRef.current.focus();
   };
   useEffect(() => {
-    if(link){
+    if (link) {
       setSelectedItem(link);
     }
   }, [link]);
+  useEffect(() => {
+    console.log('selectedItem', selectedItem);
+  }, [selectedItem]);
   const filteredData = [
     {
       label: '',
-      value: null,
+      value: link,
     },
   ].concat(
     data.filter(item =>
@@ -37,7 +40,8 @@ const SearchablePicker = ({data, onValueChange, link=null}) => {
         placeholder="Search..."
         onChangeText={text => {
           setSearchQuery(text);
-          if(text === '' || text === null){}else{
+          if (text === '' || text === null) {
+          } else {
             // onPickerPress();
             inputRef.current.focus();
           }
@@ -66,8 +70,14 @@ const SearchablePicker = ({data, onValueChange, link=null}) => {
           fontSize: 16,
         }}>
         {filteredData.map((item, index) => (
-          <Picker.Item style={{color:'rgba(80,150,240,0.8)',fontWeight:"700"}} key={index} label={item.label} value={item.value}>
-            <View style={{backgroundColor:'green'}}><Text>12345</Text></View>
+          <Picker.Item
+            style={{color: 'rgba(80,150,240,0.8)', fontWeight: '700'}}
+            key={index}
+            label={item.label}
+            value={item.value}>
+            <View style={{backgroundColor: 'green'}}>
+              <Text>12345</Text>
+            </View>
           </Picker.Item>
         ))}
       </Picker>
