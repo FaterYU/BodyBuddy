@@ -74,7 +74,7 @@ function CommunityDetail({navigation, route}) {
       fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -157,7 +157,7 @@ function CommunityDetail({navigation, route}) {
         setAuthorName(json.userName);
         setData(data);
         setLikeNum(data.like);
-        console.log('like:', data.like);
+        // console.log('like:', data.like);
         if (global.storage.getBoolean('isLogin')) {
           setLike(data.isLike);
           setFollow(data.isFollow);
@@ -182,9 +182,13 @@ function CommunityDetail({navigation, route}) {
     );
   }
   const changeFollow = () => {
-    console.log('in');
+
     if (!global.storage.getBoolean('isLogin')) {
       showToast('Please Login First!');
+      return;
+    }
+    if(global.storage.getNumber('uid')===data.author){
+      showToast('You cannot follow yourself!');
       return;
     }
     const url = follow
@@ -202,7 +206,7 @@ function CommunityDetail({navigation, route}) {
       fetch(url, requestOptions)
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
         })
         .catch(error => console.log(error));
     } catch (error) {
@@ -327,7 +331,7 @@ function CommunityDetail({navigation, route}) {
             data.comment.commentList.map((commentDetail, index) => (
               <CommentCard comment={commentDetail} key={index} />
             ))}
-          <Text style={{fontSize: 14, marginTop: 10}}>-- THE END --</Text>
+          <Text style={{fontSize: 14, marginTop: 20}}>-- THE END --</Text>
         </View>
       </ScrollView>
       <View
@@ -439,7 +443,6 @@ const ImageSlider = ({images}) => {
 
 const CommentCard = commentItem => {
   const [commentUser, setCommentUser] = useState('');
-  console.log(commentItem);
   useEffect(() => {
     if (commentItem.comment === null) {
       return;
@@ -451,9 +454,8 @@ const CommentCard = commentItem => {
   if (commentItem.comment === null) {
     return null;
   }
-
   return (
-    <View style={{flexDirection: 'row', width: screenWidth, height: 80}}>
+    <View style={{flexDirection: 'row', width: screenWidth,marginVertical:4}}>
       <View
         style={{
           height: 40,
@@ -480,13 +482,15 @@ const CommentCard = commentItem => {
         <Text style={{marginTop: 10}}>{commentUser.userName}</Text>
         <Text style={{color: 'black'}}>{commentItem?.comment.content}</Text>
         {/* <Text style={{fontSize: 10}}>11月29日 22:31</Text> */}
+        <View style={{width:'100%',height:0.4,backgroundColor:'rgba(180,180,180,0.4)',marginTop:10}}></View>
       </View>
-      <MaterialCommunityIcons
+      {/* <MaterialCommunityIcons
         name="heart-outline"
         size={15}
         style={{alignSelf: 'flex-start', marginTop: 16}}
-      />
+      /> */}
     </View>
+
   );
 };
 const styles = StyleSheet.create({

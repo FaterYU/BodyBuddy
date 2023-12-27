@@ -289,10 +289,10 @@ function PersonScreen({route}) {
                 You have been here for
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
-                <Text style={{marginTop: 8, fontSize: 38, color: 'black'}}>
+                <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
                   {comeDate}
                 </Text>
-                <Text style={{marginTop: 18, color: 'black', marginLeft: 6}}>
+                <Text style={{marginTop: 16, color: 'black', marginLeft: 6}}>
                   {comeDate > 1 ? 'days' : 'day'}
                 </Text>
               </View>
@@ -323,17 +323,30 @@ function PersonScreen({route}) {
                 Weight
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
-                <Text style={{marginTop: 8, fontSize: 38, color: 'black'}}>
+                <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
                   {userInfo.infomation === undefined ||
                   userInfo.infomation.weight === 0
                     ? '**'
                     : userInfo.infomation.weight}
                 </Text>
-                <Text style={{marginTop: 18, color: 'black', marginLeft: 6}}>
+                <Text style={{marginTop: 16, color: 'black', marginLeft: 6}}>
                   kg
                 </Text>
               </View>
-              {/* <Text style={{marginLeft: 10}}>Last recorded 10 days ago</Text> */}
+              {/* <Text style={{marginTop: 10, marginLeft: 10, color: 'gray'}}>
+                Height
+              </Text>
+              <View style={{flexDirection: 'row', marginLeft: 10}}>
+                <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
+                  {userInfo.infomation === undefined ||
+                  userInfo.infomation.height === 0
+                    ? '- -'
+                    : userInfo.infomation.height}
+                </Text>
+                <Text style={{marginTop: 16, color: 'black', marginLeft: 6}}>
+                  cm
+                </Text>
+              </View> */}
             </View>
           </View>
         </View>
@@ -412,20 +425,20 @@ const styles = StyleSheet.create({
   },
   cardList: {
     width: '100%',
-    height: screenHeight * 0.28,
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingHorizontal: 10,
     flexDirection: 'row',
-    marginVertical: -16,
+    marginVertical: 16,
   },
   dataCard: {
     backgroundColor: 'white',
     width: '44%',
     borderRadius: 6,
-    height: '60%',
+    height:'100%',
     elevation: 5,
     padding: 2,
+    paddingBottom:4,
   },
   waterfall: {
     alignItems: 'center',

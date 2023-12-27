@@ -25,6 +25,34 @@ const RegisterScreen = ({navigation}) => {
   function showToast(Text) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
+  const checkValid = (email, password, username, phoneNum) => {
+    // 验证邮箱 *@*.*
+    const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // 验证密码 6-16位字母数字组合
+    const passwordReg = /^[a-zA-Z0-9_-]{6,16}$/;
+    // 验证用户名 1-16位字母数字组合
+    const usernameReg = /^[a-zA-Z0-9_-]{1,16}$/;
+    // 验证手机号 11位数字
+    const phoneNumReg = /^[123456789]\d{10}$/;
+
+    if (!emailReg.test(email)) {
+      showToast('Please Enter a Valid Email!');
+      return false;
+    }
+    if (!passwordReg.test(password)) {
+      showToast('Password Should Be 6-16 Characters(Numbers or Letters)!');
+      return false;
+    }
+    if (!usernameReg.test(username)) {
+      showToast('Username Should Be 1-16 Characters(Numbers or Letters)!');
+      return false;
+    }
+    if (!phoneNumReg.test(phoneNum)) {
+      showToast('Please Enter a Valid Phone Number!');
+      return false;
+    }
+    return true;
+  }
   // 新建用户（注册）
   function Register() {
     const url = global.storage.getString('serverDomain') + 'users/create';
@@ -39,10 +67,18 @@ const RegisterScreen = ({navigation}) => {
         photo: 'avatar.png',
       }),
     };
-    if (email && password && username && phoneNum) {
+    if(!(email && password && username && phoneNum)){
+      showToast('Please Complete Your Information!');
+      return;
+    }
+    if (checkValid(email, password, username, phoneNum)) {
       // 获取请求结果
       fetch(url, requestOptions)
         .then(response => {
+          if(response.status = 400){
+            showToast('Email has been registered!');
+            return Promise.reject('Email has been registered!');
+          }
           if (!response.ok) {
             showToast('Sign Up Failed! Please Try Again!');
             return Promise.reject('Sign Up Failed');
@@ -57,8 +93,6 @@ const RegisterScreen = ({navigation}) => {
           showToast('Sign Up Successfully!');
           navigation.navigate('Person', {refresh: true});
         });
-    } else {
-      showToast('Please Complete Your Information!');
     }
   }
 
@@ -199,6 +233,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    paddingTop:20,
     backgroundColor: 'rgba(250,250,250,1)',
   },
   login: {

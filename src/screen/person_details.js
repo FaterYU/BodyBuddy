@@ -151,6 +151,7 @@ function PersonDetails({navigation, route}) {
               async () => {
                 var imageSrc = await takePhoto();
                 setAvatar(imageSrc[0]);
+                onClose();
               }
             }>Camera</Actionsheet.Item>
           </TouchableOpacity>
@@ -159,6 +160,7 @@ function PersonDetails({navigation, route}) {
               async () => {
                 var imageSrc = await selectImage();
                 setAvatar(imageSrc[0]);
+                onClose();
               }
             }>Select Image</Actionsheet.Item>
           </TouchableOpacity>
