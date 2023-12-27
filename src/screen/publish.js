@@ -70,7 +70,7 @@ const PublishScreen = ({navigation, route}) => {
     ToastAndroid.show(textContent, ToastAndroid.SHORT);
   }
   const publishMoment = async () => {
-    if (uid == null) {
+    if (global.storage.getBoolean('isLogin') === false) {
       showToast('Please login first');
       return;
     }
@@ -139,18 +139,18 @@ const PublishScreen = ({navigation, route}) => {
           <MaterialCommunityIcons
             name="close"
             size={36}
-            color="gray"
+            color="rgba(80,140,255,1)"
             style={{margin: 10, width: 60}}
           />
         </TouchableOpacity>
         <Text style={{fontSize: 18, color: 'black', marginLeft: 12}}>
-          Edict Movement
+          Edit Movement
         </Text>
         <TouchableOpacity onPress={publishMoment}>
           <View
             style={{
               paddingHorizontal: 4,
-              backgroundColor: '#575dfb',
+              backgroundColor: 'rgba(80,140,255,1)',
               width: 80,
               height: 28,
               justifyContent: 'center',
@@ -192,10 +192,11 @@ const PublishScreen = ({navigation, route}) => {
           marginTop: 12,
         }}>
         {linkCourse ? (
-          <Text style={{fontSize: 16, color: 'black', marginRight: 6}}>
-            Linked Course:{' '}
-            {CourseList.find(item => item.value === linkCourse)?.label}
-          </Text>
+          <SearchablePicker
+            data={CourseList}
+            onValueChange={handleValueChange}
+            link={linkCourse}
+          />
         ) : (
           <SearchablePicker
             data={CourseList}
@@ -350,12 +351,6 @@ const PublishScreen = ({navigation, route}) => {
   );
 };
 
-// const ChooesButton = () => {
-
-//   return (
-
-//   );
-// };
 
 const styles = StyleSheet.create({
   inputContent: {

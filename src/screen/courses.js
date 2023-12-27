@@ -170,19 +170,19 @@ function CoursesScreen({ navigation, route }) {
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'gray' }}>Total Time</Text>
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {totalData.totalDuration} min
+              {totalData.totalDuration?totalData.totalDuration:'- -'} min
             </Text>
           </View>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'gray' }}>Continuous Day</Text>
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {totalData.totalDay} day
+              {totalData.totalDay?totalData.totalDay:'- -'} day
             </Text>
           </View>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
             <Text style={{ fontSize: 14, color: 'gray' }}>Total Consume</Text>
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {totalData.totalCalorie} kcal
+              {totalData.totalCalorie?totalData.totalCalorie:'- -'} kcal
             </Text>
           </View>
         </View>
