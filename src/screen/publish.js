@@ -144,7 +144,7 @@ const PublishScreen = ({navigation, route}) => {
           />
         </TouchableOpacity>
         <Text style={{fontSize: 18, color: 'black', marginLeft: 12}}>
-          Edit Movement
+          Edit Post
         </Text>
         <TouchableOpacity onPress={publishMoment}>
           <View

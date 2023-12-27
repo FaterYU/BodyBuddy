@@ -266,8 +266,12 @@ function PersonDetails({navigation, route}) {
                   _selectedItem={{bg: 'teal.600'}}
                   defaultValue={gender}
                   mt="1">
-                  <Select.Item label="Male" value="Male" />
-                  <Select.Item label="Female" value="Female" />
+                  <TouchableOpacity style={{width:'100%',borderRadius:12,overflow:"hidden"}}>
+                    <Select.Item label="Male" value="Male" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{width:'100%',borderRadius:12,overflow:"hidden"}}>
+                    <Select.Item label="Female" value="Female" />
+                  </TouchableOpacity>
                 </Select>
               </View>
 
