@@ -1,8 +1,8 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {View, TextInput, Text, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
-const SearchablePicker = ({data, onValueChange}) => {
+const SearchablePicker = ({data, onValueChange, link=null}) => {
   const pickerRef = useRef();
   const inputRef = useRef();
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,7 +11,11 @@ const SearchablePicker = ({data, onValueChange}) => {
   const onPickerPress = () => {
     pickerRef.current.focus();
   };
-
+  useEffect(() => {
+    if(link){
+      setSelectedItem(link);
+    }
+  }, [link]);
   const filteredData = [
     {
       label: '',

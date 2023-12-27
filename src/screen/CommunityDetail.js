@@ -208,7 +208,7 @@ function CommunityDetail({navigation, route}) {
     }
     setFollow(follow ? false : true);
   };
-
+  // console.log(mention)
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View
@@ -287,7 +287,9 @@ function CommunityDetail({navigation, route}) {
             }}>
             {data.content.text}
           </Text>
-          <CourseCard
+          {
+            mention && (
+            <CourseCard
             courseId={mention?.id}
             courseImg={{
               uri:
@@ -298,9 +300,11 @@ function CommunityDetail({navigation, route}) {
             courseName={mention?.name}
             courseTime={mention?.duration / 60}
             courseCalorie={mention?.infomation.calorie}
-            courseLevel={''}
+            courseLevel={mention?.infomation.level}
             finishTime={2}
           />
+            )
+          }
           <Text
             style={{
               alignSelf: 'flex-start',

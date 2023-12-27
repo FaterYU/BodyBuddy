@@ -8,6 +8,9 @@ import {
   ScrollView,
   InputRightAddon,
   InputGroup,
+  useDisclose,
+  Actionsheet,
+  Center,
 } from 'native-base';
 import {
   Text,
@@ -38,7 +41,11 @@ function PersonDetails({navigation, route}) {
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
   const [originPhotoName, setOriginPhotoName] = useState(null);
-
+  const {
+    isOpen,
+    onOpen,
+    onClose
+  } = useDisclose();
   const userId = global.storage.getNumber('uid');
   const refresh = route.params.refresh;
 
@@ -131,10 +138,33 @@ function PersonDetails({navigation, route}) {
       </View>
     );
   }
+
   return (
     <ScrollView>
       <StatusBar translucent backgroundColor="transparent" />
       <View style={{backgroundColor: '#ffffff'}}>
+      <Center style={{zIndex:1000}}>
+      <Actionsheet isOpen={isOpen} onClose={onClose}>
+        <Actionsheet.Content>
+          <TouchableOpacity style={{width:'100%',borderRadius:12,overflow:"hidden"}}>
+            <Actionsheet.Item onPress={
+              async () => {
+                var imageSrc = await takePhoto();
+                setAvatar(imageSrc[0]);
+              }
+            }>Camera</Actionsheet.Item>
+          </TouchableOpacity>
+          <TouchableOpacity style={{width:'100%',borderRadius:12,overflow:"hidden"}}>
+            <Actionsheet.Item onPress={
+              async () => {
+                var imageSrc = await selectImage();
+                setAvatar(imageSrc[0]);
+              }
+            }>Select Image</Actionsheet.Item>
+          </TouchableOpacity>
+        </Actionsheet.Content>
+      </Actionsheet>
+      </Center>
         <ImageBackground
           source={require('../assets/backgrounds/rain_glass.jpg')}
           style={{height: screenHeight * 0.38}}>
@@ -154,8 +184,7 @@ function PersonDetails({navigation, route}) {
             <TouchableOpacity
               style={styles.avatar}
               onPress={async () => {
-                var imageSrc = await selectImage();
-                setAvatar(imageSrc[0]);
+                onOpen();
               }}>
               <Avatar
                 source={{

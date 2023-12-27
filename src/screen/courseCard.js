@@ -62,9 +62,9 @@ function CourseCard({
             width: '100%',
             marginTop: 8,
           }}>
-          <Text style={{fontSize: 12}}>{courseTime}min</Text>
-          <Text style={{fontSize: 12, marginLeft: 8}}>{courseCalorie}kcal</Text>
-          <Text style={{fontSize: 12, marginLeft: 8}}>L{courseLevel}</Text>
+          <Text style={{color:'gray',fontSize: 12}}>{courseTime}min</Text>
+          <Text style={{color:'gray',fontSize: 12, marginLeft: 8}}>{courseCalorie}kcal</Text>
+          <Text style={{color:'gray',fontSize: 12, marginLeft: 8}}>L{courseLevel}</Text>
         </View>
         <View style={{flexDirection: 'row',paddingTop:6}}>
           <MaterialCommunityIcons
@@ -73,7 +73,7 @@ function CourseCard({
             color="rgb(160,160,160)"
             style={{marginTop: 18, marginRight:4}}
           />
-          <Text style={{marginTop: 18, fontSize: 13}}>
+          <Text style={{color:'gray',marginTop: 18, fontSize: 13}}>
             Finished {finishTime} times
           </Text>
         </View>
