@@ -52,13 +52,7 @@ const AgendaScreen = () => {
     if (startDate > endDate) {
       setEndDate(startDate);
     }
-    // 每次修改日程后重新加载日程
-    if (showModal === false) {
-      loadItems({timestamp: new Date().getTime()});
-    }
     loadItems({timestamp: new Date().getTime()});
-    // 重新渲染日程
-    setItems(items);
     console.log(startDate, endDate);
   }, [startDate, endDate]);
 
@@ -81,6 +75,7 @@ const AgendaScreen = () => {
   const addCalendarActivity = () => {
     var postData = {
       uid: global.storage?.getNumber('uid'),
+      activityId: forceItem,
       activityDate: {
         year: startDate.getFullYear(),
         month: startDate.getMonth() + 1,
@@ -124,8 +119,6 @@ const AgendaScreen = () => {
   }-${todayDate.getDate()}`;
 
   const loadItems = originDay => {
-    console.log(global.storage.getBoolean('isLogin'));
-    console.log(global.storage.getNumber('uid'));
     var currentItems = items || {};
     var postData;
     UsersService.getCalendarActivity({
@@ -167,7 +160,7 @@ const AgendaScreen = () => {
             });
           }
         }
-        setItems(currentItems);
+        setItems({...currentItems});
       })
       .catch(error => {
         console.log(error);
@@ -182,6 +175,8 @@ const AgendaScreen = () => {
       <TouchableOpacity
         style={[styles.item]}
         onPress={() => {
+          console.log(reservation);
+          setForceItem(reservation.activityId);
           setEventTime(reservation.startTime + ' - ' + reservation.endTime);
           setEventContent(reservation.content);
           setSelectedCourse(reservation.course.id);
@@ -205,6 +200,7 @@ const AgendaScreen = () => {
         <Text style={{fontSize, color}}>{reservation.content}</Text>
         {reservation.course && (
           <CourseCard
+            key={reservation.course.id}
             courseId={reservation.course.id}
             courseImg={{
               uri:
@@ -213,10 +209,10 @@ const AgendaScreen = () => {
                 reservation.course.photo,
             }}
             courseName={reservation.course.name}
-            courseTime={30}
-            courseCalorie={300}
-            courseLevel={'beginner'}
-            finishTime={2}
+            courseTime={reservation.course.duration}
+            courseCalorie={reservation.course.calorie}
+            courseLevel={reservation.course.level}
+            finishTime={reservation.course.userPracticed}
             adaptWidthRate={0.8}
           />
         )}
@@ -241,9 +237,10 @@ const AgendaScreen = () => {
   };
 
   const rowHasChanged = (r1, r2) => {
-    // console.log("r1",r1);
-    // console.log("r2",r2);
+    // console.log('r1', r1);
+    // console.log('r2', r2);
     return r1.activityId !== r2.activityId;
+    // return true;
   };
 
   const timeToString = time => {
@@ -312,7 +309,6 @@ const AgendaScreen = () => {
   };
 
   const handleValueChange = value => {
-    console.log(value);
     setSelectedCourse(value);
   };
 
@@ -324,6 +320,9 @@ const AgendaScreen = () => {
     UsersService.deleteCalendarActivity({uid: 1, activityId: forceItem}).then(
       response => {
         setForceItem(null);
+        setStartDate(new Date());
+        setEndDate(new Date());
+        setEventContent('');
       },
       error => {
         console.log(error);
@@ -393,6 +392,11 @@ const AgendaScreen = () => {
         renderEmptyDate={renderEmptyDate}
         rowHasChanged={rowHasChanged}
         showClosingKnob={true}
+        onRefresh={() => {
+          loadItems({timestamp: new Date().getTime()});
+        }}
+        refreshing={false}
+        refreshControl={null}
       />
       {showModal && (
         <Center>
