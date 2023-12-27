@@ -36,6 +36,10 @@ export const WaterfallList = ({
 }) => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
+  const [chRefresh, setChRefresh] = useState(0);
+  useEffect(() => {
+    setChRefresh(refresh);
+  }, [refresh]);
   useEffect(() => {
     const fetchData = async () => {
       if (inputData !== null) {
@@ -78,7 +82,7 @@ export const WaterfallList = ({
     };
 
     fetchData();
-  }, [tabIndex, inputData, refresh]);
+  }, [tabIndex, inputData, chRefresh]);
 
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
@@ -182,6 +186,9 @@ export const WaterfallList = ({
       keyExtractor={item => item.showId.toString()}
       numColumns={2}
       showsVerticalScrollIndicator={false}
+      onRefresh={() => {
+        setChRefresh(chRefresh - 1);
+      }}
       style={{
         width: '100%',
         paddingHorizontal: 6,
@@ -212,8 +219,8 @@ const CommunityScreen = ({navigation, route}) => {
   const updateSearch = text => {
     setSearch(text);
   };
-  function showToast(Text) {
-    ToastAndroid.show(Text, ToastAndroid.SHORT);
+  function showToast(text) {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
   }
   return (
     <>
