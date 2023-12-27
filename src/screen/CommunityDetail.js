@@ -407,7 +407,7 @@ function CommunityDetail({navigation, route}) {
                 marginRight: 4,
                 height: 24,
               }}>
-              comment
+              {data.comment?.commentList.length}
             </Text>
             <MaterialCommunityIcons
               style={{marginRight: 8}}
