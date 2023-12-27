@@ -25,7 +25,7 @@ class UploadFilesService {
           console.log('Upload Error');
         });
    */
-  upload(file, onUploadProgress) {
+  upload(file, onUploadProgress = () => {}) {
     let formData = new FormData();
     formData.append('file', file);
     // formData.append('type', type);

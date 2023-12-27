@@ -42,10 +42,12 @@ const PublishScreen = ({navigation, route}) => {
   const [CourseList, setCourseList] = useState([]);
   const [linkCourse, setLinkCourse] = useState(null);
   const uid = global.storage.getNumber('uid');
+  const [refresh, setRefresh] = useState(0);
   useEffect(() => {
     const Link = () => {
       setSelectedValue(route.params?.linkCourse);
       setLinkCourse(route.params?.linkCourse);
+      setRefresh(route.params?.refresh + 1);
     };
     Link();
   }, [route.params]);
@@ -114,7 +116,7 @@ const PublishScreen = ({navigation, route}) => {
     await postImage(postImageList);
     momentData.photo = momentData.content.photo[0];
     MomentsService.createMoment(momentData).then(res => {
-      navigation.goBack();
+      navigation.navigate('Community', {refresh: refresh});
     });
   };
 

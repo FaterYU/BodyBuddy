@@ -29,10 +29,13 @@ import {useNavigation} from '@react-navigation/native';
 const numColumns = 2;
 const screenWidth = Dimensions.get('window').width;
 
-export const WaterfallList = ({tabIndex = 0, inputData = null}) => {
+export const WaterfallList = ({
+  tabIndex = 0,
+  inputData = null,
+  refresh = 0,
+}) => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       if (inputData !== null) {
@@ -75,7 +78,7 @@ export const WaterfallList = ({tabIndex = 0, inputData = null}) => {
     };
 
     fetchData();
-  }, [tabIndex, inputData]);
+  }, [tabIndex, inputData, refresh]);
 
   // const HeaderComponent = () => <View style={styles.headerComp}></View>;
 
@@ -191,9 +194,16 @@ export const WaterfallList = ({tabIndex = 0, inputData = null}) => {
   );
 };
 
-const CommunityScreen = ({navigation}) => {
+const CommunityScreen = ({navigation, route}) => {
   const [index, setIndex] = React.useState(0);
   const [search, setSearch] = useState('');
+  const [faRefresh, setFaRefresh] = useState(0);
+
+  useEffect(() => {
+    if (route.params?.refresh) {
+      setFaRefresh(route.params?.refresh);
+    }
+  }, [route.params]);
 
   const handleSearch = () => {
     setSearch('');
@@ -242,7 +252,7 @@ const CommunityScreen = ({navigation}) => {
                 showToast('Please Login First!');
                 return;
               }
-              navigation.navigate('PublishScreen');
+              navigation.navigate('PublishScreen', {refresh: faRefresh});
             }}>
             <MaterialCommunityIcons
               name="plus-circle"
@@ -299,7 +309,7 @@ const CommunityScreen = ({navigation}) => {
             width: '100%',
             alignItems: 'center',
           }}>
-          <WaterfallList tabIndex={index} />
+          <WaterfallList tabIndex={index} refresh={faRefresh} />
         </TabView.Item>
         <TabView.Item
           style={{
