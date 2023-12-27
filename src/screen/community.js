@@ -167,6 +167,24 @@ export const WaterfallList = ({
       </View>
     );
   }
+  if (global.storage.getBoolean('isLogin') && data.length===0 && tabIndex === 1) {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}>
+        <Text>Looks like you've reached an empty space</Text>
+        <Image
+          source={require('../assets/backgrounds/empty.png')}
+          alt="empty"
+          style={{width: screenWidth - 80, height: screenWidth - 80}}
+        />
+      </View>
+    );
+  }
   if (tabIndex === 0 && data.length === 0) {
     return (
       <View

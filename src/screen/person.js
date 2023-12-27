@@ -29,12 +29,20 @@ function PersonScreen({route}) {
   const [photo, setPhoto] = useState('avatar.png');
   const [followList, setFollowList] = useState([]);
   const [followedList, setFollowedList] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const [momentList, setMomentList] = useState([]);
+  const [comeDate, setComeDate] = useState('');
   useEffect(() => {
     const Refresh = () => setRefresh(route.params?.refresh);
     Refresh();
   }, [route.params]);
+  useEffect(() => {
+    setRefresh(false);
+    if (!global.storage.getBoolean('isLogin')) {
+      return;
+    }
 
+  }, [refresh]);
   useEffect(() => {
     const fetchData = () => {
       setRefresh(false);
@@ -62,6 +70,31 @@ function PersonScreen({route}) {
       }).then(response => {
         setMomentList(response.data);
       });
+      UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
+        response => {
+
+          var nowDate = new Date();
+          var nowYear = nowDate.getFullYear();
+          var nowMonth = nowDate.getMonth() + 1;
+          var nowDay = nowDate.getDate();
+
+          var comeDate = new Date(response.data.createdAt);
+          var comeYear = comeDate.getFullYear();
+          var comeMonth = comeDate.getMonth() + 1;
+          var comeDay = comeDate.getDate();
+
+          var days = (nowDate - comeDate) / (24 * 3600 * 1000);
+          console.log(days);
+          if(days<1){
+            setComeDate('1');
+          }else if(days>999){
+            setComeDate('999+');
+          }else{
+            setComeDate(Math.floor(days).toString());
+          }
+          setUserInfo(response.data);
+        },
+      );
     };
     fetchData();
   }, [refresh]);
@@ -238,21 +271,21 @@ function PersonScreen({route}) {
                     lineHeight: 30,
                     paddingLeft: 8,
                   }}>
-                  Moments Data
+                  Body Buddy
                 </Text>
               </View>
-              <Text style={{marginTop: 10, marginLeft: 10}}>Total</Text>
+              <Text style={{marginTop: 10, marginLeft: 10,color:'gray'}}>You have been here for</Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
-                <Text style={{marginTop: 14, fontSize: 36, color: 'black'}}>
-                  336
+                <Text style={{marginTop: 8, fontSize: 38, color: 'black'}}>
+                  {comeDate}
                 </Text>
-                <Text style={{marginTop: 22, color: 'black', marginLeft: 6}}>
-                  minutes
+                <Text style={{marginTop: 18, color: 'black', marginLeft: 6}}>
+                  {comeDate>1?'days':'day'}
                 </Text>
               </View>
-              <Text style={{marginLeft: 10}}>
+              {/* <Text style={{marginLeft: 10}}>
                 164 thousand calories consumed this week
-              </Text>
+              </Text> */}
             </View>
             <View style={styles.dataCard}>
               <View
@@ -273,16 +306,16 @@ function PersonScreen({route}) {
                   Health Data
                 </Text>
               </View>
-              <Text style={{marginTop: 10, marginLeft: 10}}>Weight</Text>
+              <Text style={{marginTop: 10, marginLeft: 10, color:'gray'}}>Weight</Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
-                <Text style={{marginTop: 14, fontSize: 36, color: 'black'}}>
-                  52.3
+                <Text style={{marginTop: 8, fontSize: 38, color: 'black'}}>
+                  {userInfo.infomation===undefined||userInfo.infomation.weight===0?'00':userInfo.infomation.weight}
                 </Text>
-                <Text style={{marginTop: 22, color: 'black', marginLeft: 6}}>
+                <Text style={{marginTop: 18, color: 'black', marginLeft: 6}}>
                   kg
                 </Text>
               </View>
-              <Text style={{marginLeft: 10}}>Last recorded 10 days ago</Text>
+              {/* <Text style={{marginLeft: 10}}>Last recorded 10 days ago</Text> */}
             </View>
           </View>
         </View>
@@ -366,13 +399,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     flexDirection: 'row',
+    marginVertical:-16,
   },
   dataCard: {
     backgroundColor: 'white',
     width: '44%',
     borderRadius: 6,
-    height: '80%',
+    height: '60%',
     elevation: 5,
+    padding:2,
   },
   waterfall: {
     alignItems: 'center',
