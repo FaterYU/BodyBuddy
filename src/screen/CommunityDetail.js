@@ -35,6 +35,7 @@ function CommunityDetail({navigation, route}) {
   const [likeNum, setLikeNum] = useState(0);
   const [atComment, setAtComment] = useState(false);
   const [mention, setMention] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   function showToast(Text) {
     ToastAndroid.show(Text, ToastAndroid.SHORT);
   }
@@ -102,13 +103,14 @@ function CommunityDetail({navigation, route}) {
     };
     try {
       const response = fetch(url, requestOptions);
-      console.log(response);
+      setRefresh(true);
     } catch (error) {
       console.log(error);
     }
     setComment('');
   };
   useEffect(() => {
+    setRefresh(false);
     const fetchData = async () => {
       const url = global.storage.getString('serverDomain') + 'moments/findOne';
       var requestOptions;
@@ -165,7 +167,7 @@ function CommunityDetail({navigation, route}) {
       }
     };
     fetchData();
-  }, [id, atComment]);
+  }, [id, atComment, refresh]);
   if (!data || data.length === 0) {
     return (
       <View
