@@ -31,6 +31,7 @@ function CourseCard({
       style={{
         ...styles.container,
         width: containerWidth,
+        paddingVertical:2,
       }}
       onPress={goToCourse}>
       <View>
@@ -69,7 +70,7 @@ function CourseCard({
           <MaterialCommunityIcons
             name="poll"
             size={16}
-            color="gray"
+            color="rgb(160,160,160)"
             style={{marginTop: 18, marginRight:4}}
           />
           <Text style={{marginTop: 18, fontSize: 13}}>
@@ -83,8 +84,9 @@ function CourseCard({
         color="#c3c3c3"
         style={{
           alignSelf: 'flex-start',
-          marginTop: 10,
-          marginLeft: -4,
+          position: 'absolute',
+          right: 10,
+          top: 10,
         }}
       />
     </TouchableOpacity>

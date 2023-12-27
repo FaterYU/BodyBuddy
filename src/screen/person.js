@@ -88,7 +88,20 @@ function PersonScreen({route}) {
               />
             </TouchableOpacity>
           )}
-
+          {!global.storage.getBoolean('isLogin') && (
+            <TouchableOpacity
+              style={{
+                postion: 'absolute',
+                left: screenWidth - 48,
+                top: 14,
+                zIndex: 1000,
+              }}
+              onPress={() =>
+                navigation.navigate('LoginScreen', {refresh: refresh})
+              }>
+              <Text style={{color:'white',fontWeight:"900",textDecorationStyle:'solid',textDecorationLine:'underline'}}>Login</Text>
+            </TouchableOpacity>
+          )}
           <ImageBackground
             style={styles.userBackground}
             source={require('../assets/backgrounds/rain_glass.jpg')}>
