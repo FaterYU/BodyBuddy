@@ -41,8 +41,8 @@ global.storage = storage;
 const serverDomain = 'http://bodybuddy.fater.top/api/';
 global.storage.set('serverDomain', serverDomain);
 
-// // Ignore all log notifications:
-// LogBox.ignoreAllLogs();
+// Ignore all log notifications:
+LogBox.ignoreAllLogs();
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

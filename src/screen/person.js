@@ -41,12 +41,18 @@ function PersonScreen({route}) {
     if (!global.storage.getBoolean('isLogin')) {
       return;
     }
-
   }, [refresh]);
   useEffect(() => {
     const fetchData = () => {
       setRefresh(false);
       if (!global.storage.getBoolean('isLogin')) {
+        setPhoto('avatar.png');
+        setUserName('Username');
+        setFollowList([]);
+        setFollowedList([]);
+        setMomentList([]);
+        setComeDate('**');
+        setUserInfo({});
         return;
       }
       UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
@@ -72,7 +78,6 @@ function PersonScreen({route}) {
       });
       UsersService.findOne({uid: global.storage.getNumber('uid')}).then(
         response => {
-
           var nowDate = new Date();
           var nowYear = nowDate.getFullYear();
           var nowMonth = nowDate.getMonth() + 1;
@@ -85,11 +90,11 @@ function PersonScreen({route}) {
 
           var days = (nowDate - comeDate) / (24 * 3600 * 1000);
           console.log(days);
-          if(days<1){
+          if (days < 1) {
             setComeDate('1');
-          }else if(days>999){
+          } else if (days > 999) {
             setComeDate('999+');
-          }else{
+          } else {
             setComeDate(Math.floor(days).toString());
           }
           setUserInfo(response.data);
@@ -132,7 +137,15 @@ function PersonScreen({route}) {
               onPress={() =>
                 navigation.navigate('LoginScreen', {refresh: refresh})
               }>
-              <Text style={{color:'white',fontWeight:"900",textDecorationStyle:'solid',textDecorationLine:'underline'}}>Login</Text>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: '900',
+                  textDecorationStyle: 'solid',
+                  textDecorationLine: 'underline',
+                }}>
+                Login
+              </Text>
             </TouchableOpacity>
           )}
           <ImageBackground
@@ -164,8 +177,6 @@ function PersonScreen({route}) {
                               onPress: () => {
                                 global.storage.set('isLogin', false);
                                 global.storage.set('uid', -1);
-                                setPhoto('avatar.png');
-                                setUserName('Username');
                                 navigation.navigate('Person', {
                                   refresh: refresh + 1,
                                 });
@@ -274,13 +285,15 @@ function PersonScreen({route}) {
                   Body Buddy
                 </Text>
               </View>
-              <Text style={{marginTop: 10, marginLeft: 10,color:'gray'}}>You have been here for</Text>
+              <Text style={{marginTop: 10, marginLeft: 10, color: 'gray'}}>
+                You have been here for
+              </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 8, fontSize: 38, color: 'black'}}>
                   {comeDate}
                 </Text>
                 <Text style={{marginTop: 18, color: 'black', marginLeft: 6}}>
-                  {comeDate>1?'days':'day'}
+                  {comeDate > 1 ? 'days' : 'day'}
                 </Text>
               </View>
               {/* <Text style={{marginLeft: 10}}>
@@ -306,10 +319,15 @@ function PersonScreen({route}) {
                   Health Data
                 </Text>
               </View>
-              <Text style={{marginTop: 10, marginLeft: 10, color:'gray'}}>Weight</Text>
+              <Text style={{marginTop: 10, marginLeft: 10, color: 'gray'}}>
+                Weight
+              </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 8, fontSize: 38, color: 'black'}}>
-                  {userInfo.infomation===undefined||userInfo.infomation.weight===0?'00':userInfo.infomation.weight}
+                  {userInfo.infomation === undefined ||
+                  userInfo.infomation.weight === 0
+                    ? '**'
+                    : userInfo.infomation.weight}
                 </Text>
                 <Text style={{marginTop: 18, color: 'black', marginLeft: 6}}>
                   kg
@@ -399,7 +417,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     flexDirection: 'row',
-    marginVertical:-16,
+    marginVertical: -16,
   },
   dataCard: {
     backgroundColor: 'white',
@@ -407,7 +425,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     height: '60%',
     elevation: 5,
-    padding:2,
+    padding: 2,
   },
   waterfall: {
     alignItems: 'center',
