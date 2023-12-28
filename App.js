@@ -40,6 +40,9 @@ export const storage = new MMKV();
 global.storage = storage;
 const serverDomain = 'http://bodybuddy.fater.top/api/';
 global.storage.set('serverDomain', serverDomain);
+if (global.storage.getBoolean('isLogin') === undefined) {
+  global.storage.set('isLogin', false);
+}
 
 // Ignore all log notifications:
 LogBox.ignoreAllLogs();
