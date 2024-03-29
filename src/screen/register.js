@@ -52,7 +52,7 @@ const RegisterScreen = ({navigation}) => {
       return false;
     }
     return true;
-  }
+  };
   // 新建用户（注册）
   function Register() {
     const url = global.storage.getString('serverDomain') + 'users/create';
@@ -67,7 +67,7 @@ const RegisterScreen = ({navigation}) => {
         photo: 'avatar.png',
       }),
     };
-    if(!(email && password && username && phoneNum)){
+    if (!(email && password && username && phoneNum)) {
       showToast('Please Complete Your Information!');
       return;
     }
@@ -75,7 +75,7 @@ const RegisterScreen = ({navigation}) => {
       // 获取请求结果
       fetch(url, requestOptions)
         .then(response => {
-          if(response.status === 400){
+          if (response.status === 400) {
             showToast('Email has been registered!');
             return Promise.reject('Email has been registered!');
           }
@@ -92,6 +92,8 @@ const RegisterScreen = ({navigation}) => {
           global.storage.set('uid', data.uid);
           showToast('Sign Up Successfully!');
           navigation.navigate('Person', {refresh: true});
+          navigation.navigate('Calendar', {refresh: true});
+          navigation.navigate('Courses', {refresh: true});
         });
     }
   }
@@ -233,7 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    paddingTop:20,
+    paddingTop: 20,
     backgroundColor: 'rgba(250,250,250,1)',
   },
   login: {

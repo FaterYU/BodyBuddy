@@ -24,6 +24,7 @@ import {
   TouchableWithoutFeedback,
   StatusBar,
   Image,
+  ToastAndroid,
 } from 'react-native';
 import {BorderlessButton} from 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
@@ -58,9 +59,13 @@ function DetailsScreen({navigation, route}) {
     getCourseDate();
   }, [courseId]);
 
+  function showToast(text) {
+    ToastAndroid.show(text, ToastAndroid.SHORT);
+  }
+
   const goToVideo = () => {
     if (global.storage.getBoolean('isLogin') === false) {
-      navigation.navigate('LoginScreen');
+      showToast('Please login first');
       return;
     }
     FitsService.create({

@@ -57,6 +57,7 @@ function LoginScreen({navigation, route}) {
           global.storage.set('isLogin', true);
           global.storage.set('uid', data.uid);
           navigation.navigate('Person', {refresh: true});
+          navigation.navigate('Calendar', {refresh: true});
           navigation.navigate('Courses', {refresh: true});
         });
     } else {

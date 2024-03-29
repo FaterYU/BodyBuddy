@@ -180,6 +180,9 @@ function PersonScreen({route}) {
                                 navigation.navigate('Person', {
                                   refresh: refresh + 1,
                                 });
+                                navigation.navigate('Calendar', {
+                                  refresh: true,
+                                });
                                 navigation.navigate('Courses', {
                                   refresh: true,
                                 });
@@ -290,7 +293,7 @@ function PersonScreen({route}) {
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
-                  {comeDate? comeDate : '**'}
+                  {comeDate ? comeDate : '**'}
                 </Text>
                 <Text style={{marginTop: 16, color: 'black', marginLeft: 6}}>
                   {comeDate > 1 ? 'days' : 'day'}
@@ -324,7 +327,8 @@ function PersonScreen({route}) {
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
-                  {userInfo.infomation === null || userInfo.infomation === undefined ||
+                  {userInfo.infomation === null ||
+                  userInfo.infomation === undefined ||
                   userInfo.infomation?.weight === 0
                     ? '**'
                     : userInfo.infomation.weight}
@@ -435,10 +439,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: '44%',
     borderRadius: 6,
-    height:'100%',
+    height: '100%',
     elevation: 5,
     padding: 2,
-    paddingBottom:4,
+    paddingBottom: 4,
   },
   waterfall: {
     alignItems: 'center',

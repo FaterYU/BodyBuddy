@@ -34,7 +34,7 @@ import CourseCard from './courseCard';
 
 const screenWidth = Dimensions.get('window').width;
 
-const AgendaScreen = () => {
+const AgendaScreen = ({navigation, route}) => {
   const [items, setItems] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -47,14 +47,22 @@ const AgendaScreen = () => {
   const [CourseList, setCourseList] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [forceItem, setForceItem] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
+    if (route.params?.refresh) {
+      setRefresh(route.params.refresh);
+    }
+  }, [route.params]);
+
+  useEffect(() => {
+    setRefresh(false);
     if (startDate > endDate) {
       setEndDate(startDate);
     }
     loadItems({timestamp: new Date().getTime()});
     console.log(startDate, endDate);
-  }, [startDate, endDate]);
+  }, [startDate, endDate, refresh]);
 
   useEffect(() => {
     const loadCourseData = () => {
@@ -568,7 +576,7 @@ const AgendaScreen = () => {
                       borderColor: 'rgba(80,150,240,0.8)',
                       borderRadius: 10,
                       overflow: 'hidden',
-                      paddingLeft:10,
+                      paddingLeft: 10,
                     }}
                   />
                 </FormControl>
