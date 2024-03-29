@@ -12,7 +12,6 @@ import CommunityScreen from './src/screen/community';
 import CoursesScreen from './src/screen/courses';
 import PersonScreen from './src/screen/person';
 import CalendarScreen from './src/screen/calendar';
-import VideoScreen from './src/screen/video';
 import DetailsScreen from './src/screen/course_details';
 import CommunityDetailScreen from './src/screen/CommunityDetail';
 import CourseFinish from './src/screen/courseFinish';
@@ -23,6 +22,10 @@ import FollowersScreen from './src/screen/FollowersScreen';
 import SearchScreen from './src/screen/search';
 import RegisterScreen from './src/screen/register';
 import PersonDetails from './src/screen/person_details';
+
+// import VideoScreen from './src/screen/video';
+import VideoScreen from './src/screen/vertical_video';
+
 import {
   couresesActiveSvg,
   couresesInactiveSvg,
