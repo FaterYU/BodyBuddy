@@ -28,6 +28,7 @@
     "expo": "*",
     "expo-constants": "^14.4.2",
     "expo-font": "^11.6.0",
+    "expo-linear-gradient": "^12.7.2",
     "expo-modules-core": "^1.5.12",
     "native-base": "^3.4.28",
     "react": "18.2.0",
