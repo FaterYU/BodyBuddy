@@ -83,7 +83,8 @@ const CourseFinish = ({navigation, route}) => {
                   marginTop: -80,
                   marginLeft: 10,
                 }}>
-                Training Finshed!
+                {/* Training Finshed! */}
+                训练完成
               </Text>
               <Image
                 source={require('../assets/icons/congrate.png')}
@@ -94,7 +95,8 @@ const CourseFinish = ({navigation, route}) => {
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text
                   style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-                  Score
+                  {/* Score */}
+                  分数
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 22, fontWeight: 'bold'}}>
@@ -110,7 +112,8 @@ const CourseFinish = ({navigation, route}) => {
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text
                   style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-                  Duration
+                  {/* Duration */}
+                  训练时长
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 22, fontWeight: 'bold'}}>
@@ -132,11 +135,13 @@ const CourseFinish = ({navigation, route}) => {
               <View style={{flexDirection: 'column', alignItems: 'center'}}>
                 <Text
                   style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-                  Days
+                  {/* Days */}
+                  天数
                 </Text>
                 <Text
                   style={{color: 'black', fontSize: 22, fontWeight: 'bold'}}>
-                  2 Days
+                  {/* 2 Days */}
+                  2 天
                 </Text>
               </View>
             </View>
@@ -153,7 +158,8 @@ const CourseFinish = ({navigation, route}) => {
                 fontWeight: '900',
                 fontSize: 16,
               }}>
-              Community Reconmended
+              {/* Community Reconmended */}
+              社区内容推荐
             </Text>
             <WaterfallList tabIndex={0} />
           </View>

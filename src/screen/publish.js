@@ -71,11 +71,13 @@ const PublishScreen = ({navigation, route}) => {
   }
   const publishMoment = async () => {
     if (global.storage.getBoolean('isLogin') === false) {
-      showToast('Please login first');
+      // showToast('Please login first');
+      showToast('请先登录！');
       return;
     }
     if (title === '' || content === '' || imageSourceList.length === 0) {
-      showToast('Please make sure you have filled in all the information');
+      // showToast('Please make sure you have filled in all the information');
+      showToast('请确保您已完善所有信息！');
       return;
     }
     const postImage = async postImageList => {
@@ -144,7 +146,8 @@ const PublishScreen = ({navigation, route}) => {
           />
         </TouchableOpacity>
         <Text style={{fontSize: 18, color: 'black', marginLeft: 12}}>
-          Edit Post
+          {/* Edit Post */}
+          编辑动态
         </Text>
         <TouchableOpacity onPress={publishMoment}>
           <View
@@ -160,13 +163,15 @@ const PublishScreen = ({navigation, route}) => {
               paddingHorizontal: 8,
               marginRight: 14,
             }}>
-            <Text style={{color: 'white'}}>Release</Text>
+            {/* <Text style={{color: 'white'}}>Release</Text> */}
+            <Text style={{color: 'white'}}>发布</Text>
           </View>
         </TouchableOpacity>
       </View>
       <View style={{marginLeft: '2%', width: '90%'}}>
         <Input
-          placeholder="Title"
+          // placeholder="Title"
+          placeholder="标题"
           variant="unstyled"
           size="2xl"
           value={title}
@@ -175,7 +180,8 @@ const PublishScreen = ({navigation, route}) => {
       </View>
       <View style={{width: '94%', alignSelf: 'center'}}>
         <TextArea
-          placeholder="Share something here..."
+          // placeholder="Share something here..."
+          placeholder="这一刻的想法..."
           containerStyle={{border: 2, borderColor: '#575dfb'}}
           h={160}
           style={styles.inputContent}

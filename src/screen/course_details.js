@@ -65,7 +65,8 @@ function DetailsScreen({navigation, route}) {
 
   const goToVideo = () => {
     if (global.storage.getBoolean('isLogin') === false) {
-      showToast('Please login first');
+      // showToast('Please login first');
+      showToast('请先登录！');
       return;
     }
     FitsService.create({
@@ -86,7 +87,8 @@ function DetailsScreen({navigation, route}) {
               fitId: id,
             });
           } else {
-            alert('Permission denied');
+            // alert('Permission denied');
+            alert('您没有访问权限！');
           }
         });
       });
@@ -140,8 +142,10 @@ function DetailsScreen({navigation, route}) {
           </Text>
           <View style={styles.top_list}>
             <View>
-              <Text style={styles.tlhead}>Duration</Text>
-              <Text style={styles.tldetails}>{courseData.duration}s</Text>
+              {/* <Text style={styles.tlhead}>Duration</Text>
+              <Text style={styles.tldetails}>{courseData.duration}s</Text> */}
+              <Text style={styles.tlhead}>时长</Text>
+              <Text style={styles.tldetails}>{courseData.duration}秒</Text>
             </View>
             <Divider
               style={styles.tl_divider}
@@ -150,9 +154,13 @@ function DetailsScreen({navigation, route}) {
               width={2}
             />
             <View>
-              <Text style={styles.tlhead}>Calories</Text>
+              {/* <Text style={styles.tlhead}>Calories</Text>
               <Text style={styles.tldetails}>
                 {courseData.infomation.calorie}kcal
+              </Text> */}
+              <Text style={styles.tlhead}>消耗</Text>
+              <Text style={styles.tldetails}>
+                {courseData.infomation.calorie}千卡
               </Text>
             </View>
             <Divider
@@ -162,7 +170,11 @@ function DetailsScreen({navigation, route}) {
               width={2}
             />
             <View>
-              <Text style={styles.tlhead}>Difficulty</Text>
+              {/* <Text style={styles.tlhead}>Difficulty</Text>
+              <Text style={styles.tldetails}>
+                L{courseData.infomation.level}
+              </Text> */}
+              <Text style={styles.tlhead}>难度</Text>
               <Text style={styles.tldetails}>
                 L{courseData.infomation.level}
               </Text>
@@ -179,7 +191,8 @@ function DetailsScreen({navigation, route}) {
             margin: 10,
             marginTop: 14,
           }}>
-          Before Course
+          {/* Before Course */}
+          课前提醒
         </Text>
         <Text
           style={{
@@ -199,7 +212,8 @@ function DetailsScreen({navigation, route}) {
             margin: 10,
             marginTop: 2,
           }}>
-          Course Intro
+          {/* Course Intro */}
+          课程信息
         </Text>
         <Text
           style={{
@@ -214,7 +228,8 @@ function DetailsScreen({navigation, route}) {
         <View style={styles.trainData}>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              Times
+              {/* Times */}
+              次数
             </Text>
             <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
               {courseData.infomation.practiced > 99
@@ -226,7 +241,8 @@ function DetailsScreen({navigation, route}) {
             style={{height: 50, width: 2, backgroundColor: '#E4E4E4'}}></View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              Best Score
+              {/* Best Score */}
+              最佳分数
             </Text>
             <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
               {courseData.infomation.score}
@@ -236,7 +252,8 @@ function DetailsScreen({navigation, route}) {
             style={{height: 50, width: 2, backgroundColor: '#E4E4E4'}}></View>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={{color: '#4969FF', fontWeight: '700', fontSize: 20}}>
-              Tag
+              {/* Tag */}
+              标签
             </Text>
             <Text style={{color: 'black', fontSize: 22, fontWeight: '600'}}>
               {courseData.infomation.tags[0].toLowerCase()}
@@ -252,7 +269,8 @@ function DetailsScreen({navigation, route}) {
               marginTop: 20,
               margin: 10,
             }}>
-            Posture List
+            {/* Posture List */}
+            动作列表
           </Text>
         </View>
       </View>
@@ -297,7 +315,8 @@ function DetailsScreen({navigation, route}) {
                     );
                   })}
                 </View>
-                <Text style={styles.list_details}>{item.like} likes</Text>
+                {/* <Text style={styles.list_details}>{item.like} likes</Text> */}
+                <Text style={styles.list_details}>{item.like} 赞</Text>
               </View>
             </View>
           );
@@ -312,7 +331,8 @@ function DetailsScreen({navigation, route}) {
         }}>
         <TouchableOpacity style={styles.button} onPress={goToVideo}>
           <Text style={{color: 'white', fontSize: 18, fontWeight: '500'}}>
-            Start Training
+            {/* Start Training */}
+            开始锻炼
           </Text>
         </TouchableOpacity>
       </View>

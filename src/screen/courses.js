@@ -95,15 +95,25 @@ function CoursesScreen({ navigation, route }) {
 
   var currentDate = new Date();
   const todayWeek = currentDate.getDay();
+  // const weekName = [
+  //   'Sunday',
+  //   'Monday',
+  //   'Tuesday',
+  //   'Wednesday',
+  //   'Thursday',
+  //   'Friday',
+  //   'Saturday',
+  // ];
   const weekName = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
+    '星期日',
+    '星期一',
+    '星期二',
+    '星期三',
+    '星期四',
+    '星期五',
+    '星期六',
+    '星期日',
+  ]
   const currentMonth = currentDate.getMonth() + 1;
   const currentDay = currentDate.getDate();
   currentDate = currentMonth + '/' + currentDay;
@@ -140,7 +150,8 @@ function CoursesScreen({ navigation, route }) {
         inputStyle={{
           fontSize: 16,
         }}
-        placeholder="Search Here..."
+        // placeholder="Search Here..."
+        placeholder='点击搜索'
         round={true}
         lightTheme
         showCancel
@@ -168,21 +179,27 @@ function CoursesScreen({ navigation, route }) {
             paddingTop: 8,
           }}>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <Text style={{ fontSize: 14, color: 'gray' }}>Total Time</Text>
+            {/* <Text style={{ fontSize: 14, color: 'gray' }}>Total Time</Text> */}
+            <Text style={{ fontSize: 14, color: 'gray' }}>锻炼时长</Text> 
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {totalData.totalDuration?totalData.totalDuration:'- -'} min
+              {/* {totalData.totalDuration?totalData.totalDuration:'- -'} min */}
+              {totalData.totalDuration?totalData.totalDuration:'- -'} 分钟
             </Text>
           </View>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <Text style={{ fontSize: 14, color: 'gray' }}>Continuous Day</Text>
+            {/* <Text style={{ fontSize: 14, color: 'gray' }}>Continuous Day</Text> */}
+            <Text style={{ fontSize: 14, color: 'gray' }}>持续锻炼</Text>
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {totalData.totalDay?totalData.totalDay:'- -'} day
+              {/* {totalData.totalDay?totalData.totalDay:'- -'} day */}
+              {totalData.totalDay?totalData.totalDay:'- -'} 天
             </Text>
           </View>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <Text style={{ fontSize: 14, color: 'gray' }}>Total Consume</Text>
+            {/* <Text style={{ fontSize: 14, color: 'gray' }}>Total Consume</Text> */}
+            <Text style={{ fontSize: 14, color: 'gray' }}>共计消耗</Text>
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
-              {totalData.totalCalorie?totalData.totalCalorie:'- -'} kcal
+              {/* {totalData.totalCalorie?totalData.totalCalorie:'- -'} kcal */}
+              {totalData.totalCalorie?totalData.totalCalorie:'- -'} 卡路里
             </Text>
           </View>
         </View>
@@ -198,7 +215,8 @@ function CoursesScreen({ navigation, route }) {
               fontWeight: 'bold',
               marginBottom: 2,
             }}>
-            View Today Schedule
+            {/* View Today Schedule */}
+            查看今日计划
           </Text>
         </TouchableOpacity>
       </View>
@@ -211,7 +229,8 @@ function CoursesScreen({ navigation, route }) {
             marginLeft: 20,
             marginVertical: 10,
           }}>
-          Recent Course
+          {/* Recent Course */}
+          近日课程
         </Text>
         <View
           style={{
@@ -259,7 +278,8 @@ function CoursesScreen({ navigation, route }) {
             marginLeft: 20,
             marginVertical: 10,
           }}>
-          Recommend Course
+          {/* Recommend Course */}
+          推荐课程
         </Text>
         <View
           style={{
@@ -341,9 +361,10 @@ const CourseSkeleton = () => {
         alignItems:'center',
         flexDirection:'column',
       }}>
-        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>No</Text>
+        {/* <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>No</Text>
         <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>Recent</Text>
-        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>Course</Text>
+        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>Course</Text> */}
+        <Text style={{color:"rgba(190,190,190,0.8)",fontWeight:'bold'}}>无近日课程</Text>
       </View>
       <View
         style={{
@@ -468,10 +489,12 @@ const RecommendCourse = ({
               marginBottom: 6,
             }}>
             <Text style={{ fontSize: 12, marginLeft: 10, color: 'white' }}>
-              {takeTime}min
+              {/* {takeTime}min */}
+              {takeTime}分钟
             </Text>
             <Text style={{ fontSize: 12, marginLeft: 10, color: 'white' }}>
-              {kalorie}kcal
+              {/* {kalorie}kcal */}
+              {kalorie}卡路里
             </Text>
             <Text style={{ fontSize: 12, marginLeft: 10, color: 'white' }}>
               {level}

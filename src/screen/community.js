@@ -141,7 +141,8 @@ export const WaterfallList = ({
             </View>
             <View style={{position: 'absolute', bottom: 6, left: 10}}>
               <Text style={{fontSize: 10, color: '#999999'}}>
-                Published : {item.updatedAt.slice(0, 16)}
+                {/* Published : {item.updatedAt.slice(0, 16)} */}
+                发布于: {item.updatedAt.slice(0, 16)}
               </Text>
             </View>
           </View>
@@ -158,7 +159,8 @@ export const WaterfallList = ({
           width: '100%',
           height: '100%',
         }}>
-        <Text>You Haven't Login Yet!</Text>
+        {/* <Text>You Haven't Login Yet!</Text> */}
+        <Text>您尚未登录</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -264,7 +266,8 @@ const CommunityScreen = ({navigation, route}) => {
             inputStyle={{
               fontSize: 16,
             }}
-            placeholder="Search Here..."
+            // placeholder="Search Here..."
+            placeholder="点击搜索"
             round={true}
             lightTheme
             showCancel
@@ -278,7 +281,8 @@ const CommunityScreen = ({navigation, route}) => {
           <TouchableOpacity
             onPress={() => {
               if (!global.storage.getBoolean('isLogin')) {
-                showToast('Please Login First!');
+                // showToast('Please Login First!');
+                showToast('请先登录！');
                 return;
               }
               navigation.navigate('PublishScreen', {refresh: faRefresh});
@@ -304,7 +308,8 @@ const CommunityScreen = ({navigation, route}) => {
             variant="default"
             style={styles.tabContent}>
             <Tab.Item
-              title="Square"
+              // title="Square"
+              title="广场"
               titleStyle={{
                 fontSize: 14,
                 fontWeight: 'bold',
@@ -314,7 +319,8 @@ const CommunityScreen = ({navigation, route}) => {
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="Follow"
+              // title="Follow"
+              title="关注"
               titleStyle={{
                 fontSize: 14,
                 fontWeight: 'bold',

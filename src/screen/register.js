@@ -36,19 +36,23 @@ const RegisterScreen = ({navigation}) => {
     const phoneNumReg = /^[123456789]\d{10}$/;
 
     if (!emailReg.test(email)) {
-      showToast('Please Enter a Valid Email!');
+      // showToast('Please Enter a Valid Email!');
+      showToast('请输入有效的邮箱！');
       return false;
     }
     if (!passwordReg.test(password)) {
-      showToast('Password Should Be 6-16 Characters(Numbers or Letters)!');
+      // showToast('Password Should Be 6-16 Characters(Numbers or Letters)!');
+      showToast('密码应为6-16个字符（数字或字母）');
       return false;
     }
     if (!usernameReg.test(username)) {
-      showToast('Username Should Be 1-16 Characters(Numbers or Letters)!');
+      // showToast('Username Should Be 1-16 Characters(Numbers or Letters)!');
+      showToast('用户名应为6-16个字符（数字或字母）');
       return false;
     }
     if (!phoneNumReg.test(phoneNum)) {
-      showToast('Please Enter a Valid Phone Number!');
+      // showToast('Please Enter a Valid Phone Number!');
+      showToast('请输入有效的电话号码！');
       return false;
     }
     return true;
@@ -68,7 +72,8 @@ const RegisterScreen = ({navigation}) => {
       }),
     };
     if (!(email && password && username && phoneNum)) {
-      showToast('Please Complete Your Information!');
+      // showToast('Please Complete Your Information!');
+      showToast('请完善所有信息！');
       return;
     }
     if (checkValid(email, password, username, phoneNum)) {
@@ -76,11 +81,13 @@ const RegisterScreen = ({navigation}) => {
       fetch(url, requestOptions)
         .then(response => {
           if (response.status === 400) {
-            showToast('Email has been registered!');
+            // showToast('Email has been registered!');
+            showToast('邮箱已被注册！');
             return Promise.reject('Email has been registered!');
           }
           if (!response.ok) {
-            showToast('Sign Up Failed! Please Try Again!');
+            // showToast('Sign Up Failed! Please Try Again!');
+            showToast('注册失败，请重试！');
             return Promise.reject('Sign Up Failed');
           } else {
             return response.json();
@@ -90,7 +97,8 @@ const RegisterScreen = ({navigation}) => {
           console.log(data.uid);
           global.storage.set('isLogin', true);
           global.storage.set('uid', data.uid);
-          showToast('Sign Up Successfully!');
+          // showToast('Sign Up Successfully!');
+          showToast('注册成功');
           navigation.navigate('Person', {refresh: true});
           navigation.navigate('Calendar', {refresh: true});
           navigation.navigate('Courses', {refresh: true});
@@ -134,7 +142,8 @@ const RegisterScreen = ({navigation}) => {
                 fontSize: 18,
                 marginBottom: 2,
               }}>
-              Sign Up For
+              {/* Sign Up For */}
+              账号注册
             </Text>
             <Text
               style={{
@@ -175,7 +184,8 @@ const RegisterScreen = ({navigation}) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Username"
+            // placeholder="Username"
+            placeholder='用户名'
             paddingRight={25}
             fontSize={16}
             onChangeText={text => setUsername(text)}
@@ -189,7 +199,8 @@ const RegisterScreen = ({navigation}) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            // placeholder="Email"
+            placeholder="邮箱"
             paddingRight={25}
             fontSize={16}
             onChangeText={text => setEmail(text)}
@@ -199,7 +210,8 @@ const RegisterScreen = ({navigation}) => {
           <MaterialCommunityIcons name="cellphone" size={30} color="#575dfb" />
           <TextInput
             style={styles.input}
-            placeholder="Phone Number"
+            // placeholder="Phone Number"
+            placeholder="电话"
             paddingRight={25}
             fontSize={16}
             onChangeText={text => setPhoneNum(text)}
@@ -213,7 +225,8 @@ const RegisterScreen = ({navigation}) => {
           />
           <TextInput
             style={styles.input}
-            placeholder="Password"
+            // placeholder="Password"
+            placeholder="密码"
             secureTextEntry={true}
             paddingRight={25}
             fontSize={16}
@@ -222,7 +235,8 @@ const RegisterScreen = ({navigation}) => {
         </View>
         <TouchableOpacity style={styles.loginButton} onPress={() => Register()}>
           <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
-            Register
+            {/* Register */}
+            注册
           </Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>

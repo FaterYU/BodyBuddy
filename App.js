@@ -66,7 +66,8 @@ const MainTabs = () => {
         name="Courses"
         component={CoursesScreen}
         options={({route}) => ({
-          tabBarLabel: 'Courses',
+          // tabBarLabel: 'Courses',
+          tabBarLabel: '课程',
           tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={couresesActiveSvg} width="60%" height="60%" />
@@ -79,7 +80,8 @@ const MainTabs = () => {
         name="Calendar"
         component={CalendarScreen}
         options={{
-          tabBarLabel: 'Calendar',
+          // tabBarLabel: 'Calendar',
+          tabBarLabel: '日历',
           tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={calendarActiveSvg} width="70%" height="70%" />
@@ -92,7 +94,8 @@ const MainTabs = () => {
         name="Community"
         component={CommunityScreen}
         options={{
-          tabBarLabel: 'Community',
+          // tabBarLabel: 'Community',
+          tabBarLabel: '社区',
           tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={communityActiveSvg} width="70%" height="70%" />
@@ -105,7 +108,8 @@ const MainTabs = () => {
         name="Person"
         component={PersonScreen}
         options={{
-          tabBarLabel: 'Profile',
+          // tabBarLabel: 'Profile',
+          tabBarLabel: '我的',
           tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={profileActiveSvg} width="60%" height="60%" />

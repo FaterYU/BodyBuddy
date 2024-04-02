@@ -3,8 +3,8 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 
 const SevenDaysCalendar = () => {
   // 获取当前日期
-  // const weekName = ['日', '一', '二', '三', '四', '五', '六'];
-  const weekName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const weekName = ['日', '一', '二', '三', '四', '五', '六'];
+  // const weekName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const currentDate = new Date();
   // 获取本周的日期
   const currentWeek = Array.from({length: 7}, (_, index) => {

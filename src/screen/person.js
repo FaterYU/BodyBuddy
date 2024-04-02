@@ -126,7 +126,7 @@ function PersonScreen({route}) {
               />
             </TouchableOpacity>
           )}
-          {!global.storage.getBoolean('isLogin') && (
+          {/* {!global.storage.getBoolean('isLogin') && (
             <TouchableOpacity
               style={{
                 postion: 'absolute',
@@ -147,7 +147,7 @@ function PersonScreen({route}) {
                 Login
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
           <ImageBackground
             style={styles.userBackground}
             source={require('../assets/backgrounds/rain_glass.jpg')}>
@@ -163,17 +163,22 @@ function PersonScreen({route}) {
                 <TouchableOpacity
                   onPress={() => {
                     global.storage.getBoolean('isLogin')
+                      // ? Alert.alert(
+                      //     'Log Out',
+                      //     'Are you sure to log out?',
                       ? Alert.alert(
-                          'Log Out',
-                          'Are you sure to log out?',
+                        '退出',
+                        '确定退出登录？',
                           [
                             {
-                              text: 'Cancel',
+                              // text: 'Cancel',
+                              text:'取消',
                               onPress: () => console.log('Cancel Pressed'),
                               style: 'cancel',
                             },
                             {
-                              text: 'OK',
+                              // text: 'OK',
+                              text: '确定',
                               onPress: () => {
                                 global.storage.set('isLogin', false);
                                 global.storage.set('uid', -1);
@@ -216,7 +221,8 @@ function PersonScreen({route}) {
                       marginTop: 6,
                       marginLeft: 8,
                     }}>
-                    {userName ? userName : 'Username'}
+                    {/* {userName ? userName : 'Username'} */}
+                    {userName ? userName : '登录/注册'}
                   </Text>
                   <View
                     style={{
@@ -226,10 +232,12 @@ function PersonScreen({route}) {
                       width: '100%',
                     }}>
                     <View style={styles.fab}>
-                      <Text style={styles.fabText}>Community Master</Text>
+                      {/* <Text style={styles.fabText}>Community Master</Text> */}
+                      <Text style={styles.fabText}>社区达人</Text>
                     </View>
                     <View style={styles.fab}>
-                      <Text style={styles.fabText}>Medal 1</Text>
+                      {/* <Text style={styles.fabText}>Medal 1</Text> */}
+                       <Text style={styles.fabText}>徽章 1</Text>
                     </View>
                   </View>
                 </View>
@@ -245,7 +253,8 @@ function PersonScreen({route}) {
                 <Text style={{color: '#333333', fontSize: 20}}>
                   {followList.length}
                 </Text>
-                <Text style={{fontSize: 15}}>Following</Text>
+                {/* <Text style={{fontSize: 15}}>Following</Text>*/}
+                <Text style={{fontSize: 15}}>关注</Text>  
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -256,14 +265,16 @@ function PersonScreen({route}) {
                 <Text style={{color: '#333333', fontSize: 20}}>
                   {followedList.length}
                 </Text>
-                <Text style={{fontSize: 15}}>Followers</Text>
+                {/* <Text style={{fontSize: 15}}>Followers</Text> */}
+                <Text style={{fontSize: 15}}>粉丝</Text>
               </View>
             </TouchableOpacity>
             <View style={styles.fansButton}>
               <Text style={{color: '#333333', fontSize: 20}}>
                 {momentList.length}
               </Text>
-              <Text style={{fontSize: 15}}>Moments</Text>
+              {/* <Text style={{fontSize: 15}}>Moments</Text> */}
+              <Text style={{fontSize: 15}}>动态</Text>
             </View>
           </View>
 
@@ -319,11 +330,13 @@ function PersonScreen({route}) {
                     lineHeight: 30,
                     paddingLeft: 8,
                   }}>
-                  Health Data
+                  {/* Health Data */}
+                  健康数据
                 </Text>
               </View>
               <Text style={{marginTop: 10, marginLeft: 10, color: 'gray'}}>
-                Weight
+                {/* Weight */}
+                体重
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
@@ -367,7 +380,8 @@ function PersonScreen({route}) {
               marginTop: -20,
               alignSelf: 'flex-start',
             }}>
-            Moments
+            {/* Moments */}
+            动态
           </Text>
           <WaterfallList tabIndex={0} />
         </View>

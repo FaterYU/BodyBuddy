@@ -61,7 +61,8 @@ function CommunityDetail({navigation, route}) {
 
   const clickLike = () => {
     if (!global.storage.getBoolean('isLogin')) {
-      showToast('Please Login First!');
+      // showToast('Please Login First!');
+      showToast('请先登录！');
       return;
     }
     const url = like
@@ -92,7 +93,8 @@ function CommunityDetail({navigation, route}) {
   const submitComment = () => {
     const url = 'http://bodybuddy.fater.top/api/moments/addComment';
     if (!global.storage.getBoolean('isLogin')) {
-      ToastAndroid.show('Please login first', ToastAndroid.SHORT);
+      // ToastAndroid.show('Please login first', ToastAndroid.SHORT);
+      ToastAndroid.show('请先登录', ToastAndroid.SHORT);
       return;
     }
     const requestOptions = {
@@ -190,11 +192,13 @@ function CommunityDetail({navigation, route}) {
   }
   const changeFollow = () => {
     if (!global.storage.getBoolean('isLogin')) {
-      showToast('Please Login First!');
+      // showToast('Please Login First!');
+      showToast('请先登录！');
       return;
     }
     if (global.storage.getNumber('uid') === data.author) {
-      showToast('You cannot follow yourself!');
+      // showToast('You cannot follow yourself!');
+      showToast('您不能关注自己！');
       return;
     }
     const url = follow
@@ -276,7 +280,8 @@ function CommunityDetail({navigation, route}) {
               style={{
                 color: follow ? 'white' : '#575dfb',
               }}>
-              {follow ? 'followed' : 'follow'}
+              {/* {follow ? 'followed' : 'follow'} */}
+              {follow ? '已关注' : '关注'}
             </Text>
           </View>
         </TouchableOpacity>
@@ -322,7 +327,8 @@ function CommunityDetail({navigation, route}) {
               marginLeft: 12,
               marginTop: -4,
             }}>
-            Published : {data.updatedAt.slice(0, 16)}
+            {/* Published : {data.updatedAt.slice(0, 16)} */}
+            发布于: {data.updatedAt.slice(0, 16)}
           </Text>
           <View
             style={{
@@ -365,7 +371,8 @@ function CommunityDetail({navigation, route}) {
           }}>
           <MaterialCommunityIcons name="pencil-plus-outline" size={25} />
           <TextInput
-            placeholder="Say Something..."
+            // placeholder="Say Something..."
+            placeholder="说点什么..."
             fontSize={15}
             onChangeText={text => setComment(text)}
             onSubmitEditing={() => {
