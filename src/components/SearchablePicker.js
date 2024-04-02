@@ -37,7 +37,8 @@ const SearchablePicker = ({data, onValueChange, link = null}) => {
       <TextInput
         ref={inputRef}
         style={styles.input}
-        placeholder="Search..."
+        // placeholder="Search..."
+        placeholder="搜索"
         onChangeText={text => {
           setSearchQuery(text);
           if (text === '' || text === null) {

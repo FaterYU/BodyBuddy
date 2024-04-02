@@ -43,17 +43,20 @@ function LoginScreen({navigation, route}) {
         .then(response => {
           // 判断登录状态
           if (!response.ok && response.status != 404) {
-            showToast('Login Failed: ' + response.status);
+            // showToast('Login Failed: ' + response.status);
+            showToast('登陆失败： ' + response.status);
             return Promise.reject('Login Failed');
           } else if (!response.ok && response.status == 404) {
-            showToast('Login Failed: Please Check Your Email and Password!');
+            // showToast('Login Failed: Please Check Your Email and Password!');
+            showToast('登陆失败：请检查邮箱和密码是否正确');
             return Promise.reject('Login Failed');
           } else {
             return response.json();
           }
         })
         .then(data => {
-          showToast('Login Successfully!');
+          // showToast('Login Successfully!');
+          showToast('登录成功');
           global.storage.set('isLogin', true);
           global.storage.set('uid', data.uid);
           navigation.navigate('Person', {refresh: true});
@@ -61,7 +64,8 @@ function LoginScreen({navigation, route}) {
           navigation.navigate('Courses', {refresh: true});
         });
     } else {
-      showToast('Please enter your email and password!');
+      // showToast('Please enter your email and password!');
+      showToast('请输入您的邮箱和密码！');
     }
   };
 
@@ -120,7 +124,8 @@ function LoginScreen({navigation, route}) {
             />
             <TextInput
               style={styles.input}
-              placeholder="Email"
+              // placeholder="Email"
+              placeholder='邮箱'
               paddingRight={25}
               fontSize={16}
               onChangeText={text => setEmail(text)}
@@ -134,7 +139,8 @@ function LoginScreen({navigation, route}) {
             />
             <TextInput
               style={styles.input}
-              placeholder="Password"
+              // placeholder="Password"
+              placeholder='密码'
               secureTextEntry={true}
               paddingRight={25}
               fontSize={16}
@@ -151,7 +157,8 @@ function LoginScreen({navigation, route}) {
             }}
             onPress={() => navigation.navigate('RegisterScreen')}>
             <Text style={{marginRight: 6, fontSize: 13}}>
-              Don't have an account?
+              {/* Don't have an account? */}
+              还没有账号？
             </Text>
             <Text
               style={{
@@ -160,12 +167,14 @@ function LoginScreen({navigation, route}) {
                 fontWeight: '600',
                 textDecorationLine: 'underline',
               }}>
-              Register
+              {/* Register */}
+              注册
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.loginButton} onPress={() => Login()}>
             <Text style={{color: 'white', fontSize: 18, fontWeight: '600'}}>
-              Login
+              {/* Login */}
+              登录
             </Text>
           </TouchableOpacity>
         </KeyboardAwareScrollView>

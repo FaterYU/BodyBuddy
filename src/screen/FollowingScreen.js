@@ -54,7 +54,8 @@ function FollowingScreen({navigation}) {
               color="rgba(30, 30, 30, 1)"
             />
           </TouchableOpacity>
-        <Text>No Following User</Text>
+        {/* <Text>No Following User</Text> */}
+        <Text>您还没有关注其他用户</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -82,7 +83,8 @@ function FollowingScreen({navigation}) {
           </TouchableOpacity>
           <Text
             style={{fontSize: 20, fontWeight: 600, color: 'rgba(30,30,30,1)'}}>
-            Following
+            {/* Following */}
+            关注
           </Text>
         </View>
       </View>
@@ -123,11 +125,13 @@ const UserList = (renderData) => {
   const FollowUser = (userId, followed) => {
     const myId = global.storage.getNumber('uid');
     if (myId===-1){
-      showToast('Please login first!');
+      // showToast('Please login first!');
+      showToast('请先登录！');
       return;
     }
     if (userId === myId) {
-      showToast('You cannot follow yourself!');
+      // showToast('You cannot follow yourself!');
+      showToast('您不能关注自己！');
       return;
     }
     const url = followed
@@ -215,7 +219,8 @@ const UserList = (renderData) => {
                   style={{
                     color: follow && myid ? 'white' : 'rgba(80,150,240,0.8)',
                   }}>
-                  {follow && myid ? 'followed' : 'follow'}
+                  {/* {follow && myid ? 'followed' : 'follow'} */}
+                  {follow && myid ? '已关注' : '关注'}
                 </Text>
               </View>
             </TouchableOpacity>

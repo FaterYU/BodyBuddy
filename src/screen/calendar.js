@@ -113,9 +113,14 @@ const AgendaScreen = ({navigation, route}) => {
         },
       );
     } else {
-      Alert.alert('Failed to create', 'please log in first', [
+      // Alert.alert('Failed to create', 'please log in first', [
+      //   {
+      //     text: 'Confirm',
+      //   },
+      // ]);
+      Alert.alert('新建计划失败，请先登录', [
         {
-          text: 'Confirm',
+          text: '确认',
         },
       ]);
     }
@@ -257,7 +262,8 @@ const AgendaScreen = ({navigation, route}) => {
           setSelectedCourse(null);
           setShowModal(true);
         }}>
-        <Text>No Schedule Yet</Text>
+        {/* <Text>No Schedule Yet</Text> */}
+        <Text>暂无日程安排</Text>
       </TouchableOpacity>
     );
   };
@@ -288,7 +294,8 @@ const AgendaScreen = ({navigation, route}) => {
         // 用户取消选择
       }
     } catch (error) {
-      console.warn('Error occurred while opening date/time picker', error);
+      // console.warn('Error occurred while opening date/time picker', error);
+      console.warn('日期/时间选择器获取失败', error);
     }
   };
 
@@ -311,7 +318,8 @@ const AgendaScreen = ({navigation, route}) => {
         // 用户取消选择
       }
     } catch (error) {
-      console.warn('Error occurred while opening date/time picker', error);
+      // console.warn('Error occurred while opening date/time picker', error);
+      console.warn('日期/时间选择器获取失败', error);
     }
   };
 
@@ -340,7 +348,8 @@ const AgendaScreen = ({navigation, route}) => {
 
   const handleDelete = () => {
     if (forceItem === null) {
-      Alert.alert('Failed to delete', 'please try again', [{text: 'Confirm'}]);
+      // Alert.alert('Failed to delete', 'please try again', [{text: 'Confirm'}]);
+      Alert.alert('删除失败，请重试', [{text: '确认'}]);
       return;
     }
     UsersService.deleteCalendarActivity({uid: 1, activityId: forceItem}).then(
@@ -366,7 +375,8 @@ const AgendaScreen = ({navigation, route}) => {
           height: '100%',
           backgroundColor: 'white',
         }}>
-        <Text>You Haven't Login Yet!</Text>
+        {/* <Text>You Haven't Login Yet!</Text> */}
+        <Text>您尚未登录！!</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -384,7 +394,8 @@ const AgendaScreen = ({navigation, route}) => {
           backgroundColor: 'white',
         }}>
         <Text style={{fontSize: 20, marginLeft: 22, alignSelf: 'center'}}>
-          Schedule
+          {/* Schedule */}
+          计划
         </Text>
         <TouchableOpacity
           onPress={() => {
@@ -432,13 +443,15 @@ const AgendaScreen = ({navigation, route}) => {
             onClose={() => setShowModal(false)}>
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
-              <Modal.Header>Create Schedule</Modal.Header>
+              {/* <Modal.Header>Create Schedule</Modal.Header> */}
+              <Modal.Header>新建计划</Modal.Header>
               <Modal.Body>
                 <FormControl>
                   <FormControl.Label>
                     <Text
                       style={{fontSize: 18, fontWeight: 'bold', marginTop: -4}}>
-                      From
+                      {/* From */}
+                      开始时间
                     </Text>
                   </FormControl.Label>
                   <View
@@ -501,7 +514,8 @@ const AgendaScreen = ({navigation, route}) => {
                 </FormControl>
                 <FormControl>
                   <FormControl.Label>
-                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>To</Text>
+                    {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>To</Text> */}
+                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>结束时间</Text>
                   </FormControl.Label>
                   <View
                     style={{
@@ -564,7 +578,8 @@ const AgendaScreen = ({navigation, route}) => {
                 <FormControl mt="3">
                   <FormControl.Label>
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-                      Content
+                      {/* Content */}
+                      备注
                     </Text>
                   </FormControl.Label>
                   <TextInput
@@ -583,7 +598,8 @@ const AgendaScreen = ({navigation, route}) => {
                 <FormControl mt="3">
                   <FormControl.Label>
                     <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-                      Courses
+                      {/* Courses */}
+                      课程
                     </Text>
                   </FormControl.Label>
                   <SearchablePicker
@@ -601,7 +617,8 @@ const AgendaScreen = ({navigation, route}) => {
                     onPress={() => {
                       setShowModal(false);
                     }}>
-                    Cancel
+                    {/* Cancel */}
+                    取消
                   </Button>
                   <Button
                     style={{backgroundColor: 'rgba(80,150,240,0.8)'}}
@@ -609,7 +626,8 @@ const AgendaScreen = ({navigation, route}) => {
                       addCalendarActivity();
                       setShowModal(false);
                     }}>
-                    Save
+                    {/* Save */}
+                    保存
                   </Button>
                 </Button.Group>
               </Modal.Footer>
@@ -624,9 +642,11 @@ const AgendaScreen = ({navigation, route}) => {
             onClose={() => setShowDeleteModal(false)}>
             <Modal.Content maxWidth="400px">
               <Modal.CloseButton />
-              <Modal.Header>Delete Schedule</Modal.Header>
+              {/* <Modal.Header>Delete Schedule</Modal.Header> */}
+              <Modal.Header>删除计划</Modal.Header>
               <Modal.Body>
-                <Text>Sure to delete？</Text>
+                {/* <Text>Sure to delete？</Text> */}
+                <Text>确定删除计划？</Text>
               </Modal.Body>
               <Modal.Footer>
                 <Button.Group space={2}>
@@ -636,7 +656,8 @@ const AgendaScreen = ({navigation, route}) => {
                     onPress={() => {
                       setShowDeleteModal(false);
                     }}>
-                    Cancel
+                    {/* Cancel */}
+                    取消
                   </Button>
                   <Button
                     colorScheme="red"
@@ -644,7 +665,8 @@ const AgendaScreen = ({navigation, route}) => {
                       handleDelete();
                       setShowDeleteModal(false);
                     }}>
-                    Delete
+                    {/* Delete */}
+                    删除
                   </Button>
                 </Button.Group>
               </Modal.Footer>

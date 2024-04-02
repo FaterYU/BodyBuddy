@@ -150,7 +150,8 @@ function PersonDetails({navigation, route}) {
                     setAvatar(imageSrc[0]);
                     onClose();
                   }}>
-                  Camera
+                  {/* Camera */}
+                  拍摄
                 </Actionsheet.Item>
               </TouchableOpacity>
               <TouchableOpacity
@@ -161,7 +162,8 @@ function PersonDetails({navigation, route}) {
                     setAvatar(imageSrc[0]);
                     onClose();
                   }}>
-                  Select Image
+                  {/* Select Image */}
+                  选择图片
                 </Actionsheet.Item>
               </TouchableOpacity>
             </Actionsheet.Content>
@@ -182,7 +184,8 @@ function PersonDetails({navigation, route}) {
                 color="#b6b7cc"
               />
             </TouchableOpacity>
-            <Text style={styles.head}>Personal Profile</Text>
+            {/* <Text style={styles.head}>Personal Profile</Text> */}
+            <Text style={styles.head}>个人档案</Text>
             <TouchableOpacity
               style={styles.avatar}
               onPress={async () => {
@@ -218,11 +221,13 @@ function PersonDetails({navigation, route}) {
                 margin: 25,
                 marginBottom: 16,
               }}>
-              Personal Information
+              {/* Personal Information */}
+              个人信息
             </Text>
             <View style={{marginHorizontal: 25}}>
               <View>
-                <Text style={styles.info_head}>Name</Text>
+                {/* <Text style={styles.info_head}>Name</Text> */}
+                <Text style={styles.info_head}>姓名</Text>
                 <Input
                   size="lg"
                   placeholder="Name"
@@ -230,7 +235,8 @@ function PersonDetails({navigation, route}) {
                   onChangeText={text => setName(text)}
                   style={styles.input}
                 />
-                <Text style={styles.info_head}>Telephone Number</Text>
+                {/* <Text style={styles.info_head}>Telephone Number</Text> */}
+                <Text style={styles.info_head}>电话</Text>
                 <Input
                   size="lg"
                   placeholder="Tel"
@@ -252,7 +258,8 @@ function PersonDetails({navigation, route}) {
 
               <View>
                 <Text style={styles.info_head} value={gender}>
-                  Gender
+                  {/* Gender */}
+                  性别
                 </Text>
                 <FormControl
                   w="3/4"
@@ -262,6 +269,9 @@ function PersonDetails({navigation, route}) {
                 <Select
                   size="lg"
                   accessibilityLabel="Gender"
+                  // placeholder="Gender"
+                  placeholder="性别"
+                  _selectedItem={{bg: 'teal.600'}}
                   placeholder="Gender"
                   style={{borderRadius:12}}
                   _selectedItem={{
@@ -275,19 +285,12 @@ function PersonDetails({navigation, route}) {
                       width: '100%',
                       borderRadius: 12,
                       overflow: 'hidden',
-                    }}> */}
+                    }}>
+                    {/* <Select.Item label="Male" value="Male" /> */}
+                    <Select.Item label="男" value="男" />
 
-                    <Select.Item label="Male" value="Male" />
-
-                  {/* </TouchableOpacity> */}
-                  {/* <TouchableOpacity
-                    style={{
-                      width: '100%',
-                      borderRadius: 12,
-                      overflow: 'hidden',
-                    }}> */}
-                    <Select.Item label="Female" value="Female" />
-                  {/* </TouchableOpacity> */}
+                    {/* <Select.Item label="Female" value="Female" /> */}
+                    <Select.Item label="女" value="女" />
                 </Select>
               </View>
 
@@ -298,11 +301,13 @@ function PersonDetails({navigation, route}) {
                   alignItems: 'center',
                 }}>
                 <View style={{flexDirection: 'column'}}>
-                  <Text style={styles.info_head}>Height</Text>
+                  {/* <Text style={styles.info_head}>Height</Text> */}
+                  <Text style={styles.info_head}>身高</Text>
                   <InputGroup>
                     <Input
                       size="lg"
-                      placeholder="Height"
+                      // placeholder="Height"
+                      placeholder="身高"
                       value={height}
                       onChangeText={text => setHeight(text)}
                       w={(screenWidth - 175) / 2}></Input>
@@ -310,11 +315,13 @@ function PersonDetails({navigation, route}) {
                   </InputGroup>
                 </View>
                 <View style={{flexDirection: 'column'}}>
-                  <Text style={styles.info_head}>Weight</Text>
+                  {/* <Text style={styles.info_head}>Weight</Text> */}
+                  <Text style={styles.info_head}>体重</Text>
                   <InputGroup>
                     <Input
                       size="lg"
-                      placeholder="Weight"
+                      // placeholder="Weight"
+                      placeholder='体重'
                       value={weight}
                       onChangeText={text => setWeight(text)}
                       w={(screenWidth - 175) / 2}></Input>
@@ -334,7 +341,8 @@ function PersonDetails({navigation, route}) {
                   onPress={() => navigation.goBack()}>
                   <Text
                     style={{fontWeight: '600', color: '#4869ff', fontSize: 19}}>
-                    Exit
+                    {/* Exit */}
+                    退出
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -342,7 +350,8 @@ function PersonDetails({navigation, route}) {
                   onPress={updateInfo}>
                   <Text
                     style={{fontWeight: '600', color: 'white', fontSize: 19}}>
-                    Save
+                    {/* Save */}
+                    保存
                   </Text>
                 </TouchableOpacity>
               </View>

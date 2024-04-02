@@ -34,7 +34,8 @@ const PoseList = ({renderData}) => {
   if (renderData.length === 0) {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text>No Pose Was Found!</Text>
+        {/* <Text>No Pose Was Found!</Text> */}
+        <Text>没有找到相关动作！</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -86,7 +87,8 @@ const PoseList = ({renderData}) => {
                   );
                 })}
               </View>
-              <Text style={styles.list_details}>{item.like} likes</Text>
+              {/* <Text style={styles.list_details}>{item.like} likes</Text> */}
+              <Text style={styles.list_details}>{item.like} 赞</Text>
             </View>
           </View>
         );
@@ -99,7 +101,8 @@ const CourseList = ({renderData}) => {
   if (renderData === undefined) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Network Error!</Text>
+        {/* <Text>Network Error!</Text> */}
+        <Text>网络错误！</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -111,7 +114,8 @@ const CourseList = ({renderData}) => {
   if (renderData.length === 0) {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text>No Course Was Found!</Text>
+        {/* <Text>No Course Was Found!</Text> */}
+        <Text>没有找到相关课程！</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -152,7 +156,8 @@ const UserList = ({renderData}) => {
   if (renderData === undefined) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Network Error!</Text>
+        {/* <Text>Network Error!</Text> */}
+        <Text>网络错误！</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -164,7 +169,8 @@ const UserList = ({renderData}) => {
   if (renderData.length === 0) {
     return (
       <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text>No User Was Found!</Text>
+        {/* <Text>No User Was Found!</Text> */}
+        <Text>没有找到相关用户！</Text>
         <Image
           source={require('../assets/backgrounds/empty.png')}
           alt="empty"
@@ -179,11 +185,13 @@ const UserList = ({renderData}) => {
   const FollowUser = (userId, followed) => {
     const myId = global.storage.getNumber('uid');
     if (!global.storage.getBoolean('isLogin')) {
-      showToast('Please login first!');
+      // showToast('Please login first!');
+      showToast('请先登录！');
       return !followed;
     }
     if (userId === myId) {
-      showToast('You cannot follow yourself!');
+      // showToast('You cannot follow yourself!');
+      showToast('您不能关注自己！');
       return !followed;
     }
     const url = followed
@@ -270,7 +278,8 @@ const UserList = ({renderData}) => {
                   style={{
                     color: follow && myid ? 'white' : 'rgba(80,150,240,0.8)',
                   }}>
-                  {follow && myid ? 'followed' : 'follow'}
+                  {/* {follow && myid ? 'followed' : 'follow'} */}
+                  {follow && myid ? '已关注' : '关注'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -304,7 +313,8 @@ function ResolveSearch({tabIndex, renderData}) {
     if (data.length === 0) {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Text>No Moment Was Found!</Text>
+          {/* <Text>No Moment Was Found!</Text> */}
+          <Text>没有找到相关动态！</Text>
           <Image
             source={require('../assets/backgrounds/empty.png')}
             alt="empty"
@@ -410,7 +420,8 @@ const SearchScreen = ({navigation}) => {
             inputStyle={{
               fontSize: 16,
             }}
-            placeholder="Search Here..."
+            // placeholder="Search Here..."
+            placeholder="点击搜索"
             round={true}
             lightTheme
             showCancel
@@ -442,7 +453,8 @@ const SearchScreen = ({navigation}) => {
             variant="default"
             style={styles.tabContent}>
             <Tab.Item
-              title="Square"
+              // title="Square"
+              title="广场"
               titleStyle={{
                 fontSize: 14,
                 fontWeight: 'bold',
@@ -452,7 +464,8 @@ const SearchScreen = ({navigation}) => {
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="Course"
+              // title="Course"
+              title="课程"
               titleStyle={{
                 fontSize: 14,
                 fontWeight: 'bold',
@@ -462,7 +475,8 @@ const SearchScreen = ({navigation}) => {
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="Pose"
+              // title="Pose"
+              title="动作"
               titleStyle={{
                 fontSize: 14,
                 fontWeight: 'bold',
@@ -472,7 +486,8 @@ const SearchScreen = ({navigation}) => {
               buttonStyle={styles.selectButton}
             />
             <Tab.Item
-              title="User"
+              // title="User"
+              title="用户"
               titleStyle={{
                 fontSize: 14,
                 fontWeight: 'bold',
