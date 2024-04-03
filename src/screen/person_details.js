@@ -272,15 +272,9 @@ function PersonDetails({navigation, route}) {
                   // placeholder="Gender"
                   placeholder="性别"
                   _selectedItem={{bg: 'teal.600'}}
-                  placeholder="Gender"
-                  style={{borderRadius:12}}
-                  _selectedItem={{
-                    bg: 'teal.600',
-
-                }}
                   defaultValue={gender}
                   mt="1">
-                  {/* <TouchableOpacity
+                  <TouchableOpacity
                     style={{
                       width: '100%',
                       borderRadius: 12,
@@ -288,9 +282,16 @@ function PersonDetails({navigation, route}) {
                     }}>
                     {/* <Select.Item label="Male" value="Male" /> */}
                     <Select.Item label="男" value="男" />
-
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      width: '100%',
+                      borderRadius: 12,
+                      overflow: 'hidden',
+                    }}>
                     {/* <Select.Item label="Female" value="Female" /> */}
                     <Select.Item label="女" value="女" />
+                  </TouchableOpacity>
                 </Select>
               </View>
 

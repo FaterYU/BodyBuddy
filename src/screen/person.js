@@ -18,6 +18,7 @@ import {WaterfallList} from './community';
 import {useNavigation} from '@react-navigation/native';
 import UsersService from '../services/users.service';
 import MomentsService from '../services/moments.service';
+import FitsService from '../services/fits.service';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -32,6 +33,24 @@ function PersonScreen({route}) {
   const [userInfo, setUserInfo] = useState({});
   const [momentList, setMomentList] = useState([]);
   const [comeDate, setComeDate] = useState('');
+  const [totalData, setTotalData] = useState([
+    {
+      totalCalorie: null,
+      totalDay: null,
+      totalDuration: null,
+    },
+  ]);
+
+  useEffect(() => {
+    FitsService.getLongTimeData({ id: global.storage.getNumber('uid') })
+      .then(res => {
+        setTotalData(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [refresh]);
+
   useEffect(() => {
     const Refresh = () => setRefresh(route.params?.refresh);
     Refresh();
@@ -254,7 +273,7 @@ function PersonScreen({route}) {
                   {followList.length}
                 </Text>
                 {/* <Text style={{fontSize: 15}}>Following</Text>*/}
-                <Text style={{fontSize: 15}}>关注</Text>  
+                <Text style={{fontSize: 15}}>关注</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -296,18 +315,20 @@ function PersonScreen({route}) {
                     lineHeight: 30,
                     paddingLeft: 8,
                   }}>
-                  Body Buddy
+                  运动数据
                 </Text>
               </View>
               <Text style={{marginTop: 10, marginLeft: 10, color: 'gray'}}>
-                You have been here for
+                您已坚持运动
               </Text>
               <View style={{flexDirection: 'row', marginLeft: 10}}>
                 <Text style={{marginTop: 6, fontSize: 38, color: 'black'}}>
                   {comeDate ? comeDate : '**'}
+                  {totalData? totalData.totalDay : '**'}
                 </Text>
                 <Text style={{marginTop: 16, color: 'black', marginLeft: 6}}>
-                  {comeDate > 1 ? 'days' : 'day'}
+                  {/* {comeDate > 1 ? 'days' : 'day'} */}
+                  天
                 </Text>
               </View>
               {/* <Text style={{marginLeft: 10}}>
