@@ -22,6 +22,7 @@ import FollowersScreen from './src/screen/FollowersScreen';
 import SearchScreen from './src/screen/search';
 import RegisterScreen from './src/screen/register';
 import PersonDetails from './src/screen/person_details';
+import AllCourse from './src/screen/allCourse.js';
 
 // import VideoScreen from './src/screen/video';
 import VideoScreen from './src/screen/vertical_video';
@@ -144,6 +145,8 @@ export default function MyTabs() {
           <Stack.Screen name="SearchScreen" component={SearchScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="PersonDetails" component={PersonDetails} />
+          <Stack.Screen name="AllCourse" component={AllCourse} />
+          
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

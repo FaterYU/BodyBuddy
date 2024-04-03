@@ -180,7 +180,7 @@ function CoursesScreen({ navigation, route }) {
           }}>
           <View style={{ flexDirection: 'column', alignItems: 'center' }}>
             {/* <Text style={{ fontSize: 14, color: 'gray' }}>Total Time</Text> */}
-            <Text style={{ fontSize: 14, color: 'gray' }}>锻炼时长</Text> 
+            <Text style={{ fontSize: 14, color: 'gray' }}>锻炼时长</Text>
             <Text style={{ fontSize: 18, color: 'black', marginTop: 10 }}>
               {/* {totalData.totalDuration?totalData.totalDuration:'- -'} min */}
               {totalData.totalDuration?totalData.totalDuration:'- -'} 分钟
@@ -220,18 +220,53 @@ function CoursesScreen({ navigation, route }) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{ width: '100%' }}>
-        <Text
-          style={{
-            color: 'black',
-            fontSize: 16,
-            fontWeight: 'bold',
-            marginLeft: 20,
-            marginVertical: 10,
-          }}>
-          {/* Recent Course */}
-          近日课程
-        </Text>
+      <View style={{
+          width: '100%',
+
+        }}>
+        <View style={{
+          width:'100%',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 16,
+              fontWeight: 'bold',
+              marginLeft: 20,
+              marginVertical: 10,
+            }}>
+            {/* Recent Course */}
+            近日课程
+          </Text>
+          {/* <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('AllCourse');
+            }}
+          >
+            <View style={{
+              flexDirection:'row',
+              alignItem:'center',
+              justifyContent:'center',
+            }}
+            >
+              <Text
+                style={{
+                  color: 'grey',
+                  fontSize: 14,
+                  marginRight: 0,
+                  marginVertical: 11,
+                }}>全部课程</Text>
+              <MaterialCommunityIcons
+                name="arrow-right"
+                style={{ marginRight: 20, marginTop:14}}
+                size={16}
+                color="grey"
+              />
+            </View>
+          </TouchableOpacity> */}
+        </View>
         <View
           style={{
             flexDirection: 'column',
